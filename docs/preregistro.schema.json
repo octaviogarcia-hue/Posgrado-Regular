@@ -2,78 +2,80 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://comexus.org.mx/schemas/preregistro-fulbright-posgrado-regular.json",
   "title": "Pre-registro · Beca Fulbright-García Robles, Posgrado Regular",
-  "description": "Estructura del payload que las landing pages envían al Catch Hook de Zapier cuando un aspirante completa el formulario de pre-registro.",
+  "description": "Payload que las landing pages envían al Catch Hook de Zapier cuando un aspirante completa el formulario de pre-registro.",
   "type": "object",
-  "required": ["nombre", "correo", "nivel", "consentimiento_aviso", "timestamp_iso"],
+  "required": [
+    "nombre",
+    "correo",
+    "nivel",
+    "elegibilidad_confirmada",
+    "consentimiento_aviso",
+    "fecha_cierre_objetivo",
+    "timestamp_iso"
+  ],
   "additionalProperties": false,
   "properties": {
     "nombre": {
       "type": "string",
       "minLength": 3,
       "maxLength": 120,
-      "description": "Nombre completo del aspirante."
+      "description": "Nombre completo del aspirante. Se usa para personalizar los correos."
     },
     "correo": {
       "type": "string",
       "format": "email",
       "maxLength": 254,
-      "description": "Clave única del contacto. Se normaliza a minúsculas antes del envío."
+      "description": "Clave única del contacto. La landing lo normaliza a minúsculas antes de enviarlo."
     },
     "telefono": {
       "type": "string",
       "pattern": "^[+0-9 ()-]{10,20}$",
-      "description": "Opcional. Solo si se activa el recordatorio por SMS/WhatsApp."
+      "description": "Opcional. Solo si se activa el recordatorio por SMS o WhatsApp."
     },
     "nivel": {
       "type": "string",
       "enum": ["maestria", "doctorado"],
-      "description": "Determina el monto y la duración que se citan en cada recordatorio: 37,000 USD/18 meses o 25,000 USD/3 años."
+      "description": "Determina el monto y la duración que se citan en cada recordatorio: 37,000 USD / 18 meses, o 25,000 USD / 3 años."
     },
     "area": {
       "type": "string",
       "enum": [
         "ciencias_ingenieria",
+        "estudios_eeuu",
         "ciencias_sociales",
         "artes",
-        "negocios",
-        "salud"
+        "negocios"
       ],
-      "description": "Área de estudio. Define qué sección del GRE debe alcanzar el mínimo de 152."
+      "description": "Área de estudio. Las dos primeras son las de prioridad declarada (STEM y estudios sobre Estados Unidos). Las áreas clínicas no aparecen porque no son elegibles."
     },
     "estatus_ingles": {
       "type": "string",
       "enum": ["si", "agendado", "no"],
       "description": "Estado del examen de inglés (TOEFL iBT 80, IELTS 6.5 o Duolingo 120). Selecciona la ruta de la secuencia de recordatorios."
     },
+    "elegibilidad_confirmada": {
+      "type": "boolean",
+      "const": true,
+      "description": "El aspirante declara nacionalidad mexicana y no haber cursado licenciatura ni maestría en EE. UU. Sin este valor en true el registro no debe entrar a la secuencia."
+    },
     "consentimiento_aviso": {
       "type": "boolean",
       "const": true,
       "description": "Aceptación del aviso de privacidad (LFPDPPP). Sin este valor en true no debe enviarse ninguna comunicación."
     },
+    "convocatoria_abierta": {
+      "type": "boolean",
+      "description": "Estado de la convocatoria al momento del registro. Si es false, el contacto entra a la lista de aviso de apertura, no a la de recordatorios de cierre."
+    },
     "fecha_cierre_objetivo": {
       "type": "string",
       "format": "date-time",
-      "description": "Cierre de la convocatoria en ISO 8601. Zapier calcula sobre esta fecha los recordatorios de -60, -30 y -7 días."
+      "description": "Cierre de la convocatoria en ISO 8601. Zapier calcula sobre esta fecha los recordatorios de −60, −30, −7 y −2 días, sin fechas escritas a mano en el Zap."
     },
-    "utm_source": {
-      "type": "string",
-      "default": "volante_impreso",
-      "description": "Origen. Por defecto el volante impreso."
-    },
-    "utm_medium": {
-      "type": "string",
-      "default": "qr",
-      "description": "Medio. Por defecto el código QR."
-    },
-    "utm_campaign": {
-      "type": "string",
-      "default": "fulbright_posgrado_regular_2026",
-      "description": "Campaña y ciclo."
-    },
-    "utm_content": {
-      "type": "string",
-      "description": "Variante creativa del hook impreso: hook_a, hook_b, hook_c o hook_d."
-    },
+    "utm_source": { "type": "string", "default": "volante_impreso", "description": "Origen. Por defecto el volante impreso." },
+    "utm_medium": { "type": "string", "default": "qr", "description": "Medio. Por defecto el código QR." },
+    "utm_campaign": { "type": "string", "default": "fulbright_posgrado_regular_2026", "description": "Campaña y ciclo." },
+    "utm_content": { "type": "string", "description": "Variante del hook impreso: hook_a, hook_b, hook_c o hook_d." },
     "qr_id": {
       "type": "string",
       "maxLength": 60,
@@ -81,38 +83,30 @@
     },
     "landing_variant": {
       "type": "string",
-      "enum": ["modelo-1-observatorio", "modelo-2-trayecto"],
+      "enum": ["modelo-1-recorrido-binacional", "modelo-2-bento-vertical"],
       "description": "Modelo de landing que generó el registro. Base de la prueba A/B."
     },
-    "referrer": {
-      "type": "string",
-      "description": "document.referrer o 'directo'."
-    },
-    "locale": {
-      "type": "string",
-      "default": "es-MX"
-    },
-    "timestamp_iso": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Momento del envío, en ISO 8601 UTC."
-    }
+    "referrer": { "type": "string", "description": "document.referrer o 'directo'." },
+    "locale": { "type": "string", "default": "es-MX" },
+    "timestamp_iso": { "type": "string", "format": "date-time", "description": "Momento del envío, en ISO 8601 UTC." }
   },
   "examples": [
     {
       "nombre": "Ana Ruiz Molina",
       "correo": "ana.ruiz@ejemplo.mx",
       "nivel": "maestria",
-      "area": "ciencias_sociales",
+      "area": "ciencias_ingenieria",
       "estatus_ingles": "agendado",
+      "elegibilidad_confirmada": true,
       "consentimiento_aviso": true,
+      "convocatoria_abierta": true,
       "fecha_cierre_objetivo": "2026-02-01T05:59:59.000Z",
       "utm_source": "volante_impreso",
       "utm_medium": "qr",
       "utm_campaign": "fulbright_posgrado_regular_2026",
       "utm_content": "hook_a",
       "qr_id": "feria_unam_01",
-      "landing_variant": "modelo-1-observatorio",
+      "landing_variant": "modelo-2-bento-vertical",
       "referrer": "directo",
       "locale": "es-MX",
       "timestamp_iso": "2025-12-01T16:04:22.113Z"

@@ -1,185 +1,172 @@
-# 1. Copywriting — Campaña Phygital Fulbright-García Robles
+# 1. Copywriting
 
-Tono rector: **institucional, claro y directo**. Sin superlativos publicitarios, sin
-promesas que COMEXUS no pueda sostener. Cada cifra que aparece es verificable en la
-convocatoria oficial.
+Fuente única: la `<base_de_conocimiento>` del brief. Ninguna cifra, fecha o requisito de este
+documento está inventado ni redondeado.
 
 ---
 
-## 1.1 Hook del volante impreso (junto al QR)
+## 1.1 Hook del volante impreso
 
-El volante tiene un solo trabajo: **provocar el escaneo**. No explica la beca, la insinúa.
-La regla de oro del gancho impreso es que el beneficio debe leerse a un metro de distancia
-y en menos de dos segundos.
+El hook compite con un pasillo lleno de carteles y se lee de pie, a metro y medio. Tiene un
+solo trabajo: **provocar el escaneo**. No explica la beca, la insinúa.
 
-### Hook principal — *ángulo: monto*
+### Hook principal
 
-> **Hasta $37,000 USD al año para tu maestría en EE. UU. Escanea y postula.**
+> ## Hasta $37,000 USD al año para estudiar tu posgrado en EE. UU.
+> **Escanea. La convocatoria cierra el 31 de enero.**
 
-`14 palabras.` Abre con la cifra porque es el dato más difícil de ignorar y el que menos
-se presta a interpretación. "Escanea y postula" cierra con la acción física y la acción
-digital en la misma frase.
+13 palabras en el titular. La cifra va primero porque es el único dato que detiene a alguien
+que camina: es concreto, es grande y no admite interpretación.
+
+### Jerarquía sugerida junto al QR
+
+```
+HASTA $37,000 USD AL AÑO          ← 1er nivel · cifra en display, peso máximo
+para estudiar tu posgrado          ← 2º nivel · aclaración en una línea
+en Estados Unidos
+
+[  QR  ]   Escanea con tu cámara   ← instrucción literal, no "escanéame"
+           Beca Fulbright-García Robles
+           Convocatoria abierta hasta el 31 de enero
+```
 
 ### Variantes para prueba A/B
 
-No son variaciones cosméticas del mismo texto: cada una ataca un **motivador distinto**,
-que es la única forma de que una prueba A/B produzca información útil.
+Cada variante ataca un **motivador distinto**, no es una reescritura cosmética de la misma
+idea. Eso es lo que hace que la prueba tenga valor: si las cuatro dijeran lo mismo con otras
+palabras, el ganador sería ruido estadístico.
 
-| # | Ángulo | Texto | Palabras | Úsala cuando |
-|---|--------|-------|:--------:|--------------|
-| **A** | Monto | Hasta $37,000 USD al año para tu maestría en EE. UU. Escanea y postula. | 14 | Distribución general, ferias de posgrado |
-| **B** | Barrera eliminada | No necesitas carta de aceptación. Nosotros gestionamos tu admisión en EE. UU. Escanea. | 13 | Público que ya intentó postular por su cuenta |
-| **C** | Urgencia | Tu beca de posgrado en EE. UU. cierra el 31 de enero. Escanea ya. | 14 | Últimas 8 semanas de la convocatoria |
-| **D** | Autocalificación | ¿Promedio de 8.0? Podrías estudiar tu posgrado en Estados Unidos con beca. Escanea. | 13 | Campus universitarios, egresados recientes |
+| Variante | Motivador | Texto | `utm_content` |
+|---|---|---|---|
+| **A** | Magnitud del apoyo | «Hasta $37,000 USD al año para estudiar tu posgrado en EE. UU. Escanea.» | `hook_a` |
+| **B** | Barrera eliminada | «Sin carta de aceptación previa. COMEXUS te postula a 5 universidades. Escanea.» | `hook_b` |
+| **C** | Urgencia de calendario | «La convocatoria cierra el 31 de enero. Tu maestría en EE. UU. empieza aquí.» | `hook_c` |
+| **D** | Autocalificación | «¿Promedio de 8.0 y ganas de un doctorado en EE. UU.? Escanea: la beca existe.» | `hook_d` |
 
-**Medición:** cada variante lleva su propio QR con `?utm_content=hook_a` … `hook_d`. Ese
-parámetro viaja hasta el pre-registro, así que el ganador se mide por **pre-registros
-generados**, no por escaneos.
+**Por qué la B suele rendir:** la objeción número uno de un aspirante mexicano no es el
+dinero, es «¿cómo entro a una universidad de allá?». La B responde esa objeción antes de que
+se formule. **Por qué la D filtra:** nombra el requisito duro en el propio volante, así el
+tráfico que llega ya se autoseleccionó.
 
-### Texto de apoyo del volante (bajo el QR)
-
-```
-Beca Fulbright-García Robles · Posgrado Regular
-Maestría y doctorado en Estados Unidos
-Convocatoria abierta hasta el 31 de enero de 2026
-```
+**Regla de coincidencia de mensaje:** el titular de la landing debe repetir el elemento del
+hook impreso. Si el volante prometió los $37,000, la primera línea de la pantalla dice
+$37,000. Romper esa continuidad es la forma más rápida de perder a alguien que ya escaneó.
 
 ---
 
 ## 1.2 Microcopy de las landing pages
 
-### Hero
+### Encabezado
 
-| Elemento | Modelo 1 (Observatorio) | Modelo 2 (Trayecto) |
+- **Etiqueta:** `Beca Fulbright-García Robles · Posgrado Regular`
+- **Titular (Modelo 1):** «Del Ángel a la Antorcha»
+  · subtítulo: «Tu posgrado en Estados Unidos, financiado. COMEXUS te acompaña desde la
+  postulación hasta la visa.»
+- **Titular (Modelo 2):** «Hasta $37,000 USD al año para tu posgrado en EE. UU.»
+  · subtítulo: «Maestría o doctorado, con la admisión y la visa gestionadas por COMEXUS.»
+- **Píldora de estado:** `● Convocatoria abierta` / `● Convocatoria cerrada`
+
+### Tira de confianza (sobre el pliegue)
+
+- ✓ Sin carta de aceptación previa
+- ✓ COMEXUS gestiona 4–5 universidades
+- ✓ Trámite de visa J1 incluido
+
+### Apoyo económico
+
+| | Maestría | Doctorado |
 |---|---|---|
-| Eyebrow | Ciclo 2026 · Inicio agosto 2027 | Ciclo 2026 · Inicio agosto 2027 |
-| Titular | Estudia tu posgrado en Estados Unidos **con beca completa**. | Tu posgrado en Estados Unidos **sin pagarlo tú.** |
-| Subtítulo | La beca Fulbright-García Robles financia maestrías y doctorados de mexicanas y mexicanos en universidades de Estados Unidos. Tú te concentras en tu proyecto académico; COMEXUS gestiona la admisión y la visa. | Maestrías y doctorados financiados para mexicanas y mexicanos. Postulas sin carta de aceptación: COMEXUS gestiona tu admisión y tu visa. |
-| CTA primario | Reservar mi lugar informativo | Reservar mi lugar |
-| CTA secundario | Ver requisitos | Ver requisitos |
+| Monto | **Hasta $37,000 USD** al año | **Hasta $25,000 USD** al año |
+| Duración | Hasta 18 meses | Hasta 3 años |
 
-**Por qué dos titulares distintos:** el Modelo 1 es institucional y explicativo, coherente
-con su tipografía serif. El Modelo 2 es coloquial y confrontativo ("sin pagarlo tú"),
-coherente con su tipografía display de alto peso. Son dos registros de marca, no dos
-redacciones del mismo texto.
+> Microcopy de apoyo: «El monto cubre colegiatura y manutención según el costo del programa
+> al que seas admitido.»
 
-### Tira de confianza (bajo el CTA)
+### Requisitos
 
-- Sin carta de aceptación previa
-- Postulación en 4–5 universidades
-- Trámite de visa J-1 incluido
+- **Promedio mínimo de 8.0** en licenciatura.
+- **Inglés acreditado**, con cualquiera de los tres: TOEFL iBT **80**, IELTS **6.5** o
+  Duolingo **120**.
+- **Examen GRE obligatorio.** No hay excepciones por área.
+- **Mínimo 55 puntos** en la escala de calidad COMEXUS para pasar a entrevistas.
 
-### Tarjetas de apoyo económico
+> Microcopy de apoyo: «Los 55 puntos se calculan sobre tu expediente completo: promedio,
+> exámenes, trayectoria y proyecto. No es un examen aparte que tengas que presentar.»
 
-```
-MAESTRÍA
-$37,000 USD / año
-Hasta 18 meses de duración
-· Colegiatura y manutención
-· Gestión de admisión por COMEXUS
-· Trámite de visa J-1
-```
+### Elegibilidad — quién sí y quién no
 
-```
-DOCTORADO
-$25,000 USD / año
-Hasta 3 años de duración
-· Apoyo renovable por ciclo académico
-· Gestión de admisión por COMEXUS
-· Trámite de visa J-1
-```
+**Sí puedes postular si:**
 
-### Requisitos — formato ficha
+- Tienes **nacionalidad mexicana**.
+- Tu área es de **posgrado no clínico**.
+- Vienes de **STEM o estudios sobre Estados Unidos** → tienes prioridad declarada.
 
-Encabezado: **Qué necesitas para postular**
-Bajada: *Revisa tus números antes de iniciar. Si te falta un examen, todavía estás a tiempo
-de programarlo: la fecha límite es lo único que no se puede mover.*
+**No puedes postular si:**
 
-| Requisito | Valor | Detalle |
-|---|---|---|
-| Promedio académico | 8.0 mín. | Promedio general de licenciatura en escala de 10 |
-| TOEFL iBT | 80 mín. | Una de las tres opciones de acreditación de inglés |
-| IELTS | 6.5 mín. | Alternativa al TOEFL iBT |
-| Duolingo English Test | 120 mín. | Alternativa al TOEFL iBT y al IELTS |
-| **Examen GRE** | **Obligatorio** | Mínimo 152 en la sección correspondiente a tu área de estudio |
-| Carta de aceptación | **No requerida** | COMEXUS gestiona tu postulación ante 4 o 5 universidades |
+- Tienes **doble nacionalidad estadounidense**.
+- Ya cursaste **licenciatura o maestría en Estados Unidos**.
+- Tu área es **clínica**: medicina, odontología o veterinaria.
 
-Las dos últimas filas se marcan en color de acento. Una porque es el requisito que más
-descarta candidatos (GRE); la otra porque es el beneficio que más sorprende y más
-convierte (no se necesita carta de aceptación).
+> Microcopy de apoyo: «Esta sección existe para ahorrarte meses. Si algo de la columna
+> derecha aplica en tu caso, la postulación no procede este ciclo.»
 
 ### Fechas
 
-Encabezado: **Fechas que definen tu postulación**
+- **1 de septiembre de 2025** — abre la convocatoria.
+- **31 de enero de 2026** — cierra. Sin prórroga.
+- **Agosto de 2027** — inicias estudios en Estados Unidos.
 
-| Fecha | Hito | Nota |
-|---|---|---|
-| 1 de septiembre de 2025 | Apertura de la convocatoria | Se habilita la plataforma de postulación de COMEXUS |
-| 31 de enero de 2026 | Cierre de la convocatoria | Último día para enviar el expediente completo. No hay prórroga |
-| Agosto de 2027 | Inicio de estudios | Comienzo del programa en la universidad asignada |
+> Contador en vivo: «Quedan **N días** para el cierre.»
+> Estado cerrado: «La convocatoria de este ciclo cerró. La siguiente abre el 1 de
+> septiembre.»
 
-Contador: **{N} días para el cierre del 31 de enero de 2026.**
+### Proceso en cuatro pasos
 
-**Estado de convocatoria cerrada** (automático, ver §4 del README):
-*La convocatoria 2026 cerró el 31 de enero. La siguiente edición abre el 1 de septiembre:
-déjanos tus datos y te avisamos el primer día.*
-
-### Proceso — cuatro pasos
-
-1. **Verifica tu perfil** — Promedio de 8.0, examen de inglés vigente y GRE presentado.
-2. **Envía tu postulación** — Un expediente en línea antes del 31 de enero. Sin carta de aceptación previa.
-3. **COMEXUS gestiona tu admisión** — Tu expediente se presenta ante 4 o 5 universidades de Estados Unidos.
-4. **Trámite de visa y salida** — COMEXUS tramita tu visa J-1 para iniciar estudios en agosto de 2027.
+1. **Verificas tu perfil.** Promedio, inglés, GRE y elegibilidad.
+2. **Envías tu postulación.** No necesitas carta de aceptación de ninguna universidad.
+3. **COMEXUS gestiona tu admisión.** Te postula a entre 4 y 5 universidades de EE. UU.
+4. **Tramitas la visa J1.** COMEXUS lleva el proceso contigo.
 
 ### Formulario de pre-registro
 
-| Elemento | Texto |
+- **Encabezado:** «Recibe la guía de requisitos y los recordatorios del cierre»
+- **Subtexto:** «Te escribimos con lo que necesitas preparar y te avisamos antes del 31 de
+  enero. Sin llenar la solicitud todavía.»
+- **Campos:** Nombre completo · Correo electrónico · Nivel (Maestría / Doctorado) ·
+  Área de estudio · ¿Ya tienes examen de inglés? · Confirmación de elegibilidad
+- **Botón:** `Recibir la guía` → estado de envío: `Enviando…`
+- **Nota legal:** «Solo para enviarte información de esta convocatoria. Puedes darte de baja
+  en cualquier momento.»
+- **Confirmación:** «Listo. Te llegó la guía a **{correo}**. El próximo aviso es a 60 días del
+  cierre.»
+
+### Mensajes de error
+
+| Campo | Error |
 |---|---|
-| Encabezado | Te avisamos antes de que cierre |
-| Bajada | Déjanos tus datos y recibirás la guía de requisitos y tres recordatorios antes del cierre de la convocatoria. Puedes darte de baja cuando quieras. |
-| Label nombre | Nombre completo |
-| Label correo | Correo electrónico |
-| Ayuda correo | Aquí llegarán la guía y los recordatorios. |
-| Label nivel | Nivel que te interesa |
-| Consentimiento | Acepto el aviso de privacidad y recibir correos sobre esta convocatoria. |
-| Botón | Recibir la guía y los recordatorios |
-| Nota de seguridad | Tus datos se usan solo para informarte sobre esta beca. No se comparten con terceros. |
-
-**Errores** — cada uno dice qué pasó y cómo se arregla:
-
-| Campo | Mensaje |
-|---|---|
-| Nombre | Escribe tu nombre completo como aparece en tu título. |
-| Correo | Revisa el correo: parece que falta el @ o el dominio. |
-| Consentimiento | Necesitamos tu consentimiento para poder escribirte. |
-| Fallo de red | No pudimos enviar tu registro. Revisa tu conexión e inténtalo otra vez. |
-
-**Confirmación:**
-*Listo, quedaste pre-registrado. Revisa tu correo: la guía de requisitos ya va en camino.
-Te escribiremos de nuevo a 60, 30 y 7 días del cierre.*
+| Nombre | «Escribe tu nombre completo.» |
+| Correo | «Revisa el correo: parece que le falta algo.» |
+| Nivel | «Elige maestría o doctorado.» |
+| Elegibilidad | «Necesitamos esta confirmación para poder escribirte.» |
+| Aviso | «Marca la casilla para que podamos enviarte la guía.» |
+| Red | «No se pudo enviar. Revisa tu conexión y vuelve a intentar.» |
 
 ### Preguntas frecuentes
 
-1. **¿Necesito una carta de aceptación de la universidad?** — No. Postulas sin carta de aceptación previa. COMEXUS presenta tu expediente ante 4 o 5 universidades de Estados Unidos y gestiona la admisión por ti.
-2. **¿El GRE es obligatorio para todas las áreas?** — Sí, el examen GRE es obligatorio. El puntaje mínimo es de 152 en la sección que corresponde a tu área de estudio.
-3. **¿Puedo usar Duolingo en lugar de TOEFL?** — Sí. Se acepta TOEFL iBT con 80 puntos, IELTS con 6.5 o Duolingo English Test con 120. Basta con acreditar una de las tres opciones.
-4. **¿Cuándo empezaría a estudiar?** — El inicio de estudios de esta convocatoria es en agosto de 2027. El periodo intermedio se usa para admisión, asignación de universidad y trámite de visa.
-5. **¿Quién tramita la visa?** — COMEXUS tramita la visa J-1 de intercambio académico como parte del proceso de la beca.
+1. **¿Necesito carta de aceptación de una universidad?** No. COMEXUS gestiona tu admisión en
+   4 o 5 universidades como parte del proceso.
+2. **¿El GRE es obligatorio?** Sí, sin excepción. El puntaje mínimo depende del área.
+3. **¿Puedo postular si estudié en Estados Unidos?** No, si ya cursaste ahí licenciatura o
+   maestría.
+4. **¿Y si tengo doble nacionalidad?** La doble nacionalidad estadounidense no es elegible.
+   Otras nacionalidades no afectan.
+5. **¿Qué son los 55 puntos de COMEXUS?** El umbral de la escala de calidad con la que se
+   evalúa tu expediente. Por debajo de 55 no se pasa a entrevistas.
+6. **¿Medicina cuenta?** Las áreas clínicas —medicina, odontología y veterinaria— no
+   participan en esta convocatoria.
 
----
+### Tono
 
-## 1.3 Coherencia volante → landing (*message match*)
-
-El error que más conversión destruye en campañas con QR es que el volante prometa una cosa
-y la landing abra con otra. La regla operativa:
-
-| Si el volante dice… | El H1 de la landing debe contener… |
-|---|---|
-| Hook A (monto) | La cifra $37,000 USD visible sin hacer scroll |
-| Hook B (barrera) | "sin carta de aceptación" en el hero o en la tira de confianza |
-| Hook C (urgencia) | El contador de días visible en el primer scroll |
-| Hook D (autocalificación) | El requisito de promedio 8.0 accesible en un toque |
-
-Los cuatro hooks cumplen esta condición con las landings tal como están construidas: la
-cifra, la tira de confianza y el contador viven todos por encima o inmediatamente debajo
-del pliegue en móvil.
+Institucional sin ser burocrático. Frases cortas. Cifras exactas, nunca «hasta miles de
+dólares». Segunda persona del singular, que es como habla COMEXUS en sus materiales de
+difusión. Cero signos de admiración: el monto ya es entusiasmo suficiente.

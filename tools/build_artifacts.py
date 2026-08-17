@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-PAGINAS = ["modelo-1-observatorio.html", "modelo-2-trayecto.html"]
+PAGINAS = ["modelo-1-recorrido-binacional.html", "modelo-2-bento-vertical.html"]
 
 
 def a_fragmento(html: str) -> str:

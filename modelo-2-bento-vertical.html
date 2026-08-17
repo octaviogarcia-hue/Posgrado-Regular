@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año para tu maestría o doctorado en Estados Unidos. Convocatoria hasta el 31 de enero.">
+<title>Corredor Fulbright</title>
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Tokens. Un solo mundo visual: el degradado institucional azul
+   profundo → cerceta, con acentos en blanco. El vidrio necesita
+   luz detrás, así que el tema oscuro no es una opción, es la
+   condición del diseño.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --profundo:#00112B;
+  --marina:#002F6C;
+  --cerceta:#00A0AF;
+  --cerceta-luz:#5FE0E6;
+  --blanco:#FFFFFF;
+  --hielo:#E4F2F5;
+  --niebla:rgba(228,242,245,.70);
+  --tenue:rgba(228,242,245,.44);
+
+  --vidrio:rgba(255,255,255,.075);
+  --vidrio-2:rgba(255,255,255,.12);
+  --borde:rgba(255,255,255,.16);
+  --borde-vivo:rgba(95,224,230,.46);
+
+  --ff:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-data:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+
+  --t--1:.8125rem;
+  --t-0:1rem;
+  --t-1:1.0625rem;
+  --t-2:1.3125rem;
+  --t-3:1.625rem;
+  --t-4:clamp(2.15rem,9.4vw,3.4rem);
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-8:32px;
+  --r:22px; --r-sm:15px; --r-pill:999px;
+  --pad:16px;
+  --gap:12px;
+  --toque:56px;
+  --seguro-abajo:env(safe-area-inset-bottom,0px);
+  --seguro-arriba:env(safe-area-inset-top,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:var(--ff);
+  font-size:var(--t-0);
+  line-height:1.55;
+  color:var(--hielo);
+  background:var(--profundo);
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+h1,h2,h3,h4,p,ul,ol{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cerceta-luz);outline-offset:3px;border-radius:8px}
+
+/* ── Aurora: las manchas que el vidrio difumina ───────────── */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--profundo)}
+.aurora::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(170deg,#012249 0%,#00112B 46%,#001A2E 100%);
+}
+.aurora i{
+  position:absolute;display:block;border-radius:50%;filter:blur(62px);opacity:.66;
+}
+.aurora i:nth-child(1){width:78vw;height:78vw;left:-24vw;top:-14vh;background:#0A5FA8;animation:deriva-a 26s ease-in-out infinite alternate}
+.aurora i:nth-child(2){width:66vw;height:66vw;right:-22vw;top:22vh;background:#00A0AF;opacity:.5;animation:deriva-b 31s ease-in-out infinite alternate}
+.aurora i:nth-child(3){width:88vw;height:88vw;left:-16vw;bottom:-18vh;background:#0B3E86;opacity:.58;animation:deriva-c 37s ease-in-out infinite alternate}
+@keyframes deriva-a{to{transform:translate3d(14vw,8vh,0) scale(1.16)}}
+@keyframes deriva-b{to{transform:translate3d(-12vw,-10vh,0) scale(1.1)}}
+@keyframes deriva-c{to{transform:translate3d(10vw,-7vh,0) scale(1.12)}}
+
+.salto{
+  position:absolute;left:var(--pad);top:var(--pad);z-index:80;
+  padding:12px 16px;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);font-weight:650;font-size:var(--t--1);
+  text-decoration:none;transform:translateY(-180%);transition:transform .18s ease;
+}
+.salto:focus{transform:none}
+
+/* ── Barra ────────────────────────────────────────────────── */
+.barra{
+  position:sticky;top:0;z-index:50;
+  padding:calc(var(--seguro-arriba) + 10px) var(--pad) 16px;
+  display:flex;align-items:center;gap:var(--s-3);
+  background:linear-gradient(180deg,rgba(0,17,43,.94) 40%,rgba(0,17,43,.62) 76%,rgba(0,17,43,0));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+/* Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG */
+.marca{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.marca b{font-size:14px;font-weight:750;letter-spacing:-.015em;color:var(--blanco);white-space:nowrap}
+.marca span{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--tenue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.estado{
+  margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
+  padding:7px 11px;border-radius:var(--r-pill);
+  background:var(--vidrio);border:1px solid var(--borde);
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+}
+.estado i{width:6px;height:6px;border-radius:50%;background:var(--cerceta-luz);box-shadow:0 0 0 3px rgba(95,224,230,.2)}
+.estado.cerrada i{background:var(--tenue);box-shadow:none}
+.estado .larga{display:none}
+@media (min-width:27rem){ .estado .larga{display:inline} .estado .corta{display:none} }
+
+/* ── Bento ────────────────────────────────────────────────── */
+.bento{
+  display:grid;grid-template-columns:1fr;gap:var(--gap);
+  padding:var(--s-2) var(--pad) calc(var(--seguro-abajo) + 108px);
+  max-width:78rem;margin:0 auto;
+}
+.tile{
+  position:relative;isolation:isolate;
+  padding:var(--s-5);border-radius:var(--r);
+  background:var(--vidrio);
+  border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(22px) saturate(135%);backdrop-filter:blur(22px) saturate(135%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09), 0 12px 32px rgba(0,8,24,.30);
+  opacity:0;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1);
+}
+.tile.dentro{opacity:1;transform:none}
+/* Reflejo que sigue al dedo. En táctil aparece al presionar. */
+.tile::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
+  border-radius:inherit;
+  background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.12),transparent 62%);
+  transition:opacity .3s ease;
+}
+.tile.brillo::before{opacity:1}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;margin-bottom:var(--s-3);
+  padding:6px 11px;border-radius:var(--r-pill);
+  border:1px solid var(--borde-vivo);background:rgba(0,160,175,.16);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cerceta-luz);
+}
+.rotulo{
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cerceta-luz);
+  font-weight:700;margin-bottom:var(--s-4);
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.t-hero{padding:var(--s-6) var(--s-5) var(--s-5)}
+.t-hero h1{
+  font-size:var(--t-4);font-weight:800;line-height:.98;letter-spacing:-.038em;
+  color:var(--blanco);text-wrap:balance;
+}
+.t-hero h1 em{font-style:normal;color:var(--cerceta-luz)}
+.t-hero .lede{margin-top:var(--s-4);font-size:var(--t-1);color:var(--niebla);max-width:34ch}
+.confianza{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
+.confianza li{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 12px;border-radius:var(--r-pill);
+  background:var(--vidrio-2);border:1px solid var(--borde);
+  font-size:11.5px;color:var(--hielo);
+}
+
+/* ── Botones ──────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:var(--toque);padding:0 24px;border:0;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);
+  font-size:var(--t-0);font-weight:700;letter-spacing:-.01em;
+  cursor:pointer;touch-action:manipulation;text-decoration:none;
+  box-shadow:0 10px 26px rgba(0,0,0,.34);
+  transition:transform .12s ease,box-shadow .2s ease,opacity .2s ease;
+}
+.btn:active{transform:scale(.975);box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.btn:disabled{opacity:.5}
+.btn.fantasma{background:var(--vidrio-2);color:var(--hielo);border:1px solid var(--borde);box-shadow:none}
+.btn.ancho{width:100%}
+
+/* ── Montos ───────────────────────────────────────────────── */
+.par{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.t-monto{display:flex;flex-direction:column;justify-content:space-between;min-height:9.5rem}
+.t-monto .rotulo{display:block;margin:0}
+.t-monto .cifra{
+  font-family:var(--ff-data);font-size:clamp(1.6rem,7.6vw,2.1rem);font-weight:700;
+  letter-spacing:-.04em;color:var(--blanco);line-height:1;font-variant-numeric:tabular-nums;
+  margin-top:var(--s-3);
+}
+.t-monto .pie{margin-top:var(--s-2);font-size:11.5px;color:var(--tenue);line-height:1.4}
+
+/* ── Reloj ────────────────────────────────────────────────── */
+.reloj{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-2)}
+.reloj div{
+  padding:var(--s-3) var(--s-1);border-radius:var(--r-sm);
+  background:rgba(0,17,43,.42);border:1px solid var(--borde);text-align:center;
+}
+.reloj b{
+  display:block;font-family:var(--ff-data);font-size:var(--t-2);font-weight:700;
+  color:var(--blanco);font-variant-numeric:tabular-nums;line-height:1.05;
+}
+.reloj span{display:block;margin-top:4px;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue)}
+.t-reloj p{margin-top:var(--s-3);font-size:12.5px;color:var(--niebla)}
+
+/* ── Requisitos ───────────────────────────────────────────── */
+.req li{
+  display:flex;align-items:baseline;gap:var(--s-3);
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,.09);
+}
+.req li:last-child{border-bottom:0;padding-bottom:0}
+.req .k{flex:1;font-size:var(--t--1)}
+.req .k small{display:block;color:var(--tenue);font-size:11.5px;margin-top:2px}
+.req .v{
+  font-family:var(--ff-data);font-size:var(--t--1);font-weight:700;color:var(--blanco);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.req li.critica .v{color:var(--cerceta-luz)}
+
+/* ── Elegibilidad: control segmentado táctil ──────────────── */
+.seg{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;margin-bottom:var(--s-4);
+  border-radius:var(--r-pill);background:rgba(0,17,43,.42);border:1px solid var(--borde);
+}
+.seg button{
+  min-height:46px;border:0;border-radius:var(--r-pill);background:transparent;
+  color:var(--niebla);font-size:var(--t--1);font-weight:650;cursor:pointer;
+  touch-action:manipulation;transition:background .2s ease,color .2s ease;
+}
+.seg button[aria-selected="true"]{background:var(--blanco);color:var(--profundo)}
+.elig li{display:flex;gap:var(--s-3);padding:11px 0;font-size:var(--t--1);color:var(--niebla);line-height:1.45}
+.elig li svg{flex:none;margin-top:3px}
+.elig li b{color:var(--blanco);font-weight:650}
+.elig[hidden]{display:none}
+
+/* ── Proceso ──────────────────────────────────────────────── */
+.pasos li{display:flex;gap:var(--s-4);padding:13px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+.pasos li:last-child{border-bottom:0;padding-bottom:0}
+.pasos .n{
+  flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:var(--vidrio-2);border:1px solid var(--borde);
+  font-family:var(--ff-data);font-size:11px;color:var(--cerceta-luz);
+}
+.pasos b{display:block;font-size:var(--t--1);color:var(--blanco);font-weight:650}
+.pasos p{font-size:12.5px;color:var(--tenue);margin-top:2px}
+
+/* ── Fechas ───────────────────────────────────────────────── */
+.hitos li{display:flex;gap:var(--s-4);padding-bottom:var(--s-5);position:relative}
+.hitos li:last-child{padding-bottom:0}
+.hitos li:not(:last-child)::before{
+  content:"";position:absolute;left:5px;top:16px;bottom:0;width:1px;
+  background:linear-gradient(180deg,var(--borde-vivo),rgba(255,255,255,.08));
+}
+.hitos i{
+  flex:none;width:11px;height:11px;border-radius:50%;margin-top:5px;
+  border:1.6px solid var(--cerceta-luz);
+}
+.hitos li.activo i{background:var(--cerceta-luz);box-shadow:0 0 0 4px rgba(95,224,230,.18)}
+.hitos .fecha{display:block;font-family:var(--ff-data);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cerceta-luz)}
+.hitos b{display:block;font-size:var(--t--1);color:var(--blanco);font-weight:650;margin-top:1px}
+.hitos p{font-size:12.5px;color:var(--tenue)}
+
+/* ── Formulario ───────────────────────────────────────────── */
+.barra-paso{height:3px;border-radius:99px;background:rgba(255,255,255,.13);overflow:hidden;margin-bottom:var(--s-5)}
+.barra-paso i{display:block;height:100%;width:50%;background:var(--cerceta-luz);transition:width .35s cubic-bezier(.22,1,.36,1)}
+.campo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
+.campo label,.grupo > span:first-child{font-size:12px;font-weight:650;color:var(--hielo)}
+.campo input,.campo select{
+  min-height:var(--toque);padding:0 16px;border-radius:var(--r-sm);
+  background:rgba(0,17,43,.5);border:1px solid var(--borde);
+  color:var(--blanco);font-size:16px;font-family:inherit;   /* 16px: evita el zoom de iOS */
+  appearance:none;-webkit-appearance:none;
+  transition:border-color .18s ease,background .18s ease;
+}
+.campo select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%235FE0E6' stroke-width='2'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;padding-right:44px;
+}
+.campo input::placeholder{color:rgba(228,242,245,.32)}
+.campo input:focus,.campo select:focus{border-color:var(--cerceta-luz);background:rgba(0,17,43,.72);outline:none}
+.campo input[aria-invalid="true"],.campo select[aria-invalid="true"]{border-color:#FFB4B4}
+.err{font-size:11.5px;color:#FFB4B4;min-height:15px}
+
+.grupo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
+.pills{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.pills.tres{grid-template-columns:1fr 1fr 1fr}
+.pill{position:relative}
+.pill input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.pill span{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  min-height:var(--toque);padding:0 8px;border-radius:var(--r-sm);
+  background:var(--vidrio);border:1px solid var(--borde);
+  font-size:13px;font-weight:600;color:var(--niebla);line-height:1.2;
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.pill input:checked + span{background:var(--blanco);color:var(--profundo);border-color:var(--blanco)}
+.pill input:focus-visible + span{outline:3px solid var(--cerceta-luz);outline-offset:2px}
+
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;cursor:pointer;min-height:48px}
+.check input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--cerceta-luz)}
+.check span{font-size:12.5px;color:var(--niebla);line-height:1.45}
+.check a{color:var(--cerceta-luz)}
+
+.paso[hidden]{display:none}
+.acciones{display:flex;gap:var(--s-2);margin-top:var(--s-4)}
+.acciones .btn{flex:1}
+.exito{display:none;text-align:left}
+.exito.visible{display:block}
+.exito h3{font-size:var(--t-2);font-weight:750;letter-spacing:-.02em;color:var(--blanco);margin-bottom:var(--s-2)}
+.exito p{font-size:var(--t--1);color:var(--niebla)}
+
+/* ── FAQ ──────────────────────────────────────────────────── */
+details{border-bottom:1px solid rgba(255,255,255,.09)}
+details:last-of-type{border-bottom:0}
+summary{
+  min-height:var(--toque);display:flex;align-items:center;gap:var(--s-3);
+  font-size:var(--t--1);font-weight:600;cursor:pointer;list-style:none;touch-action:manipulation;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"";margin-left:auto;flex:none;width:9px;height:9px;
+  border-right:1.8px solid var(--cerceta-luz);border-bottom:1.8px solid var(--cerceta-luz);
+  transform:rotate(45deg);transition:transform .22s ease;
+}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{font-size:12.5px;color:var(--tenue);padding:0 0 var(--s-4)}
+
+.pie-legal{padding:var(--s-5) var(--pad) 0;font-size:11px;color:var(--tenue);line-height:1.55;text-align:center}
+
+/* ── Barra de acción fija ─────────────────────────────────── */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  padding:12px var(--pad) calc(12px + var(--seguro-abajo));
+  display:flex;align-items:center;gap:var(--s-3);
+  background:linear-gradient(180deg,rgba(0,17,43,0),rgba(0,17,43,.94) 34%);
+  transform:translateY(0);transition:transform .32s cubic-bezier(.22,1,.36,1);
+}
+.dock.fuera{transform:translateY(140%)}
+.dock .txt{flex:1;min-width:0}
+.dock .txt b{display:block;font-size:13px;font-weight:700;color:var(--blanco);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .txt span{display:block;font-family:var(--ff-data);font-size:10.5px;color:var(--cerceta-luz);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .btn{flex:none;padding:0 20px}
+
+/* ── Bento en pantallas mayores ───────────────────────────── */
+@media (min-width:46rem){
+  :root{--pad:28px;--gap:16px}
+  .bento{grid-template-columns:repeat(4,1fr)}
+  .tile{grid-column:span 4}
+  .par{display:contents}
+  .t-monto{grid-column:span 2}
+  .t-reloj,.t-req{grid-column:span 2}
+  .t-elig,.t-proceso{grid-column:span 2}
+}
+@media (min-width:70rem){
+  .bento{grid-template-columns:repeat(6,1fr)}
+  .tile{grid-column:span 6}
+  .t-hero{grid-column:span 6}
+  .t-monto{grid-column:span 3}
+  .t-reloj{grid-column:span 2}
+  .t-req{grid-column:span 4}
+  .t-elig{grid-column:span 3}
+  .t-proceso{grid-column:span 3}
+  .t-fechas{grid-column:span 2}
+  .t-form{grid-column:span 4}
+  .t-faq{grid-column:span 6}
+  .dock{display:none}
+  .bento{padding-bottom:var(--s-8)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition-duration:.001ms !important}
+  .tile{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<a class="salto" href="#pre-registro">Saltar al pre-registro</a>
+
+<header class="barra">
+  <!-- Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG -->
+  <div class="marca">
+    <b>Fulbright-García Robles</b>
+    <span>COMEXUS · Posgrado Regular</span>
+  </div>
+  <div class="estado" id="estado" role="status">
+    <i aria-hidden="true"></i>
+    <span class="larga">Convocatoria abierta</span>
+    <span class="corta">Abierta</span>
+  </div>
+</header>
+
+<main class="bento">
+
+  <section class="tile t-hero">
+    <span class="eyebrow">Maestría y doctorado en EE. UU.</span>
+    <h1>Hasta <em>$37,000 USD</em> al año para tu posgrado</h1>
+    <p class="lede">Maestría o doctorado en Estados Unidos, con la admisión y la visa gestionadas por COMEXUS.</p>
+    <ul class="confianza">
+      <li>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Sin carta de aceptación previa
+      </li>
+      <li>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        4–5 universidades gestionadas
+      </li>
+      <li>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Visa J1 incluida
+      </li>
+    </ul>
+  </section>
+
+  <div class="par">
+    <section class="tile t-monto">
+      <div>
+        <span class="rotulo">Maestría</span>
+        <b class="cifra" data-contador="37000">$37,000</b>
+      </div>
+      <p class="pie">USD al año<br>Hasta 18 meses</p>
+    </section>
+    <section class="tile t-monto">
+      <div>
+        <span class="rotulo">Doctorado</span>
+        <b class="cifra" data-contador="25000">$25,000</b>
+      </div>
+      <p class="pie">USD al año<br>Hasta 3 años</p>
+    </section>
+  </div>
+
+  <section class="tile t-reloj" aria-labelledby="r-t">
+    <h2 class="rotulo" id="r-t">Cierre de la convocatoria</h2>
+    <div class="reloj" id="reloj">
+      <div><b id="r-d">--</b><span>Días</span></div>
+      <div><b id="r-h">--</b><span>Horas</span></div>
+      <div><b id="r-m">--</b><span>Min</span></div>
+      <div><b id="r-s">--</b><span>Seg</span></div>
+    </div>
+    <p id="reloj-txt">El 31 de enero de 2026 se cierra sin prórroga.</p>
+  </section>
+
+  <section class="tile t-req" aria-labelledby="req-t">
+    <h2 class="rotulo" id="req-t">Requisitos</h2>
+    <ul class="req">
+      <li><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></li>
+      <li><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></li>
+      <li><span class="k">IELTS</span><span class="v">6.5 mín.</span></li>
+      <li><span class="k">Duolingo</span><span class="v">120 mín.</span></li>
+      <li class="critica"><span class="k">Examen GRE<small>Sin excepciones por área</small></span><span class="v">Obligatorio</span></li>
+      <li class="critica"><span class="k">Escala de calidad COMEXUS<small>Umbral para pasar a entrevistas</small></span><span class="v">55 pts.</span></li>
+    </ul>
+  </section>
+
+  <section class="tile t-elig" aria-labelledby="el-t">
+    <h2 class="rotulo" id="el-t">Elegibilidad</h2>
+    <div class="seg" role="tablist" aria-label="Filtro de elegibilidad">
+      <button type="button" role="tab" aria-selected="true"  aria-controls="elig-si" id="tab-si">Sí puedes</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="elig-no" id="tab-no">No aplica</button>
+    </div>
+
+    <ul class="elig" id="elig-si" role="tabpanel" aria-labelledby="tab-si">
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de STEM o de estudios sobre Estados Unidos.</span></li>
+    </ul>
+
+    <ul class="elig" id="elig-no" role="tabpanel" aria-labelledby="tab-no" hidden>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E4F2F5" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span><b>Doble nacionalidad</b> estadounidense.</span></li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E4F2F5" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría <b>ya cursadas en EE. UU.</b></span></li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#E4F2F5" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas <b>clínicas</b>: medicina, odontología y veterinaria.</span></li>
+    </ul>
+  </section>
+
+  <section class="tile t-proceso" aria-labelledby="pr-t">
+    <h2 class="rotulo" id="pr-t">Proceso</h2>
+    <ol class="pasos">
+      <li><span class="n">01</span><div><b>Verificas tu perfil</b><p>Promedio, inglés, GRE y elegibilidad.</p></div></li>
+      <li><span class="n">02</span><div><b>Envías tu postulación</b><p>No necesitas carta de aceptación de ninguna universidad.</p></div></li>
+      <li><span class="n">03</span><div><b>COMEXUS gestiona tu admisión</b><p>Te postula a entre 4 y 5 universidades estadounidenses.</p></div></li>
+      <li><span class="n">04</span><div><b>Tramitas la visa J1</b><p>COMEXUS lleva el proceso contigo.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="tile t-fechas" aria-labelledby="fe-t">
+    <h2 class="rotulo" id="fe-t">Fechas</h2>
+    <ul class="hitos">
+      <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2025</span><b>Abre la convocatoria</b></div></li>
+      <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
+      <li><i aria-hidden="true"></i><div><span class="fecha">Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></li>
+    </ul>
+  </section>
+
+  <section class="tile t-form" id="pre-registro" aria-labelledby="fo-t">
+    <h2 class="rotulo" id="fo-t">Pre-registro</h2>
+    <div class="barra-paso" aria-hidden="true"><i id="barra"></i></div>
+
+    <form id="form" novalidate>
+      <div class="paso" id="paso-1">
+        <p style="font-size:var(--t--1);color:var(--niebla);margin-bottom:var(--s-4)" id="form-intro">
+          Recibe la guía de requisitos y te avisamos antes del cierre. Todavía no estás llenando la solicitud.
+        </p>
+        <div class="campo">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-nombre">
+          <span class="err" id="e-nombre"></span>
+        </div>
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-correo">
+          <span class="err" id="e-correo"></span>
+        </div>
+        <div class="acciones">
+          <button class="btn ancho" type="button" id="siguiente">Continuar</button>
+        </div>
+      </div>
+
+      <div class="paso" id="paso-2" hidden>
+        <div class="grupo" role="radiogroup" aria-labelledby="lbl-nivel">
+          <span id="lbl-nivel">Nivel al que quieres postular</span>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="nivel" value="maestria"><span>Maestría</span></label>
+            <label class="pill"><input type="radio" name="nivel" value="doctorado"><span>Doctorado</span></label>
+          </div>
+          <span class="err" id="e-nivel"></span>
+        </div>
+
+        <div class="campo">
+          <label for="area">Área de estudio</label>
+          <select id="area" name="area" aria-describedby="e-area">
+            <option value="">Elige una</option>
+            <option value="ciencias_ingenieria">Ciencias e ingeniería (STEM)</option>
+            <option value="estudios_eeuu">Estudios sobre Estados Unidos</option>
+            <option value="ciencias_sociales">Ciencias sociales y humanidades</option>
+            <option value="artes">Artes</option>
+            <option value="negocios">Negocios y administración</option>
+          </select>
+          <span class="err" id="e-area"></span>
+        </div>
+
+        <div class="grupo" role="radiogroup" aria-labelledby="lbl-ing">
+          <span id="lbl-ing">¿Ya tienes examen de inglés?</span>
+          <div class="pills tres">
+            <label class="pill"><input type="radio" name="ingles" value="si"><span>Sí</span></label>
+            <label class="pill"><input type="radio" name="ingles" value="agendado"><span>Agendado</span></label>
+            <label class="pill"><input type="radio" name="ingles" value="no"><span>Todavía no</span></label>
+          </div>
+          <span class="err" id="e-ingles"></span>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="elegible" name="elegible">
+          <span>Tengo nacionalidad mexicana y no he cursado licenciatura ni maestría en Estados Unidos.</span>
+        </label>
+        <span class="err" id="e-elegible"></span>
+
+        <label class="check">
+          <input type="checkbox" id="aviso" name="aviso">
+          <span>Acepto el <a href="#aviso-privacidad">aviso de privacidad</a> y que COMEXUS me escriba sobre esta convocatoria.</span>
+        </label>
+        <span class="err" id="e-aviso"></span>
+
+        <div class="acciones">
+          <button class="btn fantasma" type="button" id="atras">Atrás</button>
+          <button class="btn" type="submit" id="enviar">Recibir la guía</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="exito" id="exito" role="status" aria-live="polite">
+      <h3 tabindex="-1" id="exito-h">Listo</h3>
+      <p id="exito-p"></p>
+    </div>
+  </section>
+
+  <section class="tile t-faq" aria-labelledby="fq-t">
+    <h2 class="rotulo" id="fq-t">Preguntas frecuentes</h2>
+    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión en 4 o 5 universidades como parte del proceso.</p></details>
+    <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción. El puntaje mínimo depende de tu área de estudio.</p></details>
+    <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
+    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El umbral de la escala de calidad con la que se evalúa tu expediente. Por debajo de 55 no se pasa a la etapa de entrevistas.</p></details>
+    <details><summary>¿Las áreas clínicas participan?</summary><p>No. Medicina, odontología y veterinaria quedan fuera de esta convocatoria.</p></details>
+  </section>
+
+  <p class="pie-legal" id="aviso-privacidad">
+    Comisión México-Estados Unidos para el Intercambio Educativo y Cultural (COMEXUS).
+    Los datos del pre-registro se usan únicamente para enviarte información de esta convocatoria
+    y puedes solicitar tu baja en cualquier momento.<br>
+    Cifras y fechas conforme a la convocatoria oficial vigente.
+  </p>
+</main>
+
+<div class="dock" id="dock">
+  <div class="txt">
+    <b>$37,000 USD al año</b>
+    <span id="dock-s">Quedan -- días</span>
+  </div>
+  <button class="btn" type="button" id="dock-cta">Pre-registrarme</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  APERTURA_SIGUIENTE: '1 de septiembre',
+  ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
+  VARIANTE: 'modelo-2-bento-vertical'
+};
+
+const ABIERTA = Date.now() < CONFIG.CIERRE.getTime();
+const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── Revelado escalonado ─────────────────────────────────── */
+(function revelar(){
+  const tiles = [...document.querySelectorAll('.tile')];
+  if (REDUCIR){ tiles.forEach(t => t.classList.add('dentro')); return; }
+  const obs = new IntersectionObserver((ents, o) => {
+    ents.filter(e => e.isIntersecting).forEach((e, i) => {
+      setTimeout(() => e.target.classList.add('dentro'), i * 70);
+      o.unobserve(e.target);
+    });
+  }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+  tiles.forEach(t => obs.observe(t));
+})();
+
+/* ── Reflejo que sigue al dedo ───────────────────────────── */
+(function reflejo(){
+  if (REDUCIR) return;
+  document.querySelectorAll('.tile').forEach(t => {
+    const mover = e => {
+      const r = t.getBoundingClientRect();
+      t.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      t.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      t.classList.add('brillo');
+    };
+    t.addEventListener('pointermove', mover, { passive:true });
+    t.addEventListener('pointerdown', mover, { passive:true });
+    t.addEventListener('pointerleave', () => t.classList.remove('brillo'), { passive:true });
+    t.addEventListener('pointerup', () => setTimeout(() => t.classList.remove('brillo'), 420), { passive:true });
+  });
+})();
+
+/* ── Contadores de monto ─────────────────────────────────── */
+(function contadores(){
+  const fmt = n => '$' + n.toLocaleString('en-US');
+  document.querySelectorAll('[data-contador]').forEach(el => {
+    const fin = +el.dataset.contador;
+    /* La cifra real ya está en el HTML. Sin JS, con JS lento o si algo
+       falla, el usuario siempre lee el monto correcto: solo se pone a
+       cero lo que todavía no ha entrado en pantalla. */
+    if (REDUCIR || el.getBoundingClientRect().top < innerHeight) return;
+    el.textContent = '$0';
+    new IntersectionObserver((ents, o) => {
+      ents.forEach(e => {
+        if (!e.isIntersecting) return;
+        o.unobserve(e.target);
+        const t0 = performance.now();
+        (function paso(now){
+          const k = Math.min(1, (now - t0) / 1100);
+          el.textContent = fmt(Math.round(fin * (1 - Math.pow(1 - k, 3))));
+          if (k < 1) requestAnimationFrame(paso);
+        })(performance.now());
+      });
+    }, { threshold:0.4 }).observe(el);
+  });
+})();
+
+/* ── Elegibilidad: control segmentado ────────────────────── */
+(function elegibilidad(){
+  const tabs = [...document.querySelectorAll('.seg button')];
+  tabs.forEach(b => b.addEventListener('click', () => {
+    tabs.forEach(o => {
+      const activo = o === b;
+      o.setAttribute('aria-selected', String(activo));
+      document.getElementById(o.getAttribute('aria-controls')).hidden = !activo;
+    });
+  }));
+})();
+
+/* ── Estado de la convocatoria y contador ────────────────── */
+(function reloj(){
+  const d = document.getElementById('r-d'), h = document.getElementById('r-h');
+  const m = document.getElementById('r-m'), s = document.getElementById('r-s');
+  const txt = document.getElementById('reloj-txt');
+  const dockS = document.getElementById('dock-s');
+
+  if (!ABIERTA){
+    document.getElementById('reloj').style.display = 'none';
+    txt.textContent = `La convocatoria de este ciclo cerró. La siguiente abre el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    const est = document.getElementById('estado');
+    est.classList.add('cerrada');
+    est.querySelector('.larga').textContent = 'Convocatoria cerrada';
+    est.querySelector('.corta').textContent = 'Cerrada';
+    document.getElementById('hito-cierre').classList.remove('activo');
+    dockS.textContent = `Abre el ${CONFIG.APERTURA_SIGUIENTE}`;
+    document.getElementById('dock-cta').textContent = 'Avísame';
+    document.getElementById('enviar').textContent = 'Avísame cuando abra';
+    document.getElementById('form-intro').textContent =
+      `El ciclo cerró. Déjanos tu correo y te escribimos en cuanto abra la siguiente convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    return;
+  }
+
+  function tic(){
+    let x = Math.max(0, CONFIG.CIERRE.getTime() - Date.now());
+    const dd = Math.floor(x / 864e5); x -= dd * 864e5;
+    const hh = Math.floor(x / 36e5);  x -= hh * 36e5;
+    const mm = Math.floor(x / 6e4);   x -= mm * 6e4;
+    const ss = Math.floor(x / 1e3);
+    d.textContent = dd;
+    h.textContent = String(hh).padStart(2, '0');
+    m.textContent = String(mm).padStart(2, '0');
+    s.textContent = String(ss).padStart(2, '0');
+    dockS.textContent = `Quedan ${dd} días`;
+  }
+  tic(); setInterval(tic, 1000);
+})();
+
+/* ── El dock se retira cuando el formulario ya está a la vista ── */
+(function dock(){
+  const dock = document.getElementById('dock');
+  new IntersectionObserver(ents => {
+    ents.forEach(e => dock.classList.toggle('fuera', e.isIntersecting));
+  }, { threshold:0.22 }).observe(document.getElementById('pre-registro'));
+
+  document.getElementById('dock-cta').addEventListener('click', () => {
+    document.getElementById('pre-registro')
+      .scrollIntoView({ behavior: REDUCIR ? 'auto' : 'smooth', block:'start' });
+    setTimeout(() => document.getElementById('nombre').focus({ preventScroll:true }), REDUCIR ? 0 : 620);
+  });
+})();
+
+/* ── Formulario en dos pasos ─────────────────────────────── */
+(function formulario(){
+  const form = document.getElementById('form');
+  const p1 = document.getElementById('paso-1'), p2 = document.getElementById('paso-2');
+  const barra = document.getElementById('barra');
+  const exito = document.getElementById('exito');
+  const boton = document.getElementById('enviar');
+  const q = new URLSearchParams(location.search);
+  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function err(campo, msg){
+    const el = document.getElementById(campo);
+    const caja = document.getElementById('e-' + campo);
+    if (caja) caja.textContent = msg || '';
+    if (el && el.type !== 'checkbox') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+  const val = id => (document.getElementById(id).value || '').trim();
+  const marcado = n => form.querySelector(`input[name=${n}]:checked`);
+
+  function valida(campo){
+    switch (campo){
+      case 'nombre':   return err('nombre', val('nombre').length >= 3 ? '' : 'Escribe tu nombre completo.');
+      case 'correo':   return err('correo', CORREO.test(val('correo')) ? '' : 'Revisa el correo: parece que le falta algo.');
+      case 'nivel':    return err('nivel', marcado('nivel') ? '' : 'Elige maestría o doctorado.');
+      case 'area':     return err('area', val('area') ? '' : 'Elige tu área de estudio.');
+      case 'ingles':   return err('ingles', marcado('ingles') ? '' : 'Dinos en qué punto estás con el inglés.');
+      case 'elegible': return err('elegible', document.getElementById('elegible').checked ? '' : 'Necesitamos esta confirmación para poder escribirte.');
+      case 'aviso':    return err('aviso', document.getElementById('aviso').checked ? '' : 'Marca la casilla para que podamos enviarte la guía.');
+    }
+  }
+
+  ['nombre','correo'].forEach(id => document.getElementById(id).addEventListener('blur', () => valida(id)));
+  document.getElementById('area').addEventListener('change', () => valida('area'));
+  ['nivel','ingles'].forEach(n => form.querySelectorAll(`input[name=${n}]`)
+    .forEach(r => r.addEventListener('change', () => valida(n))));
+  ['elegible','aviso'].forEach(id => document.getElementById(id).addEventListener('change', () => valida(id)));
+
+  document.getElementById('siguiente').addEventListener('click', () => {
+    const malos = ['nombre','correo'].filter(c => !valida(c));
+    if (malos.length){ document.getElementById(malos[0]).focus(); return; }
+    p1.hidden = true; p2.hidden = false;
+    barra.style.width = '100%';
+    form.querySelector('input[name=nivel]').focus({ preventScroll:true });
+  });
+
+  document.getElementById('atras').addEventListener('click', () => {
+    p2.hidden = true; p1.hidden = false;
+    barra.style.width = '50%';
+    document.getElementById('nombre').focus({ preventScroll:true });
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const campos = ['nivel','area','ingles','elegible','aviso'];
+    const malos = campos.filter(c => !valida(c));
+    if (malos.length){
+      const primero = document.getElementById(malos[0]) || form.querySelector(`input[name=${malos[0]}]`);
+      primero && primero.focus();
+      return;
+    }
+
+    const datos = {
+      nombre: val('nombre'),
+      correo: val('correo').toLowerCase(),
+      nivel: marcado('nivel').value,
+      area: val('area'),
+      estatus_ingles: marcado('ingles').value,
+      elegibilidad_confirmada: true,
+      consentimiento_aviso: true,
+      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
+      convocatoria_abierta: ABIERTA,
+      utm_source: q.get('utm_source') || 'volante_impreso',
+      utm_medium: q.get('utm_medium') || 'qr',
+      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      utm_content: q.get('utm_content') || '',
+      qr_id: q.get('qr_id') || '',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+
+    boton.disabled = true;
+    const etiqueta = boton.textContent;
+    boton.textContent = 'Enviando…';
+    try {
+      if (CONFIG.ENDPOINT){
+        const r = await fetch(CONFIG.ENDPOINT, {
+          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      } else {
+        console.info('[modo demo] payload para Zapier:', datos);
+        await new Promise(r => setTimeout(r, 420));
+      }
+      form.style.display = 'none';
+      barra.style.width = '100%';
+      exito.classList.add('visible');
+      document.getElementById('exito-p').textContent = ABIERTA
+        ? `Te llegó la guía a ${datos.correo}. El próximo aviso es a 60 días del cierre.`
+        : `Guardamos ${datos.correo}. Te escribimos en cuanto abra la convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+      document.getElementById('exito-h').focus();
+    } catch (_) {
+      boton.disabled = false;
+      boton.textContent = etiqueta;
+      err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+    }
+  });
+})();
+</script>
+</body>
+</html>

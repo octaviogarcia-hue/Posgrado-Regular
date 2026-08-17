@@ -1,0 +1,1601 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año para tu maestría o doctorado en Estados Unidos. Convocatoria hasta el 31 de enero.">
+<title>Recorrido Binacional</title>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js" } }
+</script>
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Tokens. Diseño comprometido con un solo mundo visual oscuro:
+   el degradado institucional azul profundo → cerceta. Todos los
+   colores se declaran de forma explícita para que la página no
+   herede el fondo de su contenedor.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --profundo:#001129;
+  --marina:#002F6C;
+  --cerceta:#00A0AF;
+  --cerceta-luz:#5FE0E6;
+  --blanco:#FFFFFF;
+  --hielo:#DCEEF2;
+  --niebla:rgba(220,238,242,.66);
+  --tenue:rgba(220,238,242,.40);
+  --vidrio:rgba(255,255,255,.065);
+  --vidrio-alto:rgba(255,255,255,.11);
+  --borde:rgba(255,255,255,.15);
+  --borde-vivo:rgba(95,224,230,.42);
+
+  --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --ff-body:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-data:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+
+  --t--1:.8125rem;
+  --t-0:1rem;
+  --t-1:1.125rem;
+  --t-2:1.375rem;
+  --t-3:1.75rem;
+  --t-4:2.25rem;
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px; --s-8:32px;
+  --r:18px; --r-sm:12px; --r-pill:999px;
+  --pad:20px;
+  --toque:52px;
+
+  --sombra:0 -18px 44px rgba(0,10,26,.62);
+  --seguro-abajo:env(safe-area-inset-bottom,0px);
+  --seguro-arriba:env(safe-area-inset-top,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--ff-body);
+  font-size:var(--t-0);
+  line-height:1.55;
+  color:var(--hielo);
+  background:var(--profundo);
+  overflow:hidden;                 /* la app no hace scroll: lo hace la hoja */
+  overscroll-behavior:none;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit}
+
+:focus-visible{outline:3px solid var(--cerceta-luz);outline-offset:2px;border-radius:6px}
+
+.salto{
+  position:absolute;left:var(--s-3);top:calc(var(--seguro-arriba) + var(--s-3));z-index:60;
+  padding:10px 14px;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);font-weight:600;font-size:var(--t--1);
+  text-decoration:none;transform:translateY(-160%);transition:transform .18s ease;
+}
+.salto:focus{transform:none}
+
+/* ── Escena ────────────────────────────────────────────────── */
+.escena{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(120% 78% at 50% 6%, #073a63 0%, #002748 42%, var(--profundo) 78%),
+    var(--profundo);
+}
+#globo{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;touch-action:none;   /* el gesto es de cámara, no de scroll */
+}
+
+/* ── Marcadores de monumento ──────────────────────────────── */
+.marcas{position:absolute;inset:0;z-index:12;pointer-events:none}
+.marca-pt{
+  position:absolute;left:0;top:0;
+  /* El botón se ancla por su esquina superior izquierda al punto
+     proyectado; el margen negativo lo centra bajo el monumento. */
+  margin:0;
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:34px;padding:0 12px 0 10px;border-radius:var(--r-pill);
+  background:rgba(0,17,41,.62);border:1px solid var(--borde-vivo);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  color:var(--blanco);font-size:10.5px;font-weight:600;letter-spacing:.02em;
+  white-space:nowrap;cursor:pointer;pointer-events:auto;touch-action:manipulation;
+  transition:background .18s ease;
+}
+/* Zona táctil de 52 px sin engordar la píldora. */
+.marca-pt::after{content:"";position:absolute;inset:-9px -6px;border-radius:inherit}
+.marca-pt i{
+  width:7px;height:7px;border-radius:50%;background:var(--cerceta-luz);flex:none;
+  box-shadow:0 0 0 3px rgba(95,224,230,.22);
+}
+.marca-pt:active{background:rgba(0,160,175,.4)}
+
+/* ── Barra superior ───────────────────────────────────────── */
+.barra{
+  position:absolute;left:0;right:0;top:0;z-index:20;
+  padding:calc(var(--seguro-arriba) + 12px) var(--pad) 0;
+  display:flex;align-items:center;gap:var(--s-3);
+  pointer-events:none;
+}
+.marca{display:flex;flex-direction:column;line-height:1.18;min-width:0}
+.marca b{
+  font-family:var(--ff-display);font-size:15px;font-weight:600;
+  letter-spacing:.005em;color:var(--blanco);white-space:nowrap;
+}
+.marca span{
+  font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--tenue);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.estado{
+  margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:var(--r-pill);
+  background:var(--vidrio);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hielo);
+  white-space:nowrap;
+}
+.estado i{
+  width:6px;height:6px;border-radius:50%;background:var(--cerceta-luz);
+  box-shadow:0 0 0 3px rgba(95,224,230,.2);flex:none;
+}
+.estado.cerrada i{background:var(--tenue);box-shadow:none}
+.estado .larga{display:none}
+@media (min-width:27rem){
+  .estado .larga{display:inline}
+  .estado .corta{display:none}
+}
+
+/* ── Titular sobre la escena ──────────────────────────────── */
+.titular{
+  position:absolute;left:var(--pad);right:var(--pad);
+  top:calc(var(--seguro-arriba) + 64px);z-index:15;
+  pointer-events:none;max-width:22rem;
+}
+.ceja{
+  display:inline-block;margin-bottom:10px;padding:5px 10px;
+  border-radius:var(--r-pill);border:1px solid var(--borde-vivo);
+  background:rgba(0,160,175,.14);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cerceta-luz);
+}
+.titular h1{
+  font-family:var(--ff-display);font-weight:600;font-size:var(--t-4);
+  line-height:1.02;letter-spacing:-.015em;color:var(--blanco);text-wrap:balance;
+  text-shadow:0 2px 26px rgba(0,17,41,.7);
+}
+.titular p{
+  margin-top:9px;font-size:var(--t--1);line-height:1.45;color:var(--niebla);max-width:17rem;
+  text-shadow:0 1px 16px rgba(0,17,41,.9);
+}
+.titular p b{color:var(--blanco);font-weight:650}
+
+/* ── Pista de gesto ───────────────────────────────────────── */
+.pista{
+  position:absolute;left:0;right:0;z-index:11;
+  bottom:calc(var(--hoja-pico,320px) + 14px);
+  display:flex;justify-content:center;pointer-events:none;
+  transition:opacity .4s ease;
+}
+.pista span{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 14px;border-radius:var(--r-pill);
+  background:rgba(0,17,41,.5);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-size:11px;color:var(--niebla);
+}
+.pista.oculta{opacity:0}
+
+/* ── Bottom sheet ─────────────────────────────────────────── */
+.hoja{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  height:92dvh;height:92vh;
+  display:flex;flex-direction:column;
+  border-radius:26px 26px 0 0;
+  background:linear-gradient(180deg, rgba(0,60,102,.90) 0%, rgba(0,25,58,.95) 34%, rgba(0,17,41,.98) 100%);
+  -webkit-backdrop-filter:blur(26px) saturate(130%);backdrop-filter:blur(26px) saturate(130%);
+  border-top:1px solid var(--borde);
+  box-shadow:var(--sombra);
+  transform:translateY(var(--y,0px));
+  touch-action:none;
+}
+.hoja.suave{transition:transform .34s cubic-bezier(.22,1,.36,1)}
+
+.asa{
+  flex:none;padding:10px 0 2px;display:flex;justify-content:center;cursor:grab;
+}
+.asa::before{
+  content:"";width:44px;height:4px;border-radius:99px;background:rgba(220,238,242,.34);
+}
+.hoja-cab{
+  flex:none;padding:6px var(--pad) 0;
+  display:flex;align-items:center;gap:var(--s-3);
+}
+.hoja-cab h2{
+  flex:1;min-width:0;
+  font-family:var(--ff-display);font-size:var(--t-1);font-weight:600;color:var(--blanco);
+  line-height:1.2;
+}
+.hoja-cab .sub{
+  display:block;font-family:var(--ff-data);font-size:10.5px;letter-spacing:.02em;
+  color:var(--cerceta-luz);margin-top:3px;font-variant-numeric:tabular-nums;
+}
+.hoja-cab .btn{flex:none;white-space:nowrap}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:var(--toque);padding:0 20px;border:0;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);
+  font-weight:650;font-size:var(--t--1);letter-spacing:.01em;
+  cursor:pointer;touch-action:manipulation;
+  transition:transform .14s ease,box-shadow .18s ease,opacity .18s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,.34);
+}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.fantasma{
+  background:var(--vidrio-alto);color:var(--hielo);
+  border:1px solid var(--borde);box-shadow:none;
+}
+.btn.chico{min-height:44px;padding:0 16px;font-size:12px}
+.btn.ancho{width:100%}
+
+/* Pestañas */
+.tabs{
+  flex:none;margin-top:14px;padding:0 var(--pad) 12px;
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{
+  flex:none;min-height:40px;padding:0 15px;border-radius:var(--r-pill);
+  background:var(--vidrio);border:1px solid var(--borde);
+  color:var(--niebla);font-size:12.5px;font-weight:550;
+  cursor:pointer;touch-action:manipulation;scroll-snap-align:start;
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.tabs button[aria-selected="true"]{
+  background:var(--blanco);color:var(--profundo);border-color:var(--blanco);
+}
+.tabs button:active{transform:scale(.96)}
+
+/* Contenido desplazable */
+.hoja-scroll{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:0 var(--pad) calc(var(--seguro-abajo) + 96px);
+  scroll-behavior:smooth;
+  touch-action:pan-y;
+}
+.bloque{padding:18px 0 6px;scroll-margin-top:8px}
+.bloque + .bloque{border-top:1px solid rgba(255,255,255,.08)}
+.bloque h3{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cerceta-luz);
+  font-weight:600;margin-bottom:12px;
+}
+
+/* Tarjetas de apoyo */
+.montos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.monto{
+  padding:14px;border-radius:var(--r);background:var(--vidrio);
+  border:1px solid var(--borde);
+}
+.monto b{
+  display:block;font-family:var(--ff-data);font-size:var(--t-2);font-weight:700;
+  color:var(--blanco);letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+}
+.monto .nivel{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cerceta-luz);margin-bottom:6px}
+.monto .dur{display:block;font-size:12px;color:var(--tenue);margin-top:4px}
+.nota{font-size:12.5px;color:var(--tenue);margin-top:10px}
+
+/* Filas de requisito */
+.filas{display:flex;flex-direction:column;gap:2px}
+.fila{
+  display:flex;align-items:baseline;gap:10px;padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.fila:last-child{border-bottom:0}
+.fila .k{flex:1;font-size:13.5px;color:var(--hielo)}
+.fila .k small{display:block;font-size:11.5px;color:var(--tenue);margin-top:1px}
+.fila .v{
+  font-family:var(--ff-data);font-size:13.5px;font-weight:600;color:var(--blanco);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.fila.critica .v{color:var(--cerceta-luz)}
+
+/* Listas de elegibilidad */
+.elig{display:flex;flex-direction:column;gap:16px}
+.elig h4{
+  margin:0 0 8px;font-size:12.5px;font-weight:650;color:var(--blanco);
+  display:flex;align-items:center;gap:7px;
+}
+.elig ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.elig li{display:flex;gap:9px;font-size:13px;color:var(--niebla);line-height:1.45}
+.elig li svg{flex:none;margin-top:2px}
+.elig .no li{color:var(--tenue)}
+
+/* Línea de tiempo */
+.hitos{display:flex;flex-direction:column;gap:0;margin-top:2px}
+.hito{display:flex;gap:14px;padding-bottom:16px;position:relative}
+.hito:not(:last-child)::before{
+  content:"";position:absolute;left:5px;top:14px;bottom:0;width:1px;
+  background:linear-gradient(180deg,var(--borde-vivo),rgba(255,255,255,.08));
+}
+.hito i{
+  flex:none;width:11px;height:11px;border-radius:50%;margin-top:4px;
+  border:1.5px solid var(--cerceta-luz);background:transparent;
+}
+.hito.activo i{background:var(--cerceta-luz);box-shadow:0 0 0 4px rgba(95,224,230,.18)}
+.hito b{display:block;font-size:13.5px;color:var(--blanco);font-weight:600}
+.hito span{display:block;font-family:var(--ff-data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cerceta-luz)}
+.hito p{font-size:12.5px;color:var(--tenue);margin-top:2px}
+
+/* Contador */
+.reloj{
+  display:flex;gap:8px;margin-bottom:14px;
+}
+.reloj div{
+  flex:1;padding:10px 6px;border-radius:var(--r-sm);
+  background:var(--vidrio);border:1px solid var(--borde);text-align:center;
+}
+.reloj b{
+  display:block;font-family:var(--ff-data);font-size:var(--t-1);font-weight:700;
+  color:var(--blanco);font-variant-numeric:tabular-nums;line-height:1.1;
+}
+.reloj span{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue);margin-top:3px}
+.reloj.cerrado{display:none}
+
+/* Pasos */
+.pasos{display:flex;flex-direction:column;gap:12px;counter-reset:p}
+.paso{display:flex;gap:12px;align-items:flex-start}
+.paso i{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--vidrio-alto);border:1px solid var(--borde);
+  font-family:var(--ff-data);font-size:11px;font-style:normal;color:var(--cerceta-luz);
+}
+.paso b{display:block;font-size:13.5px;color:var(--blanco);font-weight:600}
+.paso p{font-size:12.5px;color:var(--tenue);margin-top:2px}
+
+/* Formulario */
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.campo label{font-size:12px;font-weight:600;color:var(--hielo)}
+.campo input[type=text],.campo input[type=email]{
+  min-height:var(--toque);padding:0 15px;border-radius:14px;
+  background:rgba(0,17,41,.55);border:1px solid var(--borde);
+  color:var(--blanco);font-size:16px;font-family:inherit;   /* 16px evita el zoom de iOS */
+  transition:border-color .18s ease,background .18s ease;
+}
+.campo input::placeholder{color:rgba(220,238,242,.34)}
+.campo input:focus{border-color:var(--cerceta-luz);background:rgba(0,17,41,.75);outline:none}
+.campo input[aria-invalid="true"]{border-color:#FFB4B4}
+.campo .err{font-size:11.5px;color:#FFB4B4;min-height:14px}
+.campo .ayuda{font-size:11.5px;color:var(--tenue)}
+
+.pills{display:flex;gap:8px}
+.pill{flex:1;position:relative}
+.pill input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.pill span{
+  display:flex;align-items:center;justify-content:center;min-height:var(--toque);
+  border-radius:14px;background:var(--vidrio);border:1px solid var(--borde);
+  font-size:13.5px;font-weight:550;color:var(--niebla);
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.pill input:checked + span{background:var(--blanco);color:var(--profundo);border-color:var(--blanco);font-weight:650}
+.pill input:focus-visible + span{outline:3px solid var(--cerceta-luz);outline-offset:2px}
+
+.check{display:flex;gap:11px;align-items:flex-start;padding:12px 0;cursor:pointer}
+.check input{
+  flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:var(--cerceta-luz);
+}
+.check span{font-size:12.5px;color:var(--niebla);line-height:1.45}
+.check a{color:var(--cerceta-luz)}
+
+.exito{
+  display:none;padding:18px;border-radius:var(--r);
+  background:rgba(0,160,175,.14);border:1px solid var(--borde-vivo);
+}
+.exito.visible{display:block}
+.exito h3{font-family:var(--ff-display);font-size:var(--t-1);color:var(--blanco);text-transform:none;letter-spacing:0;margin-bottom:6px}
+.exito p{font-size:13px;color:var(--niebla)}
+.oculto{display:none !important}
+
+/* FAQ */
+details{
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+details summary{
+  min-height:var(--toque);display:flex;align-items:center;gap:10px;
+  font-size:13.5px;color:var(--hielo);cursor:pointer;list-style:none;
+  touch-action:manipulation;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{
+  content:"";margin-left:auto;flex:none;width:9px;height:9px;
+  border-right:1.6px solid var(--cerceta-luz);border-bottom:1.6px solid var(--cerceta-luz);
+  transform:rotate(45deg);transition:transform .2s ease;
+}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{font-size:12.5px;color:var(--tenue);padding:0 0 14px}
+
+.pie{padding:20px 0 0;font-size:11px;color:var(--tenue);line-height:1.5}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  .hoja-scroll{scroll-behavior:auto}
+}
+
+/* Pantallas anchas: la escena se centra, la hoja se vuelve panel lateral */
+@media (min-width:60rem) and (min-height:34rem){
+  .hoja{
+    left:auto;right:24px;bottom:24px;top:24px;width:26rem;height:auto;
+    border-radius:26px;transform:none !important;border:1px solid var(--borde);
+  }
+  .asa{display:none}
+  .hoja-cab{padding-top:18px}
+  .titular{max-width:28rem;left:48px;top:120px}
+  .pista{bottom:32px;justify-content:flex-start;padding-left:48px}
+}
+</style>
+</head>
+<body>
+
+<a class="salto" href="#pre-registro">Saltar al pre-registro</a>
+
+<div class="escena">
+  <canvas id="globo" aria-hidden="true"></canvas>
+  <div class="marcas" id="marcas" aria-label="Puntos del recorrido"></div>
+
+  <header class="barra">
+    <!-- Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG -->
+    <div class="marca">
+      <b>Fulbright-García Robles</b>
+      <span>COMEXUS · Posgrado Regular</span>
+    </div>
+    <div class="estado" id="estado" role="status">
+      <i aria-hidden="true"></i>
+      <span class="larga">Convocatoria abierta</span>
+      <span class="corta">Abierta</span>
+    </div>
+  </header>
+
+  <div class="titular">
+    <span class="ceja">Maestría y doctorado en EE. UU.</span>
+    <h1>Del Ángel a la Antorcha</h1>
+    <p><b>Hasta $37,000 USD al año</b> para tu posgrado en Estados Unidos.</p>
+  </div>
+
+  <div class="pista" id="pista">
+    <span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/>
+      </svg>
+      Desliza para girar · toca un monumento
+    </span>
+  </div>
+</div>
+
+<section class="hoja" id="hoja" aria-label="Información de la beca">
+  <div class="asa" id="asa" role="button" tabindex="0" aria-label="Deslizar el panel de información" aria-expanded="false"></div>
+
+  <div class="hoja-cab">
+    <h2>La beca en 40 segundos
+      <span class="sub" id="sub-cab">Cierra el 31 de enero</span>
+    </h2>
+    <button class="btn chico" id="ir-form" type="button">Pre-registro</button>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones">
+    <button type="button" role="tab" aria-selected="true"  data-ir="apoyo">Apoyo</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="requisitos">Requisitos</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="elegibilidad">Elegibilidad</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="fechas">Fechas</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="proceso">Proceso</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="pre-registro">Pre-registro</button>
+  </nav>
+
+  <div class="hoja-scroll" id="scroll">
+
+    <section class="bloque" id="apoyo">
+      <h3>Apoyo económico</h3>
+      <div class="montos">
+        <div class="monto">
+          <span class="nivel">Maestría</span>
+          <b>$37,000</b>
+          <span class="dur">USD al año · hasta 18 meses</span>
+        </div>
+        <div class="monto">
+          <span class="nivel">Doctorado</span>
+          <b>$25,000</b>
+          <span class="dur">USD al año · hasta 3 años</span>
+        </div>
+      </div>
+      <p class="nota">El monto cubre colegiatura y manutención según el costo del programa al que seas admitido.</p>
+    </section>
+
+    <section class="bloque" id="requisitos">
+      <h3>Requisitos</h3>
+      <div class="filas">
+        <div class="fila"><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></div>
+        <div class="fila"><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></div>
+        <div class="fila"><span class="k">IELTS</span><span class="v">6.5 mín.</span></div>
+        <div class="fila"><span class="k">Duolingo</span><span class="v">120 mín.</span></div>
+        <div class="fila critica"><span class="k">Examen GRE<small>Sin excepciones por área</small></span><span class="v">Obligatorio</span></div>
+        <div class="fila critica"><span class="k">Escala de calidad COMEXUS<small>Umbral para pasar a entrevistas</small></span><span class="v">55 pts.</span></div>
+      </div>
+      <p class="nota">Los 55 puntos se calculan sobre tu expediente completo: promedio, exámenes, trayectoria y proyecto. No es un examen aparte.</p>
+    </section>
+
+    <section class="bloque" id="elegibilidad">
+      <h3>Elegibilidad</h3>
+      <div class="elig">
+        <div>
+          <h4>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Sí puedes postular
+          </h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de STEM o de estudios sobre Estados Unidos.</span></li>
+          </ul>
+        </div>
+        <div class="no">
+          <h4>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            No aplica este ciclo
+          </h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Doble nacionalidad estadounidense.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría ya cursadas en EE. UU.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas clínicas: medicina, odontología y veterinaria.</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="nota">Esta sección existe para ahorrarte meses. Si algo de la segunda lista aplica en tu caso, la postulación no procede.</p>
+    </section>
+
+    <section class="bloque" id="fechas">
+      <h3>Fechas</h3>
+      <div class="reloj" id="reloj" aria-label="Tiempo restante para el cierre">
+        <div><b id="r-d">--</b><span>Días</span></div>
+        <div><b id="r-h">--</b><span>Horas</span></div>
+        <div><b id="r-m">--</b><span>Min</span></div>
+        <div><b id="r-s">--</b><span>Seg</span></div>
+      </div>
+      <p class="nota" id="reloj-txt">Para el cierre de la convocatoria.</p>
+      <div class="hitos">
+        <div class="hito"><i aria-hidden="true"></i><div><span>1 sep 2025</span><b>Abre la convocatoria</b></div></div>
+        <div class="hito activo" id="hito-cierre"><i aria-hidden="true"></i><div><span>31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></div>
+        <div class="hito"><i aria-hidden="true"></i><div><span>Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></div>
+      </div>
+    </section>
+
+    <section class="bloque" id="proceso">
+      <h3>Proceso</h3>
+      <div class="pasos">
+        <div class="paso"><i>01</i><div><b>Verificas tu perfil</b><p>Promedio, inglés, GRE y elegibilidad.</p></div></div>
+        <div class="paso"><i>02</i><div><b>Envías tu postulación</b><p>No necesitas carta de aceptación de ninguna universidad.</p></div></div>
+        <div class="paso"><i>03</i><div><b>COMEXUS gestiona tu admisión</b><p>Te postula a entre 4 y 5 universidades estadounidenses.</p></div></div>
+        <div class="paso"><i>04</i><div><b>Tramitas la visa J1</b><p>COMEXUS lleva el proceso contigo.</p></div></div>
+      </div>
+    </section>
+
+    <section class="bloque" id="pre-registro">
+      <h3>Pre-registro</h3>
+
+      <form id="form" novalidate>
+        <p class="nota" style="margin:0 0 16px" id="form-intro">
+          Recibe la guía de requisitos y te avisamos antes del cierre. Todavía no estás llenando la solicitud.
+        </p>
+
+        <div class="campo">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-nombre">
+          <span class="err" id="e-nombre"></span>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-correo">
+          <span class="err" id="e-correo"></span>
+        </div>
+
+        <div class="campo">
+          <label id="lbl-nivel">Nivel al que quieres postular</label>
+          <div class="pills" role="radiogroup" aria-labelledby="lbl-nivel">
+            <label class="pill"><input type="radio" name="nivel" value="maestria"><span>Maestría</span></label>
+            <label class="pill"><input type="radio" name="nivel" value="doctorado"><span>Doctorado</span></label>
+          </div>
+          <span class="err" id="e-nivel"></span>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="elegible" name="elegible">
+          <span>Tengo nacionalidad mexicana y no he cursado licenciatura ni maestría en Estados Unidos.</span>
+        </label>
+        <span class="err" id="e-elegible"></span>
+
+        <label class="check">
+          <input type="checkbox" id="aviso" name="aviso">
+          <span>Acepto el <a href="#aviso-privacidad">aviso de privacidad</a> y que COMEXUS me escriba sobre esta convocatoria.</span>
+        </label>
+        <span class="err" id="e-aviso"></span>
+
+        <button class="btn ancho" type="submit" id="enviar" style="margin-top:8px">Recibir la guía</button>
+      </form>
+
+      <div class="exito" id="exito" role="status" aria-live="polite">
+        <h3 tabindex="-1" id="exito-h">Listo</h3>
+        <p id="exito-p"></p>
+      </div>
+    </section>
+
+    <section class="bloque" id="faq">
+      <h3>Preguntas frecuentes</h3>
+      <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión en 4 o 5 universidades como parte del proceso.</p></details>
+      <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción. El puntaje mínimo depende de tu área de estudio.</p></details>
+      <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
+      <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El umbral de la escala de calidad con la que se evalúa tu expediente. Por debajo de 55 no se pasa a la etapa de entrevistas.</p></details>
+      <details><summary>¿Las áreas clínicas participan?</summary><p>No. Medicina, odontología y veterinaria quedan fuera de esta convocatoria.</p></details>
+    </section>
+
+    <p class="pie" id="aviso-privacidad">
+      Comisión México-Estados Unidos para el Intercambio Educativo y Cultural (COMEXUS).
+      Los datos del pre-registro se usan únicamente para enviarte información de esta
+      convocatoria y puedes solicitar tu baja en cualquier momento.
+      Cifras y fechas conforme a la convocatoria oficial vigente.
+    </p>
+  </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  APERTURA_SIGUIENTE: '1 de septiembre',
+  ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
+  VARIANTE: 'modelo-1-recorrido-binacional'
+};
+
+const ABIERTA = Date.now() < CONFIG.CIERRE.getTime();
+const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══════════════════════════════════════════════════════════════
+   1 · MUNDO — geometría compartida por los dos renderizadores
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Siluetas esquemáticas en (lat, lon). No son cartografía: son la
+   forma mínima que hace legible el corredor binacional. */
+const EEUU = [[48.9,-124.7],[49,-95],[49,-83],[46,-82.5],[43,-79],[45,-67],[41,-70],
+  [40.7,-74],[36.9,-76],[32,-80.9],[25.9,-80.1],[30,-84],[29.7,-93.8],[26,-97.2],
+  [31.8,-106.5],[32.5,-114.7],[34,-120.5],[40.4,-124.4]];
+
+const MEXICO = [[32.5,-114.7],[31.8,-106.5],[29.3,-100.9],[25.9,-97.1],[22.2,-97.8],
+  [19.2,-96.1],[18.6,-91.5],[19.8,-90.5],[21.5,-87.0],[18.7,-88.3],[17.8,-89.0],
+  [14.5,-92.2],[16.2,-95.0],[17.6,-101.5],[20.7,-105.3],[23.2,-106.4],[25.5,-108.9],
+  [31.3,-113.1],[28.0,-112.5],[23.3,-109.8],[25.0,-112.0],[30.0,-115.8]];
+
+const SUDAMERICA = [[12,-71],[10,-61],[5,-52],[-1,-50],[-5,-35],[-13,-38],[-23,-43],
+  [-33,-53],[-38,-57],[-50,-68],[-53,-70],[-42,-73],[-33,-71],[-18,-70],[-5,-81],
+  [2,-79],[8,-77]];
+
+const PAISES = [
+  { nom:'EE. UU.', pts:EEUU,      clave:true  },
+  { nom:'México',  pts:MEXICO,    clave:true  },
+  { nom:'Sudamérica', pts:SUDAMERICA, clave:false }
+];
+
+/* Los dos monumentos. El arco viaja entre ellos, en los dos sentidos. */
+const MONUMENTOS = [
+  { id:'angel',    lat:19.4270, lon:-99.1677, nom:'Ángel de la Independencia',
+    lugar:'Ciudad de México', corto:'Ciudad de México', lado:-1, ir:'requisitos',
+    dato:'Aquí empieza: promedio 8.0, inglés acreditado y GRE.' },
+  { id:'libertad', lat:40.6892, lon:-74.0445, nom:'Estatua de la Libertad',
+    lugar:'Nueva York, EE. UU.', corto:'Nueva York', lado:1, ir:'apoyo',
+    dato:'Aquí llegas: hasta $37,000 USD al año, con visa J1 gestionada.' }
+];
+
+const rad = g => g * Math.PI / 180;
+
+/* Sistema diestro con la cámara en +Z: el este debe caer a la derecha
+   de la pantalla, y eso obliga a poner el seno en X y el coseno en Z. */
+function aVector(lat, lon){
+  const a = rad(lat), b = rad(lon);
+  return [Math.cos(a) * Math.sin(b), Math.sin(a), Math.cos(a) * Math.cos(b)];
+}
+
+/* Interpolación sobre la esfera con altura: el arco se despega del
+   globo en el centro del trayecto y vuelve a tocarlo en los extremos. */
+function arco(a, b, n, alto){
+  const va = aVector(a.lat, a.lon), vb = aVector(b.lat, b.lon);
+  const d = Math.acos(Math.max(-1, Math.min(1, va[0]*vb[0] + va[1]*vb[1] + va[2]*vb[2])));
+  const s = Math.sin(d), out = [];
+  for (let i = 0; i <= n; i++){
+    const t = i / n;
+    const p = s < 1e-6
+      ? va
+      : [0,1,2].map(k => (Math.sin((1-t)*d)/s)*va[k] + (Math.sin(t*d)/s)*vb[k]);
+    const r = 1 + alto * Math.sin(Math.PI * t);
+    out.push([p[0]*r, p[1]*r, p[2]*r]);
+  }
+  return out;
+}
+
+/* Puntos interiores de las siluetas, muestreados una sola vez y
+   reutilizados por los dos renderizadores. */
+function dentro(lat, lon, poly){
+  let hit = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++){
+    const [yi, xi] = poly[i], [yj, xj] = poly[j];
+    if ((yi > lat) !== (yj > lat) && lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+}
+
+const RELLENO = (() => {
+  const pts = [];
+  for (let lat = -56; lat <= 52; lat += 2)
+    for (let lon = -126; lon <= -32; lon += 2)
+      for (const p of PAISES)
+        if (dentro(lat, lon, p.pts)){ pts.push({ v:aVector(lat, lon), clave:p.clave }); break; }
+  return pts;
+})();
+
+const ARCO_IDA    = arco(MONUMENTOS[0], MONUMENTOS[1], 96, 0.30);
+const ARCO_VUELTA = arco(MONUMENTOS[1], MONUMENTOS[0], 96, 0.17);
+
+/* Encuadre único para los dos renderizadores: en retrato el globo se
+   sienta en la mitad de la pantalla, con la hoja tapando su limbo
+   inferior. Compartirlo evita que el relevo a Three.js dé un salto. */
+const ENCUADRE = {
+  centroY: 0.50,
+  radio: (w, h) => Math.min(w * 0.45, h * 0.29)
+};
+
+/* Para traer un punto (lat, lon) al frente hace falta yaw = −lon y
+   pitch = lat. Se deduce de la rotación, no se ajusta a ojo. */
+const encara = (lat, lon, k = 1) => ({ yaw: rad(-lon), pitch: rad(lat) * k });
+
+/* Estado de cámara. Arranca mirando al corredor México–EE. UU. */
+const inicio = encara(27, -99, 0.72);
+const camara = {
+  yaw: inicio.yaw,      // giro sobre el eje polar
+  pitch: inicio.pitch,  // inclinación
+  vYaw: 0, vPitch: 0,   // inercia
+  zoom: 1,
+  auto: !REDUCIR
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   2 · RENDERIZADOR DE RESPALDO (Canvas 2D)
+   Pinta desde el primer fotograma, sin dependencias. Three.js
+   releva el render solo si el CDN responde.
+   ═══════════════════════════════════════════════════════════════ */
+const Escena = (() => {
+  const lienzo = document.getElementById('globo');
+  const ctx = lienzo.getContext('2d');
+  let w = 0, h = 0, cx = 0, cy = 0, R = 0, dpr = 1, vivo = true, t0 = performance.now();
+
+  function medir(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = lienzo.clientWidth; h = lienzo.clientHeight;
+    lienzo.width = Math.round(w * dpr); lienzo.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = w / 2;
+    cy = h * ENCUADRE.centroY;
+    R = ENCUADRE.radio(w, h) * camara.zoom;
+  }
+
+  const F = 3.4;                                   // distancia de cámara virtual
+  function girar(v){
+    const cy_ = Math.cos(camara.yaw), sy = Math.sin(camara.yaw);
+    const x = v[0]*cy_ + v[2]*sy, z = -v[0]*sy + v[2]*cy_;
+    const cp = Math.cos(camara.pitch), sp = Math.sin(camara.pitch);
+    return [x, v[1]*cp - z*sp, v[1]*sp + z*cp];
+  }
+  function proyectar(v){
+    const p = girar(v);
+    const s = F / (F - p[2]);
+    return { x: cx + p[0]*R*s, y: cy - p[1]*R*s, z: p[2], s };
+  }
+  /* Un punto sobre el arco queda tapado si está detrás y su sombra
+     cae dentro de la silueta del globo. */
+  function tapado(p){
+    if (p.z >= 0) return false;
+    const dx = p.x - cx, dy = p.y - cy;
+    return Math.sqrt(dx*dx + dy*dy) < R * 0.995;
+  }
+
+  function pantallaDe(lat, lon){ return proyectar(aVector(lat, lon)); }
+
+  function dibujarMonumento(g, p, id, escala){
+    const k = escala;
+    g.save(); g.translate(p.x, p.y); g.scale(k, k);
+    g.lineJoin = 'round'; g.lineCap = 'round';
+    g.strokeStyle = '#FFFFFF'; g.fillStyle = '#FFFFFF'; g.lineWidth = 1.5;
+
+    if (id === 'angel'){
+      /* Columna, capitel y figura alada. */
+      g.beginPath(); g.moveTo(-4.5, 0); g.lineTo(4.5, 0); g.lineTo(3, -3); g.lineTo(-3, -3); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-1.6, -3); g.lineTo(1.6, -3); g.lineTo(1.2, -17); g.lineTo(-1.2, -17); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-3, -17); g.lineTo(3, -17); g.lineTo(2.2, -19.5); g.lineTo(-2.2, -19.5); g.closePath(); g.fill();
+      g.beginPath(); g.arc(0, -22.5, 1.5, 0, 7); g.fill();
+      g.beginPath(); g.moveTo(-1, -22); g.quadraticCurveTo(-6, -25, -6.5, -30); g.stroke();
+      g.beginPath(); g.moveTo(1, -22);  g.quadraticCurveTo(6, -25, 6.5, -30);  g.stroke();
+      g.beginPath(); g.moveTo(0, -24); g.lineTo(0, -28); g.stroke();
+    } else {
+      /* Pedestal, manto, cabeza, brazo y antorcha. */
+      g.beginPath(); g.moveTo(-5, 0); g.lineTo(5, 0); g.lineTo(4, -5); g.lineTo(-4, -5); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-3.4, -5); g.lineTo(3.4, -5); g.lineTo(1.4, -18); g.lineTo(-1.4, -18); g.closePath(); g.fill();
+      g.beginPath(); g.arc(0, -20, 1.7, 0, 7); g.fill();
+      g.beginPath(); g.moveTo(-1.5, -19); g.lineTo(-4, -25); g.stroke();          // corona
+      for (let i = -2; i <= 2; i++){
+        g.beginPath(); g.moveTo(0, -21.4); g.lineTo(i*1.9, -24.4); g.stroke();
+      }
+      g.beginPath(); g.moveTo(1.4, -17.5); g.lineTo(4.6, -26); g.stroke();        // brazo
+      g.beginPath(); g.moveTo(4.6, -26); g.lineTo(4.6, -28.4); g.stroke();
+      g.fillStyle = '#5FE0E6';
+      g.beginPath(); g.moveTo(4.6, -33); g.lineTo(6.4, -28.6); g.lineTo(2.8, -28.6); g.closePath(); g.fill();
+    }
+    g.restore();
+  }
+
+  function pintar(ahora){
+    if (!vivo) return;
+    const t = (ahora - t0) / 1000;
+    /* 0.025 rad/s, el mismo giro que aplica Three: el relevo no debe
+       notarse como un cambio de velocidad. */
+    const dt = Math.min(64, ahora - (pintar.prev || ahora));
+    pintar.prev = ahora;
+    if (camara.auto && !arrastrando) camara.yaw += 0.025 * dt / 1000;
+
+    /* Inercia */
+    if (!arrastrando){
+      camara.yaw += camara.vYaw; camara.pitch += camara.vPitch;
+      camara.vYaw *= 0.94; camara.vPitch *= 0.94;
+      camara.pitch = Math.max(rad(-62), Math.min(rad(62), camara.pitch));
+    }
+
+    ctx.clearRect(0, 0, w, h);
+
+    /* Cuerpo del globo con luz cenital y halo de borde. */
+    const g1 = ctx.createRadialGradient(cx - R*0.38, cy - R*0.42, R*0.06, cx, cy, R*1.02);
+    g1.addColorStop(0,   '#0A4270');
+    g1.addColorStop(.48, '#032A50');
+    g1.addColorStop(1,   '#00142B');
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fillStyle = g1; ctx.fill();
+
+    const halo = ctx.createRadialGradient(cx, cy, R*0.90, cx, cy, R*1.16);
+    halo.addColorStop(0, 'rgba(0,160,175,.30)');
+    halo.addColorStop(1, 'rgba(0,160,175,0)');
+    ctx.beginPath(); ctx.arc(cx, cy, R*1.16, 0, 7); ctx.fillStyle = halo; ctx.fill();
+
+    /* Retícula: paralelos y meridianos, solo cara visible. */
+    ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(220,238,242,.13)';
+    for (let lat = -60; lat <= 60; lat += 30) traza(lat, null);
+    for (let lon = 0; lon < 360; lon += 30) traza(null, lon);
+
+    function traza(lat, lon){
+      ctx.beginPath(); let mov = true;
+      for (let k = 0; k <= 72; k++){
+        const a = lat !== null ? lat : -90 + k * 180/72;
+        const b = lon !== null ? lon : -180 + k * 360/72;
+        const p = proyectar(aVector(a, b));
+        if (p.z < 0){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.stroke();
+    }
+
+    /* Territorio: nube de puntos. El corredor binacional, encendido. */
+    for (const pt of RELLENO){
+      const p = proyectar(pt.v);
+      if (p.z <= 0.02) continue;
+      const r = (pt.clave ? 1.5 : 1.1) * p.s * (R / 170);
+      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.5, r), 0, 7);
+      ctx.fillStyle = pt.clave
+        ? `rgba(95,224,230,${0.34 + p.z * 0.5})`
+        : `rgba(220,238,242,${0.10 + p.z * 0.14})`;
+      ctx.fill();
+    }
+
+    /* Contornos */
+    for (const pais of PAISES){
+      ctx.beginPath(); let mov = true;
+      const cerrado = pais.pts.concat([pais.pts[0]]);
+      for (const [la, lo] of cerrado){
+        const p = proyectar(aVector(la, lo));
+        if (p.z < 0){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.lineWidth = pais.clave ? 1.6 : 1;
+      ctx.strokeStyle = pais.clave ? 'rgba(95,224,230,.85)' : 'rgba(220,238,242,.22)';
+      ctx.stroke();
+    }
+
+    /* Los dos arcos y el pulso que los recorre. */
+    pintarArco(ARCO_IDA,    t, 'rgba(255,255,255,.90)', 2.0);
+    pintarArco(ARCO_VUELTA, t + 3.1, 'rgba(95,224,230,.85)', 1.5);
+
+    function pintarArco(pts, fase, color, grosor){
+      const proj = pts.map(proyectar);
+      ctx.lineWidth = grosor; ctx.lineCap = 'round';
+      ctx.beginPath(); let mov = true;
+      for (let i = 0; i < proj.length; i++){
+        const p = proj[i];
+        if (tapado(p)){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = color.replace(/[\d.]+\)$/, '.30)');
+      ctx.stroke();
+
+      /* Estela: un tramo del arco que avanza de un extremo al otro. */
+      const dur = 5.2;
+      const av = REDUCIR ? 0.5 : ((fase % dur) / dur);
+      const cab = Math.floor(av * (proj.length - 1));
+      const col = Math.max(0, cab - 22);
+      ctx.beginPath(); mov = true;
+      for (let i = col; i <= cab; i++){
+        const p = proj[i];
+        if (tapado(p)){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = color; ctx.stroke();
+
+      const pc = proj[cab];
+      if (pc && !tapado(pc)){
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, grosor * 1.7, 0, 7);
+        ctx.fillStyle = '#FFFFFF'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, grosor * 4.5, 0, 7);
+        ctx.fillStyle = 'rgba(95,224,230,.22)'; ctx.fill();
+      }
+    }
+
+    /* Monumentos */
+    for (const m of MONUMENTOS){
+      const p = pantallaDe(m.lat, m.lon);
+      if (p.z <= 0.06) continue;
+      const k = Math.max(0.55, (R / 150) * p.s * 0.85);
+      ctx.globalAlpha = Math.min(1, 0.25 + p.z * 1.5);
+      ctx.beginPath(); ctx.arc(p.x, p.y, 3.4, 0, 7);
+      ctx.fillStyle = 'rgba(95,224,230,.9)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 9 + Math.sin(t * 2 + (m.id === 'angel' ? 0 : 1.6)) * 2.2, 0, 7);
+      ctx.strokeStyle = 'rgba(95,224,230,.34)'; ctx.lineWidth = 1; ctx.stroke();
+      dibujarMonumento(ctx, p, m.id, k);
+      ctx.globalAlpha = 1;
+      m._p = p;
+    }
+
+    requestAnimationFrame(pintar);
+  }
+
+  return {
+    tipo:'canvas2d',
+    iniciar(){ medir(); addEventListener('resize', medir); requestAnimationFrame(pintar); },
+    detener(){ vivo = false; removeEventListener('resize', medir); },
+    medir,
+    pantallaDe,
+    get lienzo(){ return lienzo; }
+  };
+})();
+
+/* Renderizador en uso y estado del gesto: los comparten los
+   marcadores, los gestos y el relevo a Three.js. */
+let activo = Escena;
+let arrastrando = false;
+
+/* ═══════════════════════════════════════════════════════════════
+   2b · MARCADORES
+   Botones HTML anclados a la posición proyectada de cada monumento.
+   Un glifo dibujado en el lienzo no es enfocable ni lo lee un lector
+   de pantalla; un botón sí, y además garantiza la zona táctil.
+   ═══════════════════════════════════════════════════════════════ */
+const Marcas = (() => {
+  const capa = document.getElementById('marcas');
+  const botones = MONUMENTOS.map(m => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'marca-pt';
+    b.innerHTML = `<i aria-hidden="true"></i><span>${m.corto}</span>`;
+    b.setAttribute('aria-label', `${m.nom}. ${m.dato}`);
+    capa.appendChild(b);
+    return { b, m };
+  });
+
+  function conectar(enfocar){
+    botones.forEach(({ b, m }) => b.addEventListener('click', () => enfocar(m)));
+  }
+
+  (function seguir(){
+    requestAnimationFrame(seguir);
+    for (const { b, m } of botones){
+      const p = activo.pantallaDe && activo.pantallaDe(m.lat, m.lon);
+      if (!p){ b.style.visibility = 'hidden'; continue; }
+      const visible = p.z > 0.10;
+      b.style.visibility = visible ? 'visible' : 'hidden';
+      if (!visible) continue;
+      const ancho = b.offsetWidth || 120;
+      const bruto = m.lado > 0 ? p.x + 16 : p.x - ancho - 16;
+      const x = Math.max(10, Math.min(innerWidth - ancho - 10, bruto));
+      b.style.transform = `translate(${Math.round(x)}px, ${Math.round(p.y - 17)}px)`;
+      b.style.opacity = Math.min(1, (p.z - 0.10) * 4).toFixed(2);
+    }
+  })();
+
+  return { conectar };
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   3 · GESTOS — un dedo gira, dos dedos acercan
+   ═══════════════════════════════════════════════════════════════ */
+(function gestos(){
+  const el = document.querySelector('.escena');
+  const dedos = new Map();
+  let ultX = 0, ultY = 0, movido = 0, dist0 = 0, zoom0 = 1, iniT = 0;
+
+  el.addEventListener('pointerdown', e => {
+    if (e.target.closest('.barra, .hoja, .salto, .marca-pt')) return;
+    dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
+    if (dedos.size === 1){
+      arrastrando = true; movido = 0; iniT = performance.now();
+      ultX = e.clientX; ultY = e.clientY;
+      camara.vYaw = camara.vPitch = 0;
+      el.setPointerCapture(e.pointerId);
+      document.getElementById('pista').classList.add('oculta');
+    } else if (dedos.size === 2){
+      const [a, b] = [...dedos.values()];
+      dist0 = Math.hypot(a.x - b.x, a.y - b.y);
+      zoom0 = camara.zoom;
+    }
+  }, { passive:true });
+
+  el.addEventListener('pointermove', e => {
+    if (!dedos.has(e.pointerId)) return;
+    dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
+
+    if (dedos.size >= 2){
+      const [a, b] = [...dedos.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (dist0 > 0){
+        camara.zoom = Math.max(0.75, Math.min(1.75, zoom0 * (d / dist0)));
+        activo.medir && activo.medir();
+      }
+      return;
+    }
+    const dx = e.clientX - ultX, dy = e.clientY - ultY;
+    ultX = e.clientX; ultY = e.clientY;
+    movido += Math.abs(dx) + Math.abs(dy);
+    camara.yaw   -= dx * 0.0068;
+    camara.pitch = Math.max(rad(-62), Math.min(rad(62), camara.pitch + dy * 0.0055));
+    camara.vYaw   = -dx * 0.0016;
+    camara.vPitch =  dy * 0.0013;
+  }, { passive:true });
+
+  function soltar(e){
+    if (!dedos.has(e.pointerId)) return;
+    dedos.delete(e.pointerId);
+    if (dedos.size === 0) arrastrando = false;
+    if (dedos.size < 2) dist0 = 0;
+  }
+  el.addEventListener('pointerup', soltar, { passive:true });
+  el.addEventListener('pointercancel', soltar, { passive:true });
+
+  /* Lleva el monumento al centro con una animación corta y abre su sección. */
+  function enfocar(m){
+    const { yaw: destYaw, pitch: destPitch } = encara(m.lat, m.lon, 0.75);
+    const iy = camara.yaw, ip = camara.pitch, t0 = performance.now();
+    /* Toma el camino corto alrededor del eje. */
+    let d = ((destYaw - iy + Math.PI) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI) - Math.PI;
+    camara.auto = false;
+    (function paso(now){
+      const k = Math.min(1, (now - t0) / (REDUCIR ? 1 : 620));
+      const e = 1 - Math.pow(1 - k, 3);
+      camara.yaw = iy + d * e;
+      camara.pitch = ip + (destPitch - ip) * e;
+      if (k < 1) requestAnimationFrame(paso);
+      else if (!REDUCIR) setTimeout(() => { camara.auto = true; }, 2600);
+    })(performance.now());
+
+    Hoja.abrir('medio');
+    Hoja.irA(m.ir);
+    anunciar(`${m.nom}. ${m.dato}`);
+  }
+
+  Marcas.conectar(enfocar);
+})();
+
+function anunciar(txt){
+  const est = document.getElementById('estado');
+  est.setAttribute('aria-label', txt);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4 · BOTTOM SHEET — tres posiciones, arrastre con inercia
+   ═══════════════════════════════════════════════════════════════ */
+const Hoja = (() => {
+  const hoja = document.getElementById('hoja');
+  const asa  = document.getElementById('asa');
+  const cab  = document.querySelector('.hoja-cab');
+  const scroll = document.getElementById('scroll');
+  const tabs = document.getElementById('tabs');
+  let alto = 0, posiciones = {}, actual = 'pico', y = 0;
+  const panel = matchMedia('(min-width:60rem) and (min-height:34rem)');
+
+  function medir(){
+    alto = hoja.offsetHeight;
+    const pico = Math.min(330, innerHeight * 0.42);
+    posiciones = { lleno:0, medio:Math.round(alto * 0.42), pico:Math.round(alto - pico) };
+    document.documentElement.style.setProperty('--hoja-pico', pico + 'px');
+    aplicar(actual);
+  }
+  function aplicar(nombre, animar = true){
+    actual = nombre; y = posiciones[nombre];
+    hoja.classList.toggle('suave', animar);
+    hoja.style.setProperty('--y', y + 'px');
+    asa.setAttribute('aria-expanded', String(nombre !== 'pico'));
+    scroll.style.overflowY = nombre === 'pico' ? 'hidden' : 'auto';
+  }
+
+  /* Arrastre: desde el asa y la cabecera siempre; desde el contenido
+     solo si ya está arriba del todo y el gesto va hacia abajo. */
+  let sy = 0, y0 = 0, agarrado = false, desdeScroll = false;
+
+  function abajo(e){
+    const enScroll = e.target.closest('.hoja-scroll');
+    if (enScroll && scroll.scrollTop > 0) return;
+    if (e.target.closest('button, a, input, label, summary, details')) return;
+    agarrado = true; desdeScroll = !!enScroll;
+    sy = e.clientY; y0 = y;
+    hoja.classList.remove('suave');
+  }
+  function mover(e){
+    if (!agarrado) return;
+    const d = e.clientY - sy;
+    if (desdeScroll && d < 0){ agarrado = false; return; }
+    y = Math.max(0, Math.min(posiciones.pico + 40, y0 + d));
+    hoja.style.setProperty('--y', y + 'px');
+  }
+  function arriba(){
+    if (!agarrado) return;
+    agarrado = false;
+    const cand = Object.entries(posiciones)
+      .sort((a, b) => Math.abs(a[1] - y) - Math.abs(b[1] - y))[0][0];
+    aplicar(cand);
+  }
+
+  hoja.addEventListener('pointerdown', abajo, { passive:true });
+  hoja.addEventListener('pointermove', mover, { passive:true });
+  hoja.addEventListener('pointerup', arriba, { passive:true });
+  hoja.addEventListener('pointercancel', arriba, { passive:true });
+
+  asa.addEventListener('click', () => aplicar(actual === 'pico' ? 'medio' : 'pico'));
+  asa.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); aplicar(actual === 'pico' ? 'medio' : 'pico'); }
+  });
+
+  /* Pestañas ↔ desplazamiento */
+  tabs.addEventListener('click', e => {
+    const b = e.target.closest('button[data-ir]');
+    if (!b) return;
+    abrir('lleno');
+    irA(b.dataset.ir);
+  });
+
+  function irA(id){
+    const s = document.getElementById(id);
+    if (!s) return;
+    requestAnimationFrame(() => {
+      scroll.scrollTo({ top: s.offsetTop - 6, behavior: REDUCIR ? 'auto' : 'smooth' });
+    });
+    marcar(id);
+  }
+  function marcar(id){
+    [...tabs.children].forEach(b => b.setAttribute('aria-selected', String(b.dataset.ir === id)));
+    const sel = tabs.querySelector('[aria-selected="true"]');
+    if (sel) sel.scrollIntoView({ inline:'center', block:'nearest', behavior: REDUCIR ? 'auto' : 'smooth' });
+  }
+
+  const espia = new IntersectionObserver(ents => {
+    const vis = ents.filter(e => e.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (vis && tabs.querySelector(`[data-ir="${vis.target.id}"]`)) marcar(vis.target.id);
+  }, { root:scroll, rootMargin:'0px 0px -62% 0px', threshold:0 });
+  document.querySelectorAll('.bloque[id]').forEach(s => espia.observe(s));
+
+  function abrir(pos){ if (!panel.matches) aplicar(pos); }
+
+  addEventListener('resize', medir);
+  medir();
+
+  return { abrir, irA, medir };
+})();
+
+document.getElementById('ir-form').addEventListener('click', () => { Hoja.abrir('lleno'); Hoja.irA('pre-registro'); });
+
+/* ═══════════════════════════════════════════════════════════════
+   5 · ESTADO DE LA CONVOCATORIA Y CONTADOR
+   ═══════════════════════════════════════════════════════════════ */
+(function reloj(){
+  const d = document.getElementById('r-d'), h = document.getElementById('r-h');
+  const m = document.getElementById('r-m'), s = document.getElementById('r-s');
+  const txt = document.getElementById('reloj-txt');
+  const sub = document.getElementById('sub-cab');
+  const caja = document.getElementById('reloj');
+
+  if (!ABIERTA){
+    caja.classList.add('cerrado');
+    txt.textContent = `La convocatoria de este ciclo cerró. La siguiente abre el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    const est = document.getElementById('estado');
+    est.classList.add('cerrada');
+    est.querySelector('.larga').textContent = 'Convocatoria cerrada';
+    est.querySelector('.corta').textContent = 'Cerrada';
+    document.getElementById('hito-cierre').classList.remove('activo');
+    sub.textContent = `Cerrada · la siguiente abre el ${CONFIG.APERTURA_SIGUIENTE}`;
+    document.getElementById('ir-form').textContent = 'Avísame';
+    document.getElementById('enviar').textContent = 'Avísame cuando abra';
+    document.getElementById('form-intro').textContent =
+      `El ciclo cerró. Déjanos tu correo y te escribimos en cuanto abra la siguiente convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    return;
+  }
+
+  function tic(){
+    let x = Math.max(0, CONFIG.CIERRE.getTime() - Date.now());
+    const dd = Math.floor(x / 864e5); x -= dd * 864e5;
+    const hh = Math.floor(x / 36e5);  x -= hh * 36e5;
+    const mm = Math.floor(x / 6e4);   x -= mm * 6e4;
+    const ss = Math.floor(x / 1e3);
+    d.textContent = dd;
+    h.textContent = String(hh).padStart(2, '0');
+    m.textContent = String(mm).padStart(2, '0');
+    s.textContent = String(ss).padStart(2, '0');
+    sub.textContent = `Cierra en ${dd} días · 31 de enero`;
+  }
+  tic(); setInterval(tic, 1000);
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   6 · FORMULARIO DE PRE-REGISTRO
+   ═══════════════════════════════════════════════════════════════ */
+(function formulario(){
+  const form = document.getElementById('form');
+  const exito = document.getElementById('exito');
+  const boton = document.getElementById('enviar');
+
+  const q = new URLSearchParams(location.search);
+  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function err(campo, msg){
+    const el = document.getElementById(campo);
+    const caja = document.getElementById('e-' + campo);
+    if (caja) caja.textContent = msg || '';
+    if (el && el.type !== 'checkbox') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+
+  function valida(campo){
+    const v = id => (document.getElementById(id).value || '').trim();
+    switch (campo){
+      case 'nombre':  return err('nombre', v('nombre').length >= 3 ? '' : 'Escribe tu nombre completo.');
+      case 'correo':  return err('correo', CORREO.test(v('correo')) ? '' : 'Revisa el correo: parece que le falta algo.');
+      case 'nivel':   return err('nivel', form.querySelector('input[name=nivel]:checked') ? '' : 'Elige maestría o doctorado.');
+      case 'elegible':return err('elegible', document.getElementById('elegible').checked ? '' : 'Necesitamos esta confirmación para poder escribirte.');
+      case 'aviso':   return err('aviso', document.getElementById('aviso').checked ? '' : 'Marca la casilla para que podamos enviarte la guía.');
+    }
+  }
+
+  ['nombre','correo'].forEach(id =>
+    document.getElementById(id).addEventListener('blur', () => valida(id)));
+  form.querySelectorAll('input[name=nivel]').forEach(r =>
+    r.addEventListener('change', () => valida('nivel')));
+  ['elegible','aviso'].forEach(id =>
+    document.getElementById(id).addEventListener('change', () => valida(id)));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const campos = ['nombre','correo','nivel','elegible','aviso'];
+    const malos = campos.filter(c => !valida(c));
+    if (malos.length){
+      const primero = document.getElementById(malos[0]) || form.querySelector('input[name=nivel]');
+      primero.focus({ preventScroll:false });
+      return;
+    }
+
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      correo: document.getElementById('correo').value.trim().toLowerCase(),
+      nivel: form.querySelector('input[name=nivel]:checked').value,
+      elegibilidad_confirmada: true,
+      consentimiento_aviso: true,
+      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
+      convocatoria_abierta: ABIERTA,
+      utm_source: q.get('utm_source') || 'volante_impreso',
+      utm_medium: q.get('utm_medium') || 'qr',
+      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      utm_content: q.get('utm_content') || '',
+      qr_id: q.get('qr_id') || '',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+
+    boton.disabled = true;
+    const etiqueta = boton.textContent;
+    boton.textContent = 'Enviando…';
+
+    try {
+      if (CONFIG.ENDPOINT){
+        const r = await fetch(CONFIG.ENDPOINT, {
+          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      } else {
+        console.info('[modo demo] payload para Zapier:', datos);
+        await new Promise(r => setTimeout(r, 420));
+      }
+      form.classList.add('oculto');
+      exito.classList.add('visible');
+      document.getElementById('exito-p').textContent = ABIERTA
+        ? `Te llegó la guía a ${datos.correo}. El próximo aviso es a 60 días del cierre.`
+        : `Guardamos ${datos.correo}. Te escribimos en cuanto abra la convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+      document.getElementById('exito-h').focus();
+    } catch (_) {
+      boton.disabled = false;
+      boton.textContent = etiqueta;
+      err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+    }
+  });
+})();
+
+/* Arranca el respaldo de inmediato: el globo nunca aparece vacío. */
+Escena.iniciar();
+document.documentElement.dataset.render = 'canvas2d';
+
+/* Oculta la pista de gesto sola a los 6 s. */
+setTimeout(() => document.getElementById('pista').classList.add('oculta'), 6000);
+</script>
+
+<script type="module">
+/* ═══════════════════════════════════════════════════════════════
+   7 · RELEVO A THREE.JS
+   El respaldo ya está pintando. Este módulo solo mejora el render
+   si el CDN responde a tiempo; si no, no ocurre nada visible.
+   ═══════════════════════════════════════════════════════════════ */
+const conLimite = (p, ms) => Promise.race([
+  p, new Promise((_, no) => setTimeout(() => no(new Error('timeout')), ms))
+]);
+
+try {
+  const THREE = await conLimite(import('three'), 3500);
+  iniciarThree(THREE);
+  document.documentElement.dataset.render = 'three';
+} catch (_) {
+  document.documentElement.dataset.render = 'canvas2d';
+}
+
+function iniciarThree(THREE){
+  const viejo = document.getElementById('globo');
+  Escena.detener();
+
+  const lienzo = document.createElement('canvas');
+  lienzo.id = 'globo'; lienzo.setAttribute('aria-hidden', 'true');
+  viejo.replaceWith(lienzo);
+
+  const ren = new THREE.WebGLRenderer({ canvas:lienzo, antialias:true, alpha:true });
+  ren.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+
+  const escena = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+
+  /* pitch en el grupo externo, yaw en el interno: mismo orden que
+     el respaldo, así los gestos se sienten idénticos. */
+  const externo = new THREE.Group(), interno = new THREE.Group();
+  externo.add(interno); escena.add(externo);
+
+  const V = (a) => new THREE.Vector3(a[0], a[1], a[2]);
+
+  /* Cuerpo */
+  const cuerpo = new THREE.Mesh(
+    new THREE.SphereGeometry(0.995, 64, 48),
+    new THREE.MeshPhongMaterial({ color:0x032F58, shininess:16, specular:0x0A5F6B })
+  );
+  interno.add(cuerpo);
+
+  const atmosfera = new THREE.Mesh(
+    new THREE.SphereGeometry(1.14, 48, 32),
+    new THREE.MeshBasicMaterial({ color:0x00A0AF, transparent:true, opacity:0.075,
+      side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false })
+  );
+  interno.add(atmosfera);
+
+  escena.add(new THREE.AmbientLight(0x1C4E7A, 2.1));
+  const sol = new THREE.DirectionalLight(0xDCEEF2, 1.25);
+  sol.position.set(-1.2, 1.1, 1.6); escena.add(sol);
+
+  /* Retícula */
+  const gv = [];
+  const meta = (lat, lon) => {
+    const pts = [];
+    for (let k = 0; k <= 72; k++){
+      const a = lat !== null ? lat : -90 + k*180/72;
+      const b = lon !== null ? lon : -180 + k*360/72;
+      pts.push(aVector(a, b).map(n => n*1.002));
+    }
+    for (let i = 0; i < pts.length - 1; i++){ gv.push(...pts[i], ...pts[i+1]); }
+  };
+  for (let lat = -60; lat <= 60; lat += 30) meta(lat, null);
+  for (let lon = 0; lon < 360; lon += 30) meta(null, lon);
+  const reticula = new THREE.LineSegments(
+    new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(gv, 3)),
+    new THREE.LineBasicMaterial({ color:0xDCEEF2, transparent:true, opacity:0.14 })
+  );
+  interno.add(reticula);
+
+  /* Territorio: las mismas muestras que usa el respaldo */
+  for (const clave of [true, false]){
+    const v = [];
+    RELLENO.filter(p => p.clave === clave)
+           .forEach(p => v.push(p.v[0]*1.004, p.v[1]*1.004, p.v[2]*1.004));
+    if (!v.length) continue;
+    interno.add(new THREE.Points(
+      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
+      new THREE.PointsMaterial({ color: clave ? 0x5FE0E6 : 0xDCEEF2, size: clave ? 0.017 : 0.012,
+        transparent:true, opacity: clave ? 0.95 : 0.30, sizeAttenuation:true })
+    ));
+  }
+
+  /* Contornos */
+  for (const pais of PAISES){
+    const v = [];
+    pais.pts.concat([pais.pts[0]]).forEach(([la, lo]) =>
+      v.push(...aVector(la, lo).map(n => n*1.008)));
+    interno.add(new THREE.Line(
+      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
+      new THREE.LineBasicMaterial({ color: pais.clave ? 0x5FE0E6 : 0xDCEEF2,
+        transparent:true, opacity: pais.clave ? 0.9 : 0.25 })
+    ));
+  }
+
+  /* Arcos y pulsos */
+  const pulsos = [];
+  for (const [pts, color, fase] of [[ARCO_IDA, 0xFFFFFF, 0], [ARCO_VUELTA, 0x5FE0E6, 3.1]]){
+    const v = []; pts.forEach(p => v.push(...p));
+    interno.add(new THREE.Line(
+      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
+      new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.42 })
+    ));
+    const bola = new THREE.Mesh(
+      new THREE.SphereGeometry(0.022, 14, 10),
+      new THREE.MeshBasicMaterial({ color })
+    );
+    interno.add(bola);
+    pulsos.push({ pts, bola, fase });
+  }
+
+  /* Monumentos low-poly */
+  function monumento(id){
+    const g = new THREE.Group();
+    const blanco = new THREE.MeshBasicMaterial({ color:0xFFFFFF });
+    const luz = new THREE.MeshBasicMaterial({ color:0x5FE0E6 });
+    const add = (geo, mat, y, rz) => {
+      const m = new THREE.Mesh(geo, mat); m.position.y = y; if (rz) m.rotation.z = rz; g.add(m); return m;
+    };
+    if (id === 'angel'){
+      add(new THREE.BoxGeometry(0.055, 0.018, 0.055), blanco, 0.009);
+      add(new THREE.CylinderGeometry(0.010, 0.013, 0.115, 10), blanco, 0.075);
+      add(new THREE.BoxGeometry(0.034, 0.012, 0.034), blanco, 0.138);
+      add(new THREE.SphereGeometry(0.014, 12, 10), blanco, 0.160);
+      const alaG = new THREE.BoxGeometry(0.006, 0.052, 0.020);
+      add(alaG, luz,  0.176,  0.5).position.x = -0.020;
+      add(alaG, luz,  0.176, -0.5).position.x =  0.020;
+    } else {
+      add(new THREE.BoxGeometry(0.062, 0.030, 0.062), blanco, 0.015);
+      add(new THREE.ConeGeometry(0.026, 0.115, 8), blanco, 0.088);
+      add(new THREE.SphereGeometry(0.014, 12, 10), blanco, 0.156);
+      const corona = add(new THREE.ConeGeometry(0.024, 0.020, 7), luz, 0.176);
+      corona.rotation.x = Math.PI;
+      const brazo = add(new THREE.CylinderGeometry(0.005, 0.005, 0.075, 8), blanco, 0.168, -0.55);
+      brazo.position.x = 0.028;
+      const llama = add(new THREE.ConeGeometry(0.014, 0.032, 8), luz, 0.212);
+      llama.position.x = 0.049;
+    }
+    g.scale.setScalar(0.8);
+    return g;
+  }
+
+  /* Los monumentos miran siempre al observador. Plantados sobre la
+     normal de la esfera se veían de punta —escorzados a un cuadrado
+     blanco— justo en la latitud donde ocurre la campaña. */
+  const carteles = [];
+  for (const m of MONUMENTOS){
+    const g = monumento(m.id);
+    const dir = V(aVector(m.lat, m.lon)).normalize();
+    g.position.copy(dir.clone().multiplyScalar(0.995));
+    interno.add(g);
+    carteles.push(g);
+
+    const base = new THREE.Mesh(
+      new THREE.SphereGeometry(0.016, 12, 10),
+      new THREE.MeshBasicMaterial({ color:0x5FE0E6 })
+    );
+    base.position.copy(dir.clone().multiplyScalar(1.0));
+    interno.add(base);
+  }
+
+  /* Proyección a pantalla: la usan los gestos para el toque. */
+  const tmp = new THREE.Vector3(), centro = new THREE.Vector3(), normal = new THREE.Vector3();
+  function pantallaDe(lat, lon){
+    tmp.set(...aVector(lat, lon));
+    interno.localToWorld(tmp);
+    const mundo = tmp.clone();
+    externo.getWorldPosition(centro);
+    /* Visible si la normal del punto apunta hacia la cámara. */
+    normal.copy(mundo).sub(centro).normalize();
+    const haciaCam = cam.position.clone().sub(mundo).normalize();
+    const z = normal.dot(haciaCam);
+
+    tmp.project(cam);
+    const r = ren.domElement.getBoundingClientRect();
+    return { x:(tmp.x*0.5 + 0.5) * r.width, y:(-tmp.y*0.5 + 0.5) * r.height, z, s:1 };
+  }
+
+  const FOV = 38;
+  function medir(){
+    const w = lienzo.clientWidth, h = lienzo.clientHeight;
+    ren.setSize(w, h, false);
+    cam.aspect = w / h; cam.updateProjectionMatrix();
+
+    /* La distancia se deduce del radio en píxeles que queremos, no al
+       revés. En retrato el FOV horizontal es el que manda, y fijarlo a
+       ojo es justo lo que hacía que el globo se saliera de cuadro. */
+    const rPix = ENCUADRE.radio(w, h) * camara.zoom;
+    const f = rPix / (h / 2);
+    const d = 1 / (f * Math.tan(rad(FOV / 2)));
+    cam.position.set(0, 0, d);
+    cam.lookAt(0, 0, 0);
+
+    /* Desplaza el globo, no la cámara, para no torcer la proyección. */
+    const dyPix = (h / 2) - h * ENCUADRE.centroY;
+    externo.position.y = (dyPix / (h / 2)) * (d * Math.tan(rad(FOV / 2)));
+  }
+  addEventListener('resize', medir);
+  medir();
+
+  const relojT = new THREE.Clock();
+  const qPadre = new THREE.Quaternion();
+  (function bucle(){
+    requestAnimationFrame(bucle);
+    const dt = relojT.getDelta(), t = relojT.getElapsedTime();
+
+    if (camara.auto && !arrastrando) camara.yaw += 0.025 * dt;
+    if (!arrastrando){
+      camara.yaw += camara.vYaw; camara.pitch += camara.vPitch;
+      camara.vYaw *= 0.94; camara.vPitch *= 0.94;
+      camara.pitch = Math.max(-1.08, Math.min(1.08, camara.pitch));
+    }
+    interno.rotation.y = camara.yaw;
+    externo.rotation.x = camara.pitch;
+
+    /* Orientación local que compensa la rotación del padre. */
+    interno.getWorldQuaternion(qPadre).invert();
+    for (const g of carteles) g.quaternion.copy(qPadre).multiply(cam.quaternion);
+
+    for (const p of pulsos){
+      const av = REDUCIR ? 0.5 : (((t + p.fase) % 5.2) / 5.2);
+      const i = Math.min(p.pts.length - 1, Math.floor(av * (p.pts.length - 1)));
+      p.bola.position.set(...p.pts[i]);
+    }
+    ren.render(escena, cam);
+  })();
+
+  activo = { tipo:'three', pantallaDe, medir };
+}
+</script>
+</body>
+</html>
