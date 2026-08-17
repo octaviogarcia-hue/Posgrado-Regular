@@ -87,7 +87,7 @@ button{font:inherit;color:inherit}
     radial-gradient(120% 78% at 50% 6%, #073a63 0%, #002748 42%, var(--profundo) 78%),
     var(--profundo);
 }
-#globo{
+#mapa{
   position:absolute;inset:0;width:100%;height:100%;
   display:block;touch-action:none;   /* el gesto es de cámara, no de scroll */
 }
@@ -100,37 +100,54 @@ button{font:inherit;color:inherit}
      proyectado; el margen negativo lo centra bajo el monumento. */
   margin:0;
   display:inline-flex;align-items:center;gap:7px;
-  min-height:34px;padding:0 12px 0 10px;border-radius:var(--r-pill);
-  background:rgba(0,17,41,.62);border:1px solid var(--borde-vivo);
+  min-height:30px;padding:0 11px 0 9px;border-radius:var(--r-pill);
+  background:rgba(0,17,41,.72);border:1px solid var(--borde-vivo);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  color:var(--blanco);font-size:10.5px;font-weight:600;letter-spacing:.02em;
+  color:var(--blanco);font-size:10px;font-weight:650;letter-spacing:.02em;
   white-space:nowrap;cursor:pointer;pointer-events:auto;touch-action:manipulation;
   transition:background .18s ease;
 }
 /* Zona táctil de 52 px sin engordar la píldora. */
-.marca-pt::after{content:"";position:absolute;inset:-9px -6px;border-radius:inherit}
+.marca-pt::after{content:"";position:absolute;inset:-11px -8px;border-radius:inherit}
 .marca-pt i{
   width:7px;height:7px;border-radius:50%;background:var(--cerceta-luz);flex:none;
   box-shadow:0 0 0 3px rgba(95,224,230,.22);
 }
 .marca-pt:active{background:rgba(0,160,175,.4)}
+.ciudad-pt{
+  position:absolute;left:0;top:0;
+  font-family:var(--ff-data);font-size:10px;font-weight:600;letter-spacing:.02em;
+  color:rgba(220,238,242,.88);white-space:nowrap;pointer-events:none;
+  text-shadow:0 1px 6px rgba(0,17,41,.95),0 0 2px rgba(0,17,41,.9);
+}
 
 /* ── Barra superior ───────────────────────────────────────── */
 .barra{
-  position:absolute;left:0;right:0;top:0;z-index:20;
-  padding:calc(var(--seguro-arriba) + 12px) var(--pad) 0;
+  position:fixed;left:0;right:0;top:0;z-index:45;
+  padding:calc(var(--seguro-arriba) + 11px) var(--pad) 13px;
   display:flex;align-items:center;gap:var(--s-3);
-  pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,17,41,.93) 44%,rgba(0,17,41,.6) 78%,rgba(0,17,41,0));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
 }
-.marca{display:flex;flex-direction:column;line-height:1.18;min-width:0}
-.marca b{
-  font-family:var(--ff-display);font-size:15px;font-weight:600;
-  letter-spacing:.005em;color:var(--blanco);white-space:nowrap;
+/* ── Logotipo del encabezado fijo ─────────────────────────── */
+.logo{display:flex;align-items:center;gap:9px;min-width:0}
+.logo .emblema{width:30px;height:30px;flex:none;color:#FFFFFF}
+.logo-oficial{height:34px;width:auto;flex:none}
+.lockup{display:flex;flex-direction:column;line-height:1.18;min-width:0}
+.lockup b{
+  font-size:13.5px;font-weight:750;letter-spacing:-.012em;color:#FFFFFF;white-space:nowrap;
 }
-.marca span{
-  font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--tenue);
+.lockup b em{font-style:normal;font-weight:600;color:#5FE0E6;letter-spacing:.02em}
+.lockup > span{
+  font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
+@media (max-width:22rem){
+  .logo .emblema{width:26px;height:26px}
+  .lockup b{font-size:12px}
+  .lockup > span{font-size:8px;letter-spacing:.1em}
+}
+.lockup > span{color:var(--tenue)}
 .estado{
   margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
   padding:6px 10px;border-radius:var(--r-pill);
@@ -153,7 +170,7 @@ button{font:inherit;color:inherit}
 /* ── Titular sobre la escena ──────────────────────────────── */
 .titular{
   position:absolute;left:var(--pad);right:var(--pad);
-  top:calc(var(--seguro-arriba) + 64px);z-index:15;
+  top:calc(var(--seguro-arriba) + 78px);z-index:15;
   pointer-events:none;max-width:22rem;
 }
 .ceja{
@@ -172,6 +189,10 @@ button{font:inherit;color:inherit}
   text-shadow:0 1px 16px rgba(0,17,41,.9);
 }
 .titular p b{color:var(--blanco);font-weight:650}
+/* Al abrir la hoja el mapa se acerca y sube: el titular estorbaría. */
+.titular{transition:opacity .3s ease}
+body[data-hoja="medio"] .titular,
+body[data-hoja="lleno"] .titular{opacity:0}
 
 /* ── Pista de gesto ───────────────────────────────────────── */
 .pista{
@@ -446,14 +467,35 @@ details p{font-size:12.5px;color:var(--tenue);padding:0 0 14px}
 <a class="salto" href="#pre-registro">Saltar al pre-registro</a>
 
 <div class="escena">
-  <canvas id="globo" aria-hidden="true"></canvas>
+  <canvas id="mapa" aria-hidden="true"></canvas>
   <div class="marcas" id="marcas" aria-label="Puntos del recorrido"></div>
 
   <header class="barra">
-    <!-- Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG -->
-    <div class="marca">
-      <b>Fulbright-García Robles</b>
-      <span>COMEXUS · Posgrado Regular</span>
+    <!-- ─────────────────────────────────────────────────────────
+         LOGOTIPO. Recreación tipográfica en SVG puro, provisional:
+         el uso de la marca Fulbright está regulado. Para publicar,
+         sustituir todo este bloque por el lockup oficial que
+         entregue COMEXUS. El contenedor ya está dimensionado para
+         recibirlo tal cual:
+           <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
+                class="logo-oficial" width="188" height="34">
+         ───────────────────────────────────────────────────────── -->
+    <div class="logo">
+      <svg class="emblema" viewBox="0 0 44 44" role="img" aria-label="Fulbright COMEXUS">
+        <rect x="1.2" y="1.2" width="41.6" height="41.6" rx="12"
+              fill="none" stroke="currentColor" stroke-opacity=".34" stroke-width="1.5"/>
+        <!-- Dos trayectorias entre dos puntos: el corredor binacional -->
+        <path d="M9.5 30.5C15 15.5 29 15.5 34.5 30.5" fill="none" stroke="#FFFFFF"
+              stroke-width="2" stroke-linecap="round"/>
+        <path d="M9.5 30.5C15 22.5 29 22.5 34.5 30.5" fill="none" stroke="#5FE0E6"
+              stroke-width="1.6" stroke-linecap="round" stroke-opacity=".85"/>
+        <circle cx="9.5" cy="30.5" r="3" fill="#5FE0E6"/>
+        <circle cx="34.5" cy="30.5" r="3" fill="#FFFFFF"/>
+      </svg>
+      <span class="lockup">
+        <b>Fulbright <em>COMEXUS</em></b>
+        <span>Becas Fulbright-García Robles</span>
+      </span>
     </div>
     <div class="estado" id="estado" role="status">
       <i aria-hidden="true"></i>
@@ -473,7 +515,7 @@ details p{font-size:12.5px;color:var(--tenue);padding:0 0 14px}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/>
       </svg>
-      Desliza para girar · toca un monumento
+      Arrastra para girar · pellizca para acercar
     </span>
   </div>
 </div>
@@ -668,177 +710,236 @@ const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ═══════════════════════════════════════════════════════════════
    1 · MUNDO — geometría compartida por los dos renderizadores
+   Solo México y Estados Unidos. Sin globo: la esfera obligaba a
+   dejar vacío alrededor, y en retrato ese vacío es la mitad de la
+   pantalla.
    ═══════════════════════════════════════════════════════════════ */
 
-/* Siluetas esquemáticas en (lat, lon). No son cartografía: son la
-   forma mínima que hace legible el corredor binacional. */
-const EEUU = [[48.9,-124.7],[49,-95],[49,-83],[46,-82.5],[43,-79],[45,-67],[41,-70],
-  [40.7,-74],[36.9,-76],[32,-80.9],[25.9,-80.1],[30,-84],[29.7,-93.8],[26,-97.2],
-  [31.8,-106.5],[32.5,-114.7],[34,-120.5],[40.4,-124.4]];
+/* Siluetas en (lat, lon). Estilizadas, no cartográficas: la fidelidad
+   necesaria es la que hace reconocible el contorno a 390 px. */
+const EEUU = [[48.4,-124.7],[49.0,-123.0],[49.0,-95.2],[48.9,-89.5],[46.8,-84.6],
+  [45.4,-83.5],[43.0,-82.4],[42.3,-79.8],[43.3,-79.1],[44.1,-76.4],[45.0,-74.7],
+  [45.0,-71.5],[47.4,-69.2],[47.0,-67.8],[44.8,-67.0],[43.7,-70.2],[42.0,-70.6],
+  [41.3,-71.8],[40.7,-74.0],[39.3,-74.4],[38.0,-75.2],[36.9,-76.0],[35.2,-75.5],
+  [34.0,-77.9],[32.8,-79.9],[31.1,-81.4],[29.9,-81.3],[27.0,-80.1],[25.2,-80.4],
+  [25.8,-81.4],[27.8,-82.6],[29.7,-83.4],[30.1,-84.3],[30.4,-87.2],[29.2,-89.3],
+  [29.7,-93.9],[28.4,-96.4],[26.0,-97.2],[29.3,-100.9],[29.8,-102.8],[31.8,-106.5],
+  [31.3,-111.0],[32.5,-114.7],[32.5,-117.1],[34.4,-120.5],[36.9,-122.0],[38.9,-123.7],
+  [41.7,-124.2],[46.2,-124.0]];
 
-const MEXICO = [[32.5,-114.7],[31.8,-106.5],[29.3,-100.9],[25.9,-97.1],[22.2,-97.8],
-  [19.2,-96.1],[18.6,-91.5],[19.8,-90.5],[21.5,-87.0],[18.7,-88.3],[17.8,-89.0],
-  [14.5,-92.2],[16.2,-95.0],[17.6,-101.5],[20.7,-105.3],[23.2,-106.4],[25.5,-108.9],
-  [31.3,-113.1],[28.0,-112.5],[23.3,-109.8],[25.0,-112.0],[30.0,-115.8]];
+const MEXICO = [[32.5,-114.7],[31.8,-106.5],[29.8,-102.8],[29.3,-100.9],[26.0,-97.2],
+  [23.2,-97.8],[21.5,-97.4],[19.2,-96.1],[18.7,-95.0],[18.6,-91.5],[19.8,-90.6],
+  [21.6,-88.0],[21.5,-86.9],[19.6,-87.5],[18.5,-88.3],[17.8,-89.1],[16.1,-90.5],
+  [14.6,-92.2],[15.8,-94.5],[16.2,-95.2],[16.7,-99.9],[17.6,-101.5],[19.1,-104.3],
+  [20.7,-105.3],[22.0,-105.7],[23.2,-106.4],[25.5,-108.9],[27.9,-111.0],[29.3,-112.3],
+  [31.3,-113.1]];
 
-const SUDAMERICA = [[12,-71],[10,-61],[5,-52],[-1,-50],[-5,-35],[-13,-38],[-23,-43],
-  [-33,-53],[-38,-57],[-50,-68],[-53,-70],[-42,-73],[-33,-71],[-18,-70],[-5,-81],
-  [2,-79],[8,-77]];
+const BAJA = [[32.5,-117.1],[30.4,-116.0],[28.0,-114.5],[26.0,-112.3],[24.4,-111.6],
+  [22.9,-110.0],[24.0,-110.3],[26.6,-111.8],[28.8,-113.5],[31.2,-114.8],[32.4,-115.0]];
 
 const PAISES = [
-  { nom:'EE. UU.', pts:EEUU,      clave:true  },
-  { nom:'México',  pts:MEXICO,    clave:true  },
-  { nom:'Sudamérica', pts:SUDAMERICA, clave:false }
+  { id:'us', pts:EEUU,   mx:false },
+  { id:'mx', pts:MEXICO, mx:true  },
+  { id:'bc', pts:BAJA,   mx:true  }
 ];
 
-/* Los dos monumentos. El arco viaja entre ellos, en los dos sentidos. */
+/* Ciudades del corredor. Las mexicanas emisoras; las estadounidenses,
+   destinos del sur y de alta afluencia latina. */
+const CIUDADES = {
+  cdmx:      { nom:'Ciudad de México', lat:19.43, lon:-99.13, mx:true,  lado:1  },
+  monterrey: { nom:'Monterrey',        lat:25.67, lon:-100.31, mx:true, lado:1  },
+  guadalajara:{nom:'Guadalajara',      lat:20.67, lon:-103.35, mx:true, lado:-1 },
+  losangeles:{ nom:'Los Ángeles',      lat:34.05, lon:-118.24, mx:false, lado:1  },
+  houston:   { nom:'Houston',          lat:29.76, lon:-95.37,  mx:false, lado:1  },
+  austin:    { nom:'Austin',           lat:30.27, lon:-97.74,  mx:false, lado:-1 },
+  miami:     { nom:'Miami',            lat:25.76, lon:-80.19,  mx:false, lado:1  },
+  nuevayork: { nom:'Nueva York',       lat:40.71, lon:-74.01,  mx:false, lado:1  }
+};
+
+/* Seis trayectorias. Cubren las tres ciudades emisoras y los cuatro
+   destinos pedidos, más Nueva York, que es donde está la Antorcha. */
+const RUTAS = [
+  ['cdmx','austin'], ['cdmx','nuevayork'],
+  ['monterrey','houston'], ['monterrey','losangeles'],
+  ['guadalajara','losangeles'], ['guadalajara','miami']
+];
+
 const MONUMENTOS = [
-  { id:'angel',    lat:19.4270, lon:-99.1677, nom:'Ángel de la Independencia',
-    lugar:'Ciudad de México', corto:'Ciudad de México', lado:-1, ir:'requisitos',
-    dato:'Aquí empieza: promedio 8.0, inglés acreditado y GRE.' },
-  { id:'libertad', lat:40.6892, lon:-74.0445, nom:'Estatua de la Libertad',
-    lugar:'Nueva York, EE. UU.', corto:'Nueva York', lado:1, ir:'apoyo',
+  { id:'angel',    ciudad:'cdmx',      nom:'Ángel de la Independencia', ir:'requisitos',
+    dato:'Aquí empieza: promedio 8.0, inglés acreditado y GRE obligatorio.' },
+  { id:'libertad', ciudad:'nuevayork', nom:'Estatua de la Libertad',    ir:'apoyo',
     dato:'Aquí llegas: hasta $37,000 USD al año, con visa J1 gestionada.' }
 ];
 
 const rad = g => g * Math.PI / 180;
 
-/* Sistema diestro con la cámara en +Z: el este debe caer a la derecha
-   de la pantalla, y eso obliga a poner el seno en X y el coseno en Z. */
-function aVector(lat, lon){
-  const a = rad(lat), b = rad(lon);
-  return [Math.cos(a) * Math.sin(b), Math.sin(a), Math.cos(a) * Math.cos(b)];
-}
+/* Proyección: grados a unidades de mundo sobre el plano XZ.
+   1 unidad = 1° de latitud; la longitud se corrige por el coseno de
+   la latitud media para que México no salga estirado. */
+const REF = { lat:31, lon:-96, kx:Math.cos(rad(31)) };
+const aPlano = (lat, lon) => [ (lon - REF.lon) * REF.kx, 0, -(lat - REF.lat) ];
 
-/* Interpolación sobre la esfera con altura: el arco se despega del
-   globo en el centro del trayecto y vuelve a tocarlo en los extremos. */
-function arco(a, b, n, alto){
-  const va = aVector(a.lat, a.lon), vb = aVector(b.lat, b.lon);
-  const d = Math.acos(Math.max(-1, Math.min(1, va[0]*vb[0] + va[1]*vb[1] + va[2]*vb[2])));
-  const s = Math.sin(d), out = [];
+/* Nube de puntos del territorio, muestreada una sola vez. */
+const RELLENO = (() => {
+  const dentro = (lat, lon, poly) => {
+    let hit = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++){
+      const [yi, xi] = poly[i], [yj, xj] = poly[j];
+      if ((yi > lat) !== (yj > lat) && lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) hit = !hit;
+    }
+    return hit;
+  };
+  const pts = [];
+  for (let lat = 49; lat >= 14; lat -= 0.85)          // de norte a sur: pinta de lejos a cerca
+    for (let lon = -125; lon <= -66; lon += 0.85)
+      for (const p of PAISES)
+        if (dentro(lat, lon, p.pts)){ pts.push({ v:aPlano(lat, lon), mx:p.mx }); break; }
+  return pts;
+})();
+
+/* Arco parabólico entre dos ciudades, con altura proporcional al
+   trayecto: los saltos largos se ven más altos. */
+function arco(a, b, n = 64){
+  const pa = aPlano(a.lat, a.lon), pb = aPlano(b.lat, b.lon);
+  const d = Math.hypot(pb[0] - pa[0], pb[2] - pa[2]);
+  const alto = d * 0.34;
+  const out = [];
   for (let i = 0; i <= n; i++){
     const t = i / n;
-    const p = s < 1e-6
-      ? va
-      : [0,1,2].map(k => (Math.sin((1-t)*d)/s)*va[k] + (Math.sin(t*d)/s)*vb[k]);
-    const r = 1 + alto * Math.sin(Math.PI * t);
-    out.push([p[0]*r, p[1]*r, p[2]*r]);
+    out.push([
+      pa[0] + (pb[0] - pa[0]) * t,
+      alto * Math.sin(Math.PI * t),
+      pa[2] + (pb[2] - pa[2]) * t
+    ]);
   }
   return out;
 }
 
-/* Puntos interiores de las siluetas, muestreados una sola vez y
-   reutilizados por los dos renderizadores. */
-function dentro(lat, lon, poly){
-  let hit = false;
-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++){
-    const [yi, xi] = poly[i], [yj, xj] = poly[j];
-    if ((yi > lat) !== (yj > lat) && lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) hit = !hit;
-  }
-  return hit;
-}
+const TRAYECTOS = RUTAS.map(([a, b], i) => ({
+  pts: arco(CIUDADES[a], CIUDADES[b]),
+  fase: i * 0.85,
+  sentido: i % 2 === 0 ? 1 : -1,     // van y vienen
+  mx: i % 2 === 0
+}));
 
-const RELLENO = (() => {
-  const pts = [];
-  for (let lat = -56; lat <= 52; lat += 2)
-    for (let lon = -126; lon <= -32; lon += 2)
-      for (const p of PAISES)
-        if (dentro(lat, lon, p.pts)){ pts.push({ v:aVector(lat, lon), clave:p.clave }); break; }
-  return pts;
-})();
+/* ── Cámara ──────────────────────────────────────────────────
+   El mapa vive en el plano XZ; la cámara lo mira desde el sur y
+   desde arriba. En retrato eso convierte el formato vertical en
+   una ventaja: México cerca y grande abajo, Estados Unidos al
+   fondo, y el cielo libre para los arcos. */
+const FOV = 42;
+const PROF_MUNDO = 35;     // grados de latitud entre Chiapas y la frontera norte
 
-const ARCO_IDA    = arco(MONUMENTOS[0], MONUMENTOS[1], 96, 0.30);
-const ARCO_VUELTA = arco(MONUMENTOS[1], MONUMENTOS[0], 96, 0.17);
-
-/* Encuadre único para los dos renderizadores: en retrato el globo se
-   sienta en la mitad de la pantalla, con la hoja tapando su limbo
-   inferior. Compartirlo evita que el relevo a Three.js dé un salto. */
+/* El mapa de Norteamérica nunca puede ser más alto que ancho en
+   pantalla: aun visto desde cenit su relación máxima es 0.7:1, y el
+   móvil es 2.16:1. Así que no se encaja en el ancho —eso deja la
+   mitad de la pantalla vacía— sino que se llena la banda libre entre
+   el titular y la hoja, dejando que sangre por los costados. */
 const ENCUADRE = {
-  centroY: 0.50,
-  radio: (w, h) => Math.min(w * 0.45, h * 0.29)
+  arriba: 248,                                   // alto de barra + titular
+  pico: () => Math.min(330, innerHeight * 0.42), // asomo de la hoja
+  banda(h){ return Math.max(190, h - this.arriba - this.pico()); },
+  centroY(h){ return this.arriba + this.banda(h) / 2; },
+  /* Distancia de cámara fijada a la elevación de referencia: al
+     inclinar, la perspectiva cambia sola, como una cámara real. */
+  distancia(w, h){
+    const f = (h / 2) / Math.tan(rad(FOV / 2));
+    return f * PROF_MUNDO * Math.sin(rad(50)) / (this.banda(h) * 0.88 * camara.zoom);
+  }
 };
 
-/* Para traer un punto (lat, lon) al frente hace falta yaw = −lon y
-   pitch = lat. Se deduce de la rotación, no se ajusta a ojo. */
-const encara = (lat, lon, k = 1) => ({ yaw: rad(-lon), pitch: rad(lat) * k });
-
-/* Estado de cámara. Arranca mirando al corredor México–EE. UU. */
-const inicio = encara(27, -99, 0.72);
 const camara = {
-  yaw: inicio.yaw,      // giro sobre el eje polar
-  pitch: inicio.pitch,  // inclinación
-  vYaw: 0, vPitch: 0,   // inercia
+  yaw: rad(-6),
+  elev: rad(50),
   zoom: 1,
+  centro: [0, 0],          // punto de mira sobre el plano: [x, z]
+  vYaw: 0, vElev: 0,
+  vaiven: 0,               // balanceo lento cuando nadie toca
   auto: !REDUCIR
 };
 
+/* El operador % de JavaScript conserva el signo, y el primer
+   fotograma puede llegar con una marca de tiempo anterior al origen:
+   sin esto, el avance de la estela sale negativo y el índice se sale
+   del arco. */
+const cicla = (x, periodo) => ((x % periodo) + periodo) % periodo;
+
+const CLAMP_ELEV = [rad(20), rad(80)];
+const CLAMP_YAW  = [rad(-48), rad(48)];   // el mapa no se pone del revés
+const sujeta = (v, [a, b]) => Math.max(a, Math.min(b, v));
 /* ═══════════════════════════════════════════════════════════════
    2 · RENDERIZADOR DE RESPALDO (Canvas 2D)
    Pinta desde el primer fotograma, sin dependencias. Three.js
    releva el render solo si el CDN responde.
    ═══════════════════════════════════════════════════════════════ */
 const Escena = (() => {
-  const lienzo = document.getElementById('globo');
+  const lienzo = document.getElementById('mapa');
   const ctx = lienzo.getContext('2d');
-  let w = 0, h = 0, cx = 0, cy = 0, R = 0, dpr = 1, vivo = true, t0 = performance.now();
+  let w = 0, h = 0, cx = 0, cy = 0, f = 1, D = 1, dpr = 1, vivo = true;
+  const t0 = performance.now();
 
   function medir(){
     dpr = Math.min(devicePixelRatio || 1, 2);
     w = lienzo.clientWidth; h = lienzo.clientHeight;
     lienzo.width = Math.round(w * dpr); lienzo.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cx = w / 2;
-    cy = h * ENCUADRE.centroY;
-    R = ENCUADRE.radio(w, h) * camara.zoom;
+    cx = w / 2; cy = ENCUADRE.centroY(h);
+    f = (h / 2) / Math.tan(rad(FOV / 2));
+    D = ENCUADRE.distancia(w, h);
   }
 
-  const F = 3.4;                                   // distancia de cámara virtual
-  function girar(v){
-    const cy_ = Math.cos(camara.yaw), sy = Math.sin(camara.yaw);
-    const x = v[0]*cy_ + v[2]*sy, z = -v[0]*sy + v[2]*cy_;
-    const cp = Math.cos(camara.pitch), sp = Math.sin(camara.pitch);
-    return [x, v[1]*cp - z*sp, v[1]*sp + z*cp];
-  }
-  function proyectar(v){
-    const p = girar(v);
-    const s = F / (F - p[2]);
-    return { x: cx + p[0]*R*s, y: cy - p[1]*R*s, z: p[2], s };
-  }
-  /* Un punto sobre el arco queda tapado si está detrás y su sombra
-     cae dentro de la silueta del globo. */
-  function tapado(p){
-    if (p.z >= 0) return false;
-    const dx = p.x - cx, dy = p.y - cy;
-    return Math.sqrt(dx*dx + dy*dy) < R * 0.995;
+  /* Punto de mundo → pantalla. Mismo encadenado que aplica Three:
+     giro del mapa, traslación al objetivo, inclinación, perspectiva. */
+  function proyectar(p){
+    const yaw = camara.yaw + camara.vaiven;
+    const c = Math.cos(yaw), s = Math.sin(yaw);
+    /* Primero el desplazamiento del punto de mira: así el giro ocurre
+       alrededor de la ciudad enfocada, no del centro del mapa. */
+    const px = p[0] - camara.centro[0], pz = p[2] - camara.centro[1];
+    let x = px * c + pz * s;
+    let z = -px * s + pz * c;
+    let y = p[1];
+
+    const ce = Math.cos(camara.elev), se = Math.sin(camara.elev);
+    y -= D * se; z -= D * ce;
+    const y2 = y * ce - z * se;
+    const z2 = y * se + z * ce;
+
+    const prof = -z2;
+    const esc = f / prof;
+    return { x: cx + x * esc, y: cy - y2 * esc, prof, esc };
   }
 
-  function pantallaDe(lat, lon){ return proyectar(aVector(lat, lon)); }
+  const pantallaDe = (lat, lon) => proyectar(aPlano(lat, lon));
+  const visible = p => !!p && p.prof > 2;
 
-  function dibujarMonumento(g, p, id, escala){
-    const k = escala;
+  function dibujarMonumento(g, p, id, k){
     g.save(); g.translate(p.x, p.y); g.scale(k, k);
     g.lineJoin = 'round'; g.lineCap = 'round';
     g.strokeStyle = '#FFFFFF'; g.fillStyle = '#FFFFFF'; g.lineWidth = 1.5;
 
     if (id === 'angel'){
-      /* Columna, capitel y figura alada. */
+      /* Base, columna, capitel y figura alada. */
       g.beginPath(); g.moveTo(-4.5, 0); g.lineTo(4.5, 0); g.lineTo(3, -3); g.lineTo(-3, -3); g.closePath(); g.fill();
       g.beginPath(); g.moveTo(-1.6, -3); g.lineTo(1.6, -3); g.lineTo(1.2, -17); g.lineTo(-1.2, -17); g.closePath(); g.fill();
       g.beginPath(); g.moveTo(-3, -17); g.lineTo(3, -17); g.lineTo(2.2, -19.5); g.lineTo(-2.2, -19.5); g.closePath(); g.fill();
       g.beginPath(); g.arc(0, -22.5, 1.5, 0, 7); g.fill();
+      g.strokeStyle = '#5FE0E6';
       g.beginPath(); g.moveTo(-1, -22); g.quadraticCurveTo(-6, -25, -6.5, -30); g.stroke();
       g.beginPath(); g.moveTo(1, -22);  g.quadraticCurveTo(6, -25, 6.5, -30);  g.stroke();
+      g.strokeStyle = '#FFFFFF';
       g.beginPath(); g.moveTo(0, -24); g.lineTo(0, -28); g.stroke();
     } else {
-      /* Pedestal, manto, cabeza, brazo y antorcha. */
+      /* Pedestal, manto, cabeza, corona, brazo y antorcha. */
       g.beginPath(); g.moveTo(-5, 0); g.lineTo(5, 0); g.lineTo(4, -5); g.lineTo(-4, -5); g.closePath(); g.fill();
       g.beginPath(); g.moveTo(-3.4, -5); g.lineTo(3.4, -5); g.lineTo(1.4, -18); g.lineTo(-1.4, -18); g.closePath(); g.fill();
       g.beginPath(); g.arc(0, -20, 1.7, 0, 7); g.fill();
-      g.beginPath(); g.moveTo(-1.5, -19); g.lineTo(-4, -25); g.stroke();          // corona
+      g.strokeStyle = '#5FE0E6';
       for (let i = -2; i <= 2; i++){
-        g.beginPath(); g.moveTo(0, -21.4); g.lineTo(i*1.9, -24.4); g.stroke();
+        g.beginPath(); g.moveTo(0, -21.4); g.lineTo(i * 1.9, -24.4); g.stroke();
       }
-      g.beginPath(); g.moveTo(1.4, -17.5); g.lineTo(4.6, -26); g.stroke();        // brazo
+      g.strokeStyle = '#FFFFFF';
+      g.beginPath(); g.moveTo(1.4, -17.5); g.lineTo(4.6, -26); g.stroke();
       g.beginPath(); g.moveTo(4.6, -26); g.lineTo(4.6, -28.4); g.stroke();
       g.fillStyle = '#5FE0E6';
       g.beginPath(); g.moveTo(4.6, -33); g.lineTo(6.4, -28.6); g.lineTo(2.8, -28.6); g.closePath(); g.fill();
@@ -846,130 +947,119 @@ const Escena = (() => {
     g.restore();
   }
 
+  function traza(pts, cerrar){
+    ctx.beginPath(); let mov = true;
+    const lista = cerrar ? pts.concat([pts[0]]) : pts;
+    for (const [la, lo] of lista){
+      const p = proyectar(aPlano(la, lo));
+      if (!visible(p)){ mov = true; continue; }
+      if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+    }
+    ctx.stroke();
+  }
+
   function pintar(ahora){
     if (!vivo) return;
     const t = (ahora - t0) / 1000;
-    /* 0.025 rad/s, el mismo giro que aplica Three: el relevo no debe
-       notarse como un cambio de velocidad. */
-    const dt = Math.min(64, ahora - (pintar.prev || ahora));
-    pintar.prev = ahora;
-    if (camara.auto && !arrastrando) camara.yaw += 0.025 * dt / 1000;
 
-    /* Inercia */
+    if (camara.auto && !arrastrando) camara.vaiven = REDUCIR ? 0 : Math.sin(t * 0.19) * rad(6);
     if (!arrastrando){
-      camara.yaw += camara.vYaw; camara.pitch += camara.vPitch;
-      camara.vYaw *= 0.94; camara.vPitch *= 0.94;
-      camara.pitch = Math.max(rad(-62), Math.min(rad(62), camara.pitch));
+      camara.yaw = sujeta(camara.yaw + camara.vYaw, CLAMP_YAW);
+      camara.elev = sujeta(camara.elev + camara.vElev, CLAMP_ELEV);
+      camara.vYaw *= 0.93; camara.vElev *= 0.93;
     }
 
     ctx.clearRect(0, 0, w, h);
 
-    /* Cuerpo del globo con luz cenital y halo de borde. */
-    const g1 = ctx.createRadialGradient(cx - R*0.38, cy - R*0.42, R*0.06, cx, cy, R*1.02);
-    g1.addColorStop(0,   '#0A4270');
-    g1.addColorStop(.48, '#032A50');
-    g1.addColorStop(1,   '#00142B');
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fillStyle = g1; ctx.fill();
+    /* Resplandor bajo el mapa: sustituye al vacío que dejaba el globo. */
+    const centro = proyectar([0, 0, 0]);
+    const halo = ctx.createRadialGradient(centro.x, centro.y, 0, centro.x, centro.y, w * 0.95);
+    halo.addColorStop(0,   'rgba(0,160,175,.26)');
+    halo.addColorStop(.55, 'rgba(0,72,132,.14)');
+    halo.addColorStop(1,   'rgba(0,17,41,0)');
+    ctx.fillStyle = halo; ctx.fillRect(0, 0, w, h);
 
-    const halo = ctx.createRadialGradient(cx, cy, R*0.90, cx, cy, R*1.16);
-    halo.addColorStop(0, 'rgba(0,160,175,.30)');
-    halo.addColorStop(1, 'rgba(0,160,175,0)');
-    ctx.beginPath(); ctx.arc(cx, cy, R*1.16, 0, 7); ctx.fillStyle = halo; ctx.fill();
-
-    /* Retícula: paralelos y meridianos, solo cara visible. */
-    ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(220,238,242,.13)';
-    for (let lat = -60; lat <= 60; lat += 30) traza(lat, null);
-    for (let lon = 0; lon < 360; lon += 30) traza(null, lon);
-
-    function traza(lat, lon){
-      ctx.beginPath(); let mov = true;
-      for (let k = 0; k <= 72; k++){
-        const a = lat !== null ? lat : -90 + k * 180/72;
-        const b = lon !== null ? lon : -180 + k * 360/72;
-        const p = proyectar(aVector(a, b));
-        if (p.z < 0){ mov = true; continue; }
-        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
-      }
-      ctx.stroke();
+    /* Retícula del plano */
+    ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(220,238,242,.09)';
+    for (let lat = 15; lat <= 50; lat += 5){
+      const fila = []; for (let lon = -126; lon <= -64; lon += 4) fila.push([lat, lon]);
+      traza(fila, false);
+    }
+    for (let lon = -125; lon <= -65; lon += 5){
+      const col = []; for (let lat = 14; lat <= 50; lat += 3) col.push([lat, lon]);
+      traza(col, false);
     }
 
-    /* Territorio: nube de puntos. El corredor binacional, encendido. */
+    /* Territorio en puntos */
     for (const pt of RELLENO){
       const p = proyectar(pt.v);
-      if (p.z <= 0.02) continue;
-      const r = (pt.clave ? 1.5 : 1.1) * p.s * (R / 170);
-      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0.5, r), 0, 7);
-      ctx.fillStyle = pt.clave
-        ? `rgba(95,224,230,${0.34 + p.z * 0.5})`
-        : `rgba(220,238,242,${0.10 + p.z * 0.14})`;
+      if (!visible(p)) continue;
+      const r = Math.max(0.55, p.esc * 0.20);
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 7);
+      ctx.fillStyle = pt.mx ? 'rgba(95,224,230,.92)' : 'rgba(220,238,242,.44)';
       ctx.fill();
     }
 
     /* Contornos */
     for (const pais of PAISES){
-      ctx.beginPath(); let mov = true;
-      const cerrado = pais.pts.concat([pais.pts[0]]);
-      for (const [la, lo] of cerrado){
-        const p = proyectar(aVector(la, lo));
-        if (p.z < 0){ mov = true; continue; }
-        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
-      }
-      ctx.lineWidth = pais.clave ? 1.6 : 1;
-      ctx.strokeStyle = pais.clave ? 'rgba(95,224,230,.85)' : 'rgba(220,238,242,.22)';
-      ctx.stroke();
+      ctx.lineWidth = pais.mx ? 1.5 : 1.1;
+      ctx.strokeStyle = pais.mx ? 'rgba(95,224,230,.9)' : 'rgba(220,238,242,.34)';
+      traza(pais.pts, true);
     }
 
-    /* Los dos arcos y el pulso que los recorre. */
-    pintarArco(ARCO_IDA,    t, 'rgba(255,255,255,.90)', 2.0);
-    pintarArco(ARCO_VUELTA, t + 3.1, 'rgba(95,224,230,.85)', 1.5);
-
-    function pintarArco(pts, fase, color, grosor){
-      const proj = pts.map(proyectar);
-      ctx.lineWidth = grosor; ctx.lineCap = 'round';
+    /* Trayectorias */
+    for (const tr of TRAYECTOS){
+      const proj = tr.pts.map(proyectar);
+      const color = tr.mx ? 'rgba(95,224,230,' : 'rgba(255,255,255,';
+      ctx.lineWidth = 1.3; ctx.lineCap = 'round';
       ctx.beginPath(); let mov = true;
-      for (let i = 0; i < proj.length; i++){
-        const p = proj[i];
-        if (tapado(p)){ mov = true; continue; }
+      for (const p of proj){
+        if (!visible(p)){ mov = true; continue; }
         if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
       }
-      ctx.strokeStyle = color.replace(/[\d.]+\)$/, '.30)');
-      ctx.stroke();
+      ctx.strokeStyle = color + '.34)'; ctx.stroke();
 
-      /* Estela: un tramo del arco que avanza de un extremo al otro. */
-      const dur = 5.2;
-      const av = REDUCIR ? 0.5 : ((fase % dur) / dur);
-      const cab = Math.floor(av * (proj.length - 1));
-      const col = Math.max(0, cab - 22);
+      /* Estela que recorre el arco */
+      const dur = 4.6;
+      const av = REDUCIR ? 0.5 : cicla(t + tr.fase, dur) / dur;
+      const n = proj.length - 1;
+      const cab = Math.max(0, Math.min(n, Math.round((tr.sentido > 0 ? av : 1 - av) * n)));
+      const desde = Math.max(0, Math.min(n, cab - tr.sentido * 16));
+      const [i0, i1] = desde < cab ? [desde, cab] : [cab, desde];
       ctx.beginPath(); mov = true;
-      for (let i = col; i <= cab; i++){
+      for (let i = i0; i <= i1; i++){
         const p = proj[i];
-        if (tapado(p)){ mov = true; continue; }
+        if (!visible(p)){ mov = true; continue; }
         if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
       }
-      ctx.strokeStyle = color; ctx.stroke();
+      ctx.lineWidth = 2; ctx.strokeStyle = color + '.95)'; ctx.stroke();
 
       const pc = proj[cab];
-      if (pc && !tapado(pc)){
-        ctx.beginPath(); ctx.arc(pc.x, pc.y, grosor * 1.7, 0, 7);
-        ctx.fillStyle = '#FFFFFF'; ctx.fill();
-        ctx.beginPath(); ctx.arc(pc.x, pc.y, grosor * 4.5, 0, 7);
-        ctx.fillStyle = 'rgba(95,224,230,.22)'; ctx.fill();
+      if (pc && visible(pc)){
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, 2.6, 0, 7); ctx.fillStyle = '#FFFFFF'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, 7, 0, 7); ctx.fillStyle = 'rgba(95,224,230,.2)'; ctx.fill();
       }
     }
 
-    /* Monumentos */
+    /* Ciudades: el punto en el lienzo, el nombre en HTML */
+    for (const k in CIUDADES){
+      const c = CIUDADES[k];
+      const p = pantallaDe(c.lat, c.lon);
+      if (!visible(p)) continue;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2.8, 0, 7);
+      ctx.fillStyle = c.mx ? '#5FE0E6' : '#FFFFFF'; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 7, 0, 7);
+      ctx.strokeStyle = c.mx ? 'rgba(95,224,230,.38)' : 'rgba(255,255,255,.30)';
+      ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    /* Monumentos: el pie va sobre la ciudad */
     for (const m of MONUMENTOS){
-      const p = pantallaDe(m.lat, m.lon);
-      if (p.z <= 0.06) continue;
-      const k = Math.max(0.55, (R / 150) * p.s * 0.85);
-      ctx.globalAlpha = Math.min(1, 0.25 + p.z * 1.5);
-      ctx.beginPath(); ctx.arc(p.x, p.y, 3.4, 0, 7);
-      ctx.fillStyle = 'rgba(95,224,230,.9)'; ctx.fill();
-      ctx.beginPath(); ctx.arc(p.x, p.y, 9 + Math.sin(t * 2 + (m.id === 'angel' ? 0 : 1.6)) * 2.2, 0, 7);
-      ctx.strokeStyle = 'rgba(95,224,230,.34)'; ctx.lineWidth = 1; ctx.stroke();
-      dibujarMonumento(ctx, p, m.id, k);
-      ctx.globalAlpha = 1;
-      m._p = p;
+      const c = CIUDADES[m.ciudad];
+      const p = pantallaDe(c.lat, c.lon);
+      if (!visible(p)) continue;
+      const k = (p.esc * 5) / 34;      // 5 unidades de mundo de alto
+      dibujarMonumento(ctx, p, m.id, Math.max(0.5, k));
     }
 
     requestAnimationFrame(pintar);
@@ -979,9 +1069,7 @@ const Escena = (() => {
     tipo:'canvas2d',
     iniciar(){ medir(); addEventListener('resize', medir); requestAnimationFrame(pintar); },
     detener(){ vivo = false; removeEventListener('resize', medir); },
-    medir,
-    pantallaDe,
-    get lienzo(){ return lienzo; }
+    medir, pantallaDe
   };
 })();
 
@@ -992,39 +1080,50 @@ let arrastrando = false;
 
 /* ═══════════════════════════════════════════════════════════════
    2b · MARCADORES
-   Botones HTML anclados a la posición proyectada de cada monumento.
-   Un glifo dibujado en el lienzo no es enfocable ni lo lee un lector
-   de pantalla; un botón sí, y además garantiza la zona táctil.
+   Botones HTML anclados sobre cada monumento. Un glifo dibujado en
+   el lienzo no es enfocable ni lo lee un lector de pantalla; un
+   botón sí, y además garantiza la zona táctil.
    ═══════════════════════════════════════════════════════════════ */
 const Marcas = (() => {
   const capa = document.getElementById('marcas');
-  const botones = MONUMENTOS.map(m => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'marca-pt';
-    b.innerHTML = `<i aria-hidden="true"></i><span>${m.corto}</span>`;
-    b.setAttribute('aria-label', `${m.nom}. ${m.dato}`);
-    capa.appendChild(b);
-    return { b, m };
+  const conMonumento = {};
+  MONUMENTOS.forEach(m => { conMonumento[m.ciudad] = m; });
+
+  const piezas = Object.keys(CIUDADES).map(k => {
+    const c = CIUDADES[k];
+    const m = conMonumento[k];
+    const el = document.createElement(m ? 'button' : 'span');
+    el.className = m ? 'marca-pt' : 'ciudad-pt';
+    el.innerHTML = m
+      ? `<i aria-hidden="true"></i><span>${c.nom}</span>`
+      : `<span>${c.nom}</span>`;
+    if (m){
+      el.type = 'button';
+      el.setAttribute('aria-label', `${m.nom}, ${c.nom}. ${m.dato}`);
+    } else {
+      el.setAttribute('aria-hidden', 'true');   // el dato vive en la hoja
+    }
+    capa.appendChild(el);
+    return { el, c, m };
   });
 
   function conectar(enfocar){
-    botones.forEach(({ b, m }) => b.addEventListener('click', () => enfocar(m)));
+    piezas.filter(x => x.m).forEach(({ el, m }) => el.addEventListener('click', () => enfocar(m)));
   }
 
   (function seguir(){
     requestAnimationFrame(seguir);
-    for (const { b, m } of botones){
-      const p = activo.pantallaDe && activo.pantallaDe(m.lat, m.lon);
-      if (!p){ b.style.visibility = 'hidden'; continue; }
-      const visible = p.z > 0.10;
-      b.style.visibility = visible ? 'visible' : 'hidden';
-      if (!visible) continue;
-      const ancho = b.offsetWidth || 120;
-      const bruto = m.lado > 0 ? p.x + 16 : p.x - ancho - 16;
-      const x = Math.max(10, Math.min(innerWidth - ancho - 10, bruto));
-      b.style.transform = `translate(${Math.round(x)}px, ${Math.round(p.y - 17)}px)`;
-      b.style.opacity = Math.min(1, (p.z - 0.10) * 4).toFixed(2);
+    for (const { el, c, m } of piezas){
+      const p = activo.pantallaDe && activo.pantallaDe(c.lat, c.lon);
+      if (!p || p.prof <= 2){ el.style.visibility = 'hidden'; continue; }
+      el.style.visibility = 'visible';
+      const ancho = el.offsetWidth || 90;
+      /* El botón corona la figura, que mide 5 unidades de mundo.
+         La etiqueta simple se aparta hacia su lado. */
+      const bruto = c.lado > 0 ? p.x + 11 : p.x - ancho - 11;
+      const x = Math.max(6, Math.min(innerWidth - ancho - 6, bruto));
+      const y = m ? p.y - 15 : p.y - 9;
+      el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
     }
   })();
 
@@ -1032,20 +1131,20 @@ const Marcas = (() => {
 })();
 
 /* ═══════════════════════════════════════════════════════════════
-   3 · GESTOS — un dedo gira, dos dedos acercan
+   3 · GESTOS — un dedo gira e inclina, dos dedos acercan
    ═══════════════════════════════════════════════════════════════ */
 (function gestos(){
   const el = document.querySelector('.escena');
   const dedos = new Map();
-  let ultX = 0, ultY = 0, movido = 0, dist0 = 0, zoom0 = 1, iniT = 0;
+  let ultX = 0, ultY = 0, dist0 = 0, zoom0 = 1;
 
   el.addEventListener('pointerdown', e => {
     if (e.target.closest('.barra, .hoja, .salto, .marca-pt')) return;
     dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
     if (dedos.size === 1){
-      arrastrando = true; movido = 0; iniT = performance.now();
+      arrastrando = true;
       ultX = e.clientX; ultY = e.clientY;
-      camara.vYaw = camara.vPitch = 0;
+      camara.vYaw = camara.vElev = 0;
       el.setPointerCapture(e.pointerId);
       document.getElementById('pista').classList.add('oculta');
     } else if (dedos.size === 2){
@@ -1063,18 +1162,17 @@ const Marcas = (() => {
       const [a, b] = [...dedos.values()];
       const d = Math.hypot(a.x - b.x, a.y - b.y);
       if (dist0 > 0){
-        camara.zoom = Math.max(0.75, Math.min(1.75, zoom0 * (d / dist0)));
+        camara.zoom = Math.max(0.8, Math.min(2.4, zoom0 * (d / dist0)));
         activo.medir && activo.medir();
       }
       return;
     }
     const dx = e.clientX - ultX, dy = e.clientY - ultY;
     ultX = e.clientX; ultY = e.clientY;
-    movido += Math.abs(dx) + Math.abs(dy);
-    camara.yaw   -= dx * 0.0068;
-    camara.pitch = Math.max(rad(-62), Math.min(rad(62), camara.pitch + dy * 0.0055));
-    camara.vYaw   = -dx * 0.0016;
-    camara.vPitch =  dy * 0.0013;
+    camara.yaw  = sujeta(camara.yaw - dx * 0.0055, CLAMP_YAW);
+    camara.elev = sujeta(camara.elev - dy * 0.0042, CLAMP_ELEV);
+    camara.vYaw  = -dx * 0.0013;
+    camara.vElev = -dy * 0.0010;
   }, { passive:true });
 
   function soltar(e){
@@ -1086,34 +1184,37 @@ const Marcas = (() => {
   el.addEventListener('pointerup', soltar, { passive:true });
   el.addEventListener('pointercancel', soltar, { passive:true });
 
-  /* Lleva el monumento al centro con una animación corta y abre su sección. */
+  /* Acerca la cámara al monumento y abre su sección de la hoja. */
   function enfocar(m){
-    const { yaw: destYaw, pitch: destPitch } = encara(m.lat, m.lon, 0.75);
-    const iy = camara.yaw, ip = camara.pitch, t0 = performance.now();
-    /* Toma el camino corto alrededor del eje. */
-    let d = ((destYaw - iy + Math.PI) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI) - Math.PI;
+    const c = CIUDADES[m.ciudad];
+    const w = aPlano(c.lat, c.lon);
+    const destino = { yaw: rad(0), elev: rad(42), zoom: 1.45, cx: w[0], cz: w[2] };
+    const ini = {
+      yaw: camara.yaw, elev: camara.elev, zoom: camara.zoom,
+      cx: camara.centro[0], cz: camara.centro[1]
+    };
+    const t0 = performance.now();
     camara.auto = false;
     (function paso(now){
       const k = Math.min(1, (now - t0) / (REDUCIR ? 1 : 620));
       const e = 1 - Math.pow(1 - k, 3);
-      camara.yaw = iy + d * e;
-      camara.pitch = ip + (destPitch - ip) * e;
+      camara.yaw  = ini.yaw  + (destino.yaw  - ini.yaw)  * e;
+      camara.elev = ini.elev + (destino.elev - ini.elev) * e;
+      camara.zoom = ini.zoom + (destino.zoom - ini.zoom) * e;
+      camara.centro[0] = ini.cx + (destino.cx - ini.cx) * e;
+      camara.centro[1] = ini.cz + (destino.cz - ini.cz) * e;
+      activo.medir && activo.medir();
       if (k < 1) requestAnimationFrame(paso);
       else if (!REDUCIR) setTimeout(() => { camara.auto = true; }, 2600);
     })(performance.now());
 
     Hoja.abrir('medio');
     Hoja.irA(m.ir);
-    anunciar(`${m.nom}. ${m.dato}`);
+    document.getElementById('estado').setAttribute('aria-label', `${m.nom}. ${m.dato}`);
   }
 
   Marcas.conectar(enfocar);
 })();
-
-function anunciar(txt){
-  const est = document.getElementById('estado');
-  est.setAttribute('aria-label', txt);
-}
 
 /* ═══════════════════════════════════════════════════════════════
    4 · BOTTOM SHEET — tres posiciones, arrastre con inercia
@@ -1139,6 +1240,7 @@ const Hoja = (() => {
     hoja.classList.toggle('suave', animar);
     hoja.style.setProperty('--y', y + 'px');
     asa.setAttribute('aria-expanded', String(nombre !== 'pico'));
+    document.body.dataset.hoja = nombre;
     scroll.style.overflowY = nombre === 'pico' ? 'hidden' : 'auto';
   }
 
@@ -1380,105 +1482,106 @@ try {
 }
 
 function iniciarThree(THREE){
-  const viejo = document.getElementById('globo');
+  const viejo = document.getElementById('mapa');
   Escena.detener();
 
   const lienzo = document.createElement('canvas');
-  lienzo.id = 'globo'; lienzo.setAttribute('aria-hidden', 'true');
+  lienzo.id = 'mapa'; lienzo.setAttribute('aria-hidden', 'true');
   viejo.replaceWith(lienzo);
 
   const ren = new THREE.WebGLRenderer({ canvas:lienzo, antialias:true, alpha:true });
   ren.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
 
   const escena = new THREE.Scene();
-  const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  const cam = new THREE.PerspectiveCamera(FOV, 1, 1, 4000);
+  const mapa = new THREE.Group();      // gira
+  const interior = new THREE.Group();  // se desplaza al punto de mira
+  mapa.add(interior);
+  escena.add(mapa);
 
-  /* pitch en el grupo externo, yaw en el interno: mismo orden que
-     el respaldo, así los gestos se sienten idénticos. */
-  const externo = new THREE.Group(), interno = new THREE.Group();
-  externo.add(interno); escena.add(externo);
-
-  const V = (a) => new THREE.Vector3(a[0], a[1], a[2]);
-
-  /* Cuerpo */
-  const cuerpo = new THREE.Mesh(
-    new THREE.SphereGeometry(0.995, 64, 48),
-    new THREE.MeshPhongMaterial({ color:0x032F58, shininess:16, specular:0x0A5F6B })
+  const V = a => new THREE.Vector3(a[0], a[1], a[2]);
+  const linea = (pts, color, op) => new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(pts.map(V)),
+    new THREE.LineBasicMaterial({ color, transparent:true, opacity:op })
   );
-  interno.add(cuerpo);
 
-  const atmosfera = new THREE.Mesh(
-    new THREE.SphereGeometry(1.14, 48, 32),
-    new THREE.MeshBasicMaterial({ color:0x00A0AF, transparent:true, opacity:0.075,
-      side:THREE.BackSide, blending:THREE.AdditiveBlending, depthWrite:false })
-  );
-  interno.add(atmosfera);
-
-  escena.add(new THREE.AmbientLight(0x1C4E7A, 2.1));
-  const sol = new THREE.DirectionalLight(0xDCEEF2, 1.25);
-  sol.position.set(-1.2, 1.1, 1.6); escena.add(sol);
-
-  /* Retícula */
+  /* Retícula del plano */
   const gv = [];
-  const meta = (lat, lon) => {
-    const pts = [];
-    for (let k = 0; k <= 72; k++){
-      const a = lat !== null ? lat : -90 + k*180/72;
-      const b = lon !== null ? lon : -180 + k*360/72;
-      pts.push(aVector(a, b).map(n => n*1.002));
+  for (let lat = 15; lat <= 50; lat += 5)
+    for (let lon = -126; lon < -64; lon += 4){
+      gv.push(...aPlano(lat, lon), ...aPlano(lat, lon + 4));
     }
-    for (let i = 0; i < pts.length - 1; i++){ gv.push(...pts[i], ...pts[i+1]); }
-  };
-  for (let lat = -60; lat <= 60; lat += 30) meta(lat, null);
-  for (let lon = 0; lon < 360; lon += 30) meta(null, lon);
-  const reticula = new THREE.LineSegments(
+  for (let lon = -125; lon <= -65; lon += 5)
+    for (let lat = 14; lat < 50; lat += 3){
+      gv.push(...aPlano(lat, lon), ...aPlano(lat + 3, lon));
+    }
+  interior.add(new THREE.LineSegments(
     new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(gv, 3)),
-    new THREE.LineBasicMaterial({ color:0xDCEEF2, transparent:true, opacity:0.14 })
-  );
-  interno.add(reticula);
+    new THREE.LineBasicMaterial({ color:0xDCEEF2, transparent:true, opacity:0.09 })
+  ));
 
   /* Territorio: las mismas muestras que usa el respaldo */
-  for (const clave of [true, false]){
+  for (const mx of [true, false]){
     const v = [];
-    RELLENO.filter(p => p.clave === clave)
-           .forEach(p => v.push(p.v[0]*1.004, p.v[1]*1.004, p.v[2]*1.004));
-    if (!v.length) continue;
-    interno.add(new THREE.Points(
+    RELLENO.filter(p => p.mx === mx).forEach(p => v.push(p.v[0], 0.04, p.v[2]));
+    interior.add(new THREE.Points(
       new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
-      new THREE.PointsMaterial({ color: clave ? 0x5FE0E6 : 0xDCEEF2, size: clave ? 0.017 : 0.012,
-        transparent:true, opacity: clave ? 0.95 : 0.30, sizeAttenuation:true })
+      new THREE.PointsMaterial({ color: mx ? 0x5FE0E6 : 0xDCEEF2, size: mx ? 0.78 : 0.58,
+        transparent:true, opacity: mx ? 0.95 : 0.42, sizeAttenuation:true })
     ));
   }
 
   /* Contornos */
   for (const pais of PAISES){
-    const v = [];
-    pais.pts.concat([pais.pts[0]]).forEach(([la, lo]) =>
-      v.push(...aVector(la, lo).map(n => n*1.008)));
-    interno.add(new THREE.Line(
-      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
-      new THREE.LineBasicMaterial({ color: pais.clave ? 0x5FE0E6 : 0xDCEEF2,
-        transparent:true, opacity: pais.clave ? 0.9 : 0.25 })
-    ));
+    const pts = pais.pts.concat([pais.pts[0]]).map(([la, lo]) => {
+      const p = aPlano(la, lo); return [p[0], 0.12, p[2]];
+    });
+    interior.add(linea(pts, pais.mx ? 0x5FE0E6 : 0xDCEEF2, pais.mx ? 0.92 : 0.34));
   }
 
-  /* Arcos y pulsos */
+  /* Trayectorias y sus estelas */
+  const LARGO_ESTELA = 17;
   const pulsos = [];
-  for (const [pts, color, fase] of [[ARCO_IDA, 0xFFFFFF, 0], [ARCO_VUELTA, 0x5FE0E6, 3.1]]){
-    const v = []; pts.forEach(p => v.push(...p));
-    interno.add(new THREE.Line(
-      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
-      new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.42 })
-    ));
+  for (const tr of TRAYECTOS){
+    const color = tr.mx ? 0x5FE0E6 : 0xFFFFFF;
+    interior.add(linea(tr.pts, color, 0.34));
+
+    /* Tramo brillante que recorre el arco. Se reescribe cada
+       fotograma sobre un búfer de tamaño fijo. */
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(LARGO_ESTELA * 3), 3));
+    const estela = new THREE.Line(geo, new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.95 }));
+    interior.add(estela);
+
     const bola = new THREE.Mesh(
-      new THREE.SphereGeometry(0.022, 14, 10),
-      new THREE.MeshBasicMaterial({ color })
+      new THREE.SphereGeometry(0.5, 12, 10),
+      new THREE.MeshBasicMaterial({ color:0xFFFFFF })
     );
-    interno.add(bola);
-    pulsos.push({ pts, bola, fase });
+    interior.add(bola);
+    pulsos.push({ tr, bola, estela });
   }
 
-  /* Monumentos low-poly */
+  /* Ciudades */
+  const anilloGeo = new THREE.RingGeometry(0.55, 0.8, 20);
+  for (const k in CIUDADES){
+    const c = CIUDADES[k];
+    const p = aPlano(c.lat, c.lon);
+    const punto = new THREE.Mesh(
+      new THREE.SphereGeometry(0.32, 12, 10),
+      new THREE.MeshBasicMaterial({ color: c.mx ? 0x5FE0E6 : 0xFFFFFF })
+    );
+    punto.position.set(p[0], 0.2, p[2]);
+    interior.add(punto);
+
+    const anillo = new THREE.Mesh(anilloGeo, new THREE.MeshBasicMaterial({
+      color: c.mx ? 0x5FE0E6 : 0xFFFFFF, transparent:true, opacity:0.34, side:THREE.DoubleSide
+    }));
+    anillo.position.set(p[0], 0.06, p[2]);
+    anillo.rotation.x = -Math.PI / 2;
+    interior.add(anillo);
+  }
+
+  /* Monumentos low-poly, de pie sobre su ciudad */
   function monumento(id){
     const g = new THREE.Group();
     const blanco = new THREE.MeshBasicMaterial({ color:0xFFFFFF });
@@ -1487,109 +1590,96 @@ function iniciarThree(THREE){
       const m = new THREE.Mesh(geo, mat); m.position.y = y; if (rz) m.rotation.z = rz; g.add(m); return m;
     };
     if (id === 'angel'){
-      add(new THREE.BoxGeometry(0.055, 0.018, 0.055), blanco, 0.009);
-      add(new THREE.CylinderGeometry(0.010, 0.013, 0.115, 10), blanco, 0.075);
-      add(new THREE.BoxGeometry(0.034, 0.012, 0.034), blanco, 0.138);
-      add(new THREE.SphereGeometry(0.014, 12, 10), blanco, 0.160);
-      const alaG = new THREE.BoxGeometry(0.006, 0.052, 0.020);
-      add(alaG, luz,  0.176,  0.5).position.x = -0.020;
-      add(alaG, luz,  0.176, -0.5).position.x =  0.020;
+      add(new THREE.BoxGeometry(1.15, 0.38, 1.15), blanco, 0.19);
+      add(new THREE.CylinderGeometry(0.21, 0.27, 2.4, 10), blanco, 1.58);
+      add(new THREE.BoxGeometry(0.7, 0.25, 0.7), blanco, 2.9);
+      add(new THREE.SphereGeometry(0.29, 12, 10), blanco, 3.35);
+      const ala = new THREE.BoxGeometry(0.12, 1.1, 0.42);
+      add(ala, luz, 3.7,  0.5).position.x = -0.42;
+      add(ala, luz, 3.7, -0.5).position.x =  0.42;
     } else {
-      add(new THREE.BoxGeometry(0.062, 0.030, 0.062), blanco, 0.015);
-      add(new THREE.ConeGeometry(0.026, 0.115, 8), blanco, 0.088);
-      add(new THREE.SphereGeometry(0.014, 12, 10), blanco, 0.156);
-      const corona = add(new THREE.ConeGeometry(0.024, 0.020, 7), luz, 0.176);
+      add(new THREE.BoxGeometry(1.3, 0.62, 1.3), blanco, 0.31);
+      add(new THREE.ConeGeometry(0.55, 2.4, 8), blanco, 1.82);
+      add(new THREE.SphereGeometry(0.29, 12, 10), blanco, 3.25);
+      const corona = add(new THREE.ConeGeometry(0.5, 0.42, 7), luz, 3.66);
       corona.rotation.x = Math.PI;
-      const brazo = add(new THREE.CylinderGeometry(0.005, 0.005, 0.075, 8), blanco, 0.168, -0.55);
-      brazo.position.x = 0.028;
-      const llama = add(new THREE.ConeGeometry(0.014, 0.032, 8), luz, 0.212);
-      llama.position.x = 0.049;
+      const brazo = add(new THREE.CylinderGeometry(0.1, 0.1, 1.55, 8), blanco, 3.5, -0.55);
+      brazo.position.x = 0.58;
+      const llama = add(new THREE.ConeGeometry(0.28, 0.66, 8), luz, 4.42);
+      llama.position.x = 1.0;
     }
-    g.scale.setScalar(0.8);
     return g;
   }
 
-  /* Los monumentos miran siempre al observador. Plantados sobre la
-     normal de la esfera se veían de punta —escorzados a un cuadrado
-     blanco— justo en la latitud donde ocurre la campaña. */
-  const carteles = [];
   for (const m of MONUMENTOS){
+    const c = CIUDADES[m.ciudad];
+    const p = aPlano(c.lat, c.lon);
     const g = monumento(m.id);
-    const dir = V(aVector(m.lat, m.lon)).normalize();
-    g.position.copy(dir.clone().multiplyScalar(0.995));
-    interno.add(g);
-    carteles.push(g);
-
-    const base = new THREE.Mesh(
-      new THREE.SphereGeometry(0.016, 12, 10),
-      new THREE.MeshBasicMaterial({ color:0x5FE0E6 })
-    );
-    base.position.copy(dir.clone().multiplyScalar(1.0));
-    interno.add(base);
+    g.position.set(p[0], 0, p[2]);
+    interior.add(g);
   }
 
-  /* Proyección a pantalla: la usan los gestos para el toque. */
-  const tmp = new THREE.Vector3(), centro = new THREE.Vector3(), normal = new THREE.Vector3();
+  /* Proyección a pantalla para los marcadores HTML. */
+  const tmp = new THREE.Vector3();
   function pantallaDe(lat, lon){
-    tmp.set(...aVector(lat, lon));
-    interno.localToWorld(tmp);
-    const mundo = tmp.clone();
-    externo.getWorldPosition(centro);
-    /* Visible si la normal del punto apunta hacia la cámara. */
-    normal.copy(mundo).sub(centro).normalize();
-    const haciaCam = cam.position.clone().sub(mundo).normalize();
-    const z = normal.dot(haciaCam);
-
+    const w = aPlano(lat, lon);
+    tmp.set(w[0], 0, w[2]);
+    interior.localToWorld(tmp);
+    const prof = cam.position.distanceTo(tmp);
     tmp.project(cam);
     const r = ren.domElement.getBoundingClientRect();
-    return { x:(tmp.x*0.5 + 0.5) * r.width, y:(-tmp.y*0.5 + 0.5) * r.height, z, s:1 };
+    const f = (r.height / 2) / Math.tan(rad(FOV / 2));
+    return {
+      x:(tmp.x * 0.5 + 0.5) * r.width,
+      y:(-tmp.y * 0.5 + 0.5) * r.height,
+      prof: tmp.z < 1 ? prof : -1,
+      esc: f / prof
+    };
   }
 
-  const FOV = 38;
   function medir(){
     const w = lienzo.clientWidth, h = lienzo.clientHeight;
     ren.setSize(w, h, false);
-    cam.aspect = w / h; cam.updateProjectionMatrix();
-
-    /* La distancia se deduce del radio en píxeles que queremos, no al
-       revés. En retrato el FOV horizontal es el que manda, y fijarlo a
-       ojo es justo lo que hacía que el globo se saliera de cuadro. */
-    const rPix = ENCUADRE.radio(w, h) * camara.zoom;
-    const f = rPix / (h / 2);
-    const d = 1 / (f * Math.tan(rad(FOV / 2)));
-    cam.position.set(0, 0, d);
+    cam.aspect = w / h;
+    /* Sube el encuadre para que el mapa caiga en la banda libre,
+       igual que hace el respaldo con su centro de proyección. */
+    cam.setViewOffset(w, h, 0, h / 2 - ENCUADRE.centroY(h), w, h);
+    cam.updateProjectionMatrix();
+    const D = ENCUADRE.distancia(w, h);
+    cam.position.set(0, D * Math.sin(camara.elev), D * Math.cos(camara.elev));
     cam.lookAt(0, 0, 0);
-
-    /* Desplaza el globo, no la cámara, para no torcer la proyección. */
-    const dyPix = (h / 2) - h * ENCUADRE.centroY;
-    externo.position.y = (dyPix / (h / 2)) * (d * Math.tan(rad(FOV / 2)));
   }
   addEventListener('resize', medir);
   medir();
 
   const relojT = new THREE.Clock();
-  const qPadre = new THREE.Quaternion();
   (function bucle(){
     requestAnimationFrame(bucle);
-    const dt = relojT.getDelta(), t = relojT.getElapsedTime();
+    const t = relojT.getElapsedTime();
 
-    if (camara.auto && !arrastrando) camara.yaw += 0.025 * dt;
+    if (camara.auto && !arrastrando) camara.vaiven = REDUCIR ? 0 : Math.sin(t * 0.19) * rad(6);
     if (!arrastrando){
-      camara.yaw += camara.vYaw; camara.pitch += camara.vPitch;
-      camara.vYaw *= 0.94; camara.vPitch *= 0.94;
-      camara.pitch = Math.max(-1.08, Math.min(1.08, camara.pitch));
+      camara.yaw = sujeta(camara.yaw + camara.vYaw, CLAMP_YAW);
+      camara.elev = sujeta(camara.elev + camara.vElev, CLAMP_ELEV);
+      camara.vYaw *= 0.93; camara.vElev *= 0.93;
     }
-    interno.rotation.y = camara.yaw;
-    externo.rotation.x = camara.pitch;
+    mapa.rotation.y = camara.yaw + camara.vaiven;
+    interior.position.set(-camara.centro[0], 0, -camara.centro[1]);
+    interior.updateMatrixWorld();
+    medir();
 
-    /* Orientación local que compensa la rotación del padre. */
-    interno.getWorldQuaternion(qPadre).invert();
-    for (const g of carteles) g.quaternion.copy(qPadre).multiply(cam.quaternion);
+    for (const { tr, bola, estela } of pulsos){
+      const av = REDUCIR ? 0.5 : cicla(t + tr.fase, 4.6) / 4.6;
+      const n = tr.pts.length - 1;
+      const cab = Math.max(0, Math.min(n, Math.round((tr.sentido > 0 ? av : 1 - av) * n)));
+      bola.position.set(...tr.pts[cab]);
 
-    for (const p of pulsos){
-      const av = REDUCIR ? 0.5 : (((t + p.fase) % 5.2) / 5.2);
-      const i = Math.min(p.pts.length - 1, Math.floor(av * (p.pts.length - 1)));
-      p.bola.position.set(...p.pts[i]);
+      const pos = estela.geometry.attributes.position;
+      for (let k = 0; k < LARGO_ESTELA; k++){
+        const i = Math.max(0, Math.min(n, cab - tr.sentido * k));
+        pos.setXYZ(k, tr.pts[i][0], tr.pts[i][1], tr.pts[i][2]);
+      }
+      pos.needsUpdate = true;
     }
     ren.render(escena, cam);
   })();

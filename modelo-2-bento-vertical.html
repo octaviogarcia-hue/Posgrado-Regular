@@ -96,10 +96,25 @@ button{font:inherit;color:inherit}
   background:linear-gradient(180deg,rgba(0,17,43,.94) 40%,rgba(0,17,43,.62) 76%,rgba(0,17,43,0));
   -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
 }
-/* Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG */
-.marca{display:flex;flex-direction:column;line-height:1.15;min-width:0}
-.marca b{font-size:14px;font-weight:750;letter-spacing:-.015em;color:var(--blanco);white-space:nowrap}
-.marca span{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--tenue);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ── Logotipo del encabezado fijo ─────────────────────────── */
+.logo{display:flex;align-items:center;gap:9px;min-width:0}
+.logo .emblema{width:30px;height:30px;flex:none;color:#FFFFFF}
+.logo-oficial{height:34px;width:auto;flex:none}
+.lockup{display:flex;flex-direction:column;line-height:1.18;min-width:0}
+.lockup b{
+  font-size:13.5px;font-weight:750;letter-spacing:-.012em;color:#FFFFFF;white-space:nowrap;
+}
+.lockup b em{font-style:normal;font-weight:600;color:#5FE0E6;letter-spacing:.02em}
+.lockup > span{
+  font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (max-width:22rem){
+  .logo .emblema{width:26px;height:26px}
+  .lockup b{font-size:12px}
+  .lockup > span{font-size:8px;letter-spacing:.1em}
+}
+.lockup > span{color:var(--tenue)}
 .estado{
   margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
   padding:7px 11px;border-radius:var(--r-pill);
@@ -379,10 +394,31 @@ details p{font-size:12.5px;color:var(--tenue);padding:0 0 var(--s-4)}
 <a class="salto" href="#pre-registro">Saltar al pre-registro</a>
 
 <header class="barra">
-  <!-- Sustituir por el lockup oficial de COMEXUS / Fulbright en SVG -->
-  <div class="marca">
-    <b>Fulbright-García Robles</b>
-    <span>COMEXUS · Posgrado Regular</span>
+<!-- ─────────────────────────────────────────────────────────
+       LOGOTIPO. Recreación tipográfica en SVG puro, provisional:
+       el uso de la marca Fulbright está regulado. Para publicar,
+       sustituir todo este bloque por el lockup oficial que
+       entregue COMEXUS. El contenedor ya está dimensionado para
+       recibirlo tal cual:
+         <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
+              class="logo-oficial" width="188" height="34">
+       ───────────────────────────────────────────────────────── -->
+  <div class="logo">
+    <svg class="emblema" viewBox="0 0 44 44" role="img" aria-label="Fulbright COMEXUS">
+      <rect x="1.2" y="1.2" width="41.6" height="41.6" rx="12"
+            fill="none" stroke="currentColor" stroke-opacity=".34" stroke-width="1.5"/>
+      <!-- Dos trayectorias entre dos puntos: el corredor binacional -->
+      <path d="M9.5 30.5C15 15.5 29 15.5 34.5 30.5" fill="none" stroke="#FFFFFF"
+            stroke-width="2" stroke-linecap="round"/>
+      <path d="M9.5 30.5C15 22.5 29 22.5 34.5 30.5" fill="none" stroke="#5FE0E6"
+            stroke-width="1.6" stroke-linecap="round" stroke-opacity=".85"/>
+      <circle cx="9.5" cy="30.5" r="3" fill="#5FE0E6"/>
+      <circle cx="34.5" cy="30.5" r="3" fill="#FFFFFF"/>
+    </svg>
+    <span class="lockup">
+      <b>Fulbright <em>COMEXUS</em></b>
+      <span>Becas Fulbright-García Robles</span>
+    </span>
   </div>
   <div class="estado" id="estado" role="status">
     <i aria-hidden="true"></i>

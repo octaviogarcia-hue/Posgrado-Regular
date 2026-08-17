@@ -12,7 +12,7 @@ en lugar de eventos de ratón.
 ## Contenido
 
 ```
-modelo-1-recorrido-binacional.html   Globo 3D interactivo (Three.js + respaldo propio)
+modelo-1-recorrido-binacional.html   Mapa 3D interactivo (Three.js + respaldo propio)
 modelo-2-bento-vertical.html         Bento apilado, glassmorphism, sin motores 3D
 docs/
   01-copy.md                         Hook del volante y microcopy de las landings
@@ -33,17 +33,22 @@ sin dependencias obligatorias. Se abren con doble clic.
 
 ### Modelo 1 — Recorrido Binacional
 
-Un globo terráqueo encuadrado para pantalla vertical, girando sobre el corredor
-México–Estados Unidos. Dos arcos animados viajan entre las dos ciudades, uno en cada
-sentido. En sus extremos, el **Ángel de la Independencia** y la **Estatua de la Libertad**,
-construidos con geometrías simples. La información vive en un **bottom sheet** de tres
-posiciones que se arrastra con el pulgar.
+Solo México y Estados Unidos, en malla de puntos sobre un plano inclinado. **Seis
+trayectorias animadas** unen Ciudad de México, Monterrey y Guadalajara con Los Ángeles,
+Austin, Houston, Miami y Nueva York, en los dos sentidos. El **Ángel de la Independencia**
+y la **Estatua de la Libertad** se levantan low-poly sobre sus ciudades. La información
+vive en un **bottom sheet** de tres posiciones que se arrastra con el pulgar.
 
-- **Gestos:** un dedo gira, dos dedos acercan, el toque en un marcador centra la cámara y
-  abre la sección correspondiente.
+- **Encuadre.** Un mapa de Norteamérica con el norte arriba no puede ser más alto que ancho
+  en pantalla: aun visto desde cenit su relación máxima es 0.7:1, y el móvil es 2.16:1. Por
+  eso no se encaja en el ancho —eso deja media pantalla vacía, que es lo que ocurría con el
+  globo— sino que llena la banda libre entre el titular y la hoja y sangra por los costados.
+- **Gestos:** un dedo gira e inclina, dos dedos acercan; el toque en un monumento lleva la
+  cámara sobre esa ciudad y abre su sección de la hoja.
 - **Marcadores accesibles:** los monumentos llevan botones HTML anclados a su posición
   proyectada. Un glifo dibujado en el lienzo no es enfocable ni lo lee un lector de
-  pantalla; un botón sí.
+  pantalla; un botón sí. Los nombres de ciudad también son HTML, así que se ven igual con
+  cualquiera de los dos renderizadores.
 - **Formulario de un paso, tres campos** — máxima tasa de conversión.
 
 Three.js se carga por CDN mediante *import map* (ESM). El punto importante es cómo:
@@ -65,6 +70,24 @@ dedo, revelado escalonado, contadores de monto, reloj de cierre al segundo—.
 - Control segmentado para alternar entre «Sí puedes» y «No aplica» en elegibilidad.
 - **Formulario de dos pasos, seis campos** — menos conversión bruta, mucha mejor
   segmentación de la secuencia de correos.
+
+---
+
+## Encabezado fijo y logotipo
+
+Las dos páginas abren con un **sticky header** que contiene el lockup
+`Fulbright COMEXUS · Becas Fulbright-García Robles`, dibujado en **SVG puro**: un emblema de
+dos trayectorias entre dos puntos —el mismo motivo del corredor binacional— más la marca
+denominativa.
+
+Es una **recreación provisional**. El uso de la marca Fulbright está regulado, así que antes
+de publicar hay que sustituir el bloque por el archivo oficial que entregue COMEXUS. El
+contenedor ya está dimensionado para recibirlo sin tocar el resto del encabezado:
+
+```html
+<img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
+     class="logo-oficial" width="188" height="34">
+```
 
 ---
 
@@ -103,9 +126,10 @@ Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 p
 |---|---|
 | Errores de consola y de JavaScript | Ninguno |
 | Desbordamiento horizontal (390 y 1440 px) | Ninguno |
-| Modelo 1 con Three.js real (servido en local) | WebGL2, globo y monumentos en escena |
+| Modelo 1 con Three.js real (servido en local) | WebGL2, mapa, trayectorias y monumentos en escena |
 | Modelo 1 con el CDN bloqueado | Renderiza por el respaldo en Canvas 2D, sin salto visible |
-| Toque en un marcador | Centra la cámara, abre la hoja y salta a su sección |
+| Toque en un monumento | Lleva la cámara sobre la ciudad, abre la hoja y salta a su sección |
+| Logotipo del encabezado fijo | Presente y legible en los dos modelos |
 | Zonas táctiles por debajo de 44 px | Ninguna |
 | Contador con convocatoria abierta | 61 d 13 h 59 m 12 s, avanza al segundo |
 | Estado de convocatoria cerrada | Píldora, reloj, hito, dock, CTA y formulario cambian a la vez |
