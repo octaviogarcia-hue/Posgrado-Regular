@@ -12,7 +12,7 @@ en lugar de eventos de ratón.
 ## Contenido
 
 ```
-modelo-1-recorrido-binacional.html   Mapa 3D interactivo (Three.js + respaldo propio)
+modelo-1-scrollytelling.html         Relato guiado por scroll con mapa SVG animado
 modelo-2-bento-vertical.html         Bento apilado, glassmorphism, sin motores 3D
 docs/
   01-copy.md                         Hook del volante y microcopy de las landings
@@ -20,8 +20,8 @@ docs/
   preregistro.schema.json            Esquema del payload de pre-registro
 tools/
   build_artifacts.py                 Genera fragmentos publicables desde los HTML
-archivo/v1/                          Versión anterior del encargo (otra paleta y otro
-                                     concepto de escena), conservada como referencia
+archivo/                             Versiones anteriores del encargo (v1: icosaedro;
+                                     v2: globo y mapa 3D en WebGL), como referencia
 ```
 
 Los dos HTML son **autónomos**: CSS y JavaScript embebidos, sin build, sin fuentes externas,
@@ -31,40 +31,37 @@ sin dependencias obligatorias. Se abren con doble clic.
 
 ## Los dos modelos
 
-### Modelo 1 — Recorrido Binacional
+### Modelo 1 — Del Ángel a la Antorcha
 
-Solo México y Estados Unidos, en malla de puntos sobre un plano inclinado. **Seis
-trayectorias animadas** unen Ciudad de México, Monterrey y Guadalajara con Los Ángeles,
-Austin, Houston, Miami y Nueva York, en los dos sentidos. El **Ángel de la Independencia**
-y la **Estatua de la Libertad** se levantan low-poly sobre sus ciudades. La información
-vive en un **bottom sheet** de tres posiciones que se arrastra con el pulgar.
+Un relato guiado por el scroll. El escenario queda fijo bajo el encabezado mientras las
+tarjetas de contenido pasan por debajo, y el desplazamiento mueve una **cámara sobre un mapa
+SVG** de México y Estados Unidos: arranca cerrada sobre Ciudad de México, se abre a las tres
+ciudades emisoras, cruza la frontera y termina en el noreste. Seis **trayectorias que se
+trazan solas** unen Ciudad de México, Monterrey y Guadalajara con Los Ángeles, Austin,
+Houston, Miami y Nueva York. El **Ángel de la Independencia** cede el sitio a la **Estatua de
+la Libertad** a mitad del trayecto, en SVG 2D.
 
-- **Encuadre.** Un mapa de Norteamérica con el norte arriba no puede ser más alto que ancho
-  en pantalla: aun visto desde cenit su relación máxima es 0.7:1, y el móvil es 2.16:1. Por
-  eso no se encaja en el ancho —eso deja media pantalla vacía, que es lo que ocurría con el
-  globo— sino que llena la banda libre entre el titular y la hoja y sangra por los costados.
-- **Gestos:** un dedo gira e inclina, dos dedos acercan; el toque en un monumento lleva la
-  cámara sobre esa ciudad y abre su sección de la hoja.
-- **Marcadores accesibles:** los monumentos llevan botones HTML anclados a su posición
-  proyectada. Un glifo dibujado en el lienzo no es enfocable ni lo lee un lector de
-  pantalla; un botón sí. Los nombres de ciudad también son HTML, así que se ven igual con
-  cualquiera de los dos renderizadores.
+- **Un solo cálculo gobierna todo.** El avance del scroll dentro del relato produce un valor
+  entre 0 y 1, y de ahí salen el encuadre de la cámara, el trazado de cada arco, la
+  transición entre monumentos y la barra de progreso. No hay animaciones sueltas que se
+  desincronicen.
+- **La cámara escala el grupo, no los rótulos.** Cada ciudad va en su propio grupo con la
+  escala compensada, y los trazos usan `vector-effect: non-scaling-stroke`. Sin eso, a 2.7
+  aumentos los nombres se leerían al triple y las fronteras se verían como tuberías.
+- **`prefers-reduced-motion`** entrega el mapa completo, los seis arcos trazados y los dos
+  monumentos a la vez, sin movimiento.
 - **Formulario de un paso, tres campos** — máxima tasa de conversión.
-
-Three.js se carga por CDN mediante *import map* (ESM). El punto importante es cómo:
-
-> Un renderizador propio en Canvas 2D **pinta desde el primer fotograma**, con la misma
-> geometría, el mismo encuadre y la misma interacción. Si Three.js llega antes de 3.5 s,
-> releva el render sustituyendo el `<canvas>`. Si el CDN está bloqueado por CSP, por la red
-> del campus o por falta de conexión, no ocurre nada visible. El hero nunca queda vacío y el
-> LCP no depende de un tercero.
 
 ### Modelo 2 — Corredor Fulbright
 
-Interfaz contemporánea sin motores 3D: **bento apilado en vertical** (1 columna en móvil,
-4 a partir de 46rem, 6 a partir de 70rem), **glassmorphism** sobre una aurora en movimiento,
-tipografía de peso 800 con tracking negativo y micro-interacciones —reflejo que sigue al
-dedo, revelado escalonado, contadores de monto, reloj de cierre al segundo—.
+Interfaz contemporánea sin animaciones de scroll: **bento apilado en vertical** (1 columna en
+móvil, 4 a partir de 46rem, 6 a partir de 70rem), **glassmorphism** sobre el degradado
+corporativo con auroras en movimiento, Montserrat de peso 800 con tracking negativo y
+micro-interacciones —reflejo que sigue al dedo, revelado escalonado, contadores de monto,
+reloj de cierre al segundo—.
+
+La pieza de acompañamiento es la **única tarjeta de fondo blanco** del bento: en una pila de
+vidrio azul, invertir el valor es lo que hace que un bloque destaque sin gritar.
 
 - **Zonas táctiles de 56 px** en todos los controles.
 - Control segmentado para alternar entre «Sí puedes» y «No aplica» en elegibilidad.
@@ -73,11 +70,28 @@ dedo, revelado escalonado, contadores de monto, reloj de cierre al segundo—.
 
 ---
 
-## Encabezado fijo y logotipo
+## Identidad oficial
 
-Las dos páginas abren con un **sticky header** que contiene el lockup
+Aplicada según la Fulbright Brand Guide:
+
+| | |
+|---|---|
+| Titulares, cifras, interfaz | **Montserrat** (Google Fonts, pesos 400–800) |
+| Citas y acentos formales | **Source Serif 4** en cursiva |
+| Legacy Blue `#003DA5` | Corporativo primario |
+| Azure Blue `#0077C8` | Secundario y transiciones |
+| Sky Blue `#00A9E0` | Acentos y resaltados |
+| Blanco, `#C7C9C7`, `#707372` | Fondos y textos de soporte |
+
+**Una advertencia de contraste que conviene conocer.** Sky Blue es un color de acento: sobre
+blanco da 2.5:1 y sobre el azul del bento menos de 2:1, ambos por debajo del mínimo de la
+WCAG. En las dos páginas pinta **solo gráficos** —arcos, halos, bordes, la antorcha, las
+reglas, la barra de progreso—; el texto usa Legacy Blue, Azure Blue o blanco según el fondo.
+Se ve igual de vivo y se lee.
+
+Ambas páginas abren con un **sticky header** que contiene el lockup
 `Fulbright COMEXUS · Becas Fulbright-García Robles`, dibujado en **SVG puro**: un emblema de
-dos trayectorias entre dos puntos —el mismo motivo del corredor binacional— más la marca
+dos trayectorias entre dos puntos —el motivo del corredor binacional— más la marca
 denominativa.
 
 Es una **recreación provisional**. El uso de la marca Fulbright está regulado, así que antes
@@ -126,9 +140,9 @@ Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 p
 |---|---|
 | Errores de consola y de JavaScript | Ninguno |
 | Desbordamiento horizontal (390 y 1440 px) | Ninguno |
-| Modelo 1 con Three.js real (servido en local) | WebGL2, mapa, trayectorias y monumentos en escena |
-| Modelo 1 con el CDN bloqueado | Renderiza por el respaldo en Canvas 2D, sin salto visible |
-| Toque en un monumento | Lleva la cámara sobre la ciudad, abre la hoja y salta a su sección |
+| Montserrat y Source Serif 4 | Cargan en los dos modelos y en los fragmentos publicados |
+| Modelo 1: recorrido de la cámara | Encuadre, arcos, monumentos y progreso avanzan sincronizados |
+| Modelo 1: rótulos del mapa a cualquier zoom | Tamaño constante; los trazos no engordan |
 | Logotipo del encabezado fijo | Presente y legible en los dos modelos |
 | Zonas táctiles por debajo de 44 px | Ninguna |
 | Contador con convocatoria abierta | 61 d 13 h 59 m 12 s, avanza al segundo |

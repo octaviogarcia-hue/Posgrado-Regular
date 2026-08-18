@@ -41,12 +41,12 @@
       "type": "string",
       "enum": [
         "ciencias_ingenieria",
-        "estudios_eeuu",
         "ciencias_sociales",
         "artes",
-        "negocios"
+        "negocios",
+        "otra"
       ],
-      "description": "Área de estudio. Las dos primeras son las de prioridad declarada (STEM y estudios sobre Estados Unidos). Las áreas clínicas no aparecen porque no son elegibles."
+      "description": "Área de estudio. STEM aparece primero porque tiene prioridad declarada. Las áreas clínicas no aparecen porque no son elegibles."
     },
     "estatus_ingles": {
       "type": "string",
@@ -83,7 +83,7 @@
     },
     "landing_variant": {
       "type": "string",
-      "enum": ["modelo-1-recorrido-binacional", "modelo-2-bento-vertical"],
+      "enum": ["modelo-1-scrollytelling", "modelo-2-bento-vertical"],
       "description": "Modelo de landing que generó el registro. Base de la prueba A/B."
     },
     "referrer": { "type": "string", "description": "document.referrer o 'directo'." },

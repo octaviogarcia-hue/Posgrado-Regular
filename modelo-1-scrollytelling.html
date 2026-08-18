@@ -1,0 +1,1082 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año, con asesoramiento personalizado y seguimiento puntual de COMEXUS. Convocatoria hasta el 31 de enero.">
+<title>Del Ángel a la Antorcha</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   IDENTIDAD OFICIAL — Fulbright Brand Guide
+   Montserrat para titulares e interfaz, Source Serif para acentos
+   formales. Los tres azules corporativos, blanco y los grises de
+   soporte. Nada de esta página usa un color fuera de esa lista,
+   salvo dos derivados que se documentan donde se declaran.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --legacy:#003DA5;      /* Legacy Blue — corporativo primario */
+  --azure:#0077C8;       /* Azure Blue — secundario y transiciones */
+  --sky:#00A9E0;         /* Sky Blue — acentos y resaltados */
+  --blanco:#FFFFFF;
+  --gris-claro:#C7C9C7;
+  --gris:#707372;
+
+  /* Derivados. El primero es Legacy Blue oscurecido, para texto de
+     lectura larga: los grises de la guía son de soporte y no dan
+     contraste suficiente en cuerpo de texto. El segundo es Legacy
+     Blue al 4 % sobre blanco, para fondos de sección.
+
+     Nota de contraste: Sky Blue es un color de acento. Sobre blanco
+     da 2.5:1, por debajo del mínimo de la WCAG, así que aquí solo
+     pinta gráficos —arcos, halos, bordes, la antorcha, la barra de
+     progreso—. El texto usa Legacy o Azure Blue. */
+  --tinta:#12294A;
+  --nieve:#F3F7FC;
+
+  --ff:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+
+  --t--1:.8125rem;
+  --t-0:1rem;
+  --t-1:1.0625rem;
+  --t-2:1.25rem;
+  --t-3:clamp(1.5rem,6vw,2rem);
+  --t-4:clamp(2rem,8.6vw,3rem);
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-8:32px; --s-12:48px;
+  --r:18px; --r-sm:12px; --r-pill:999px;
+  --pad:20px;
+  --toque:56px;
+  --barra-h:60px;
+  --seguro-abajo:env(safe-area-inset-bottom,0px);
+  --seguro-arriba:env(safe-area-inset-top,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--ff);
+  font-size:var(--t-0);
+  line-height:1.6;
+  color:var(--tinta);
+  background:var(--blanco);
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:6px}
+
+.salto{
+  position:absolute;left:var(--pad);top:var(--pad);z-index:90;
+  padding:12px 18px;border-radius:var(--r-pill);
+  background:var(--legacy);color:var(--blanco);font-weight:600;font-size:var(--t--1);
+  text-decoration:none;transform:translateY(-200%);transition:transform .18s ease;
+}
+.salto:focus{transform:none}
+
+/* ── Encabezado fijo ──────────────────────────────────────── */
+.barra{
+  position:fixed;left:0;right:0;top:0;z-index:60;
+  height:calc(var(--barra-h) + var(--seguro-arriba));
+  padding:var(--seguro-arriba) var(--pad) 0;
+  display:flex;align-items:center;gap:var(--s-3);
+  background:rgba(255,255,255,.92);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid rgba(0,61,165,.10);
+}
+/* Contenedor reservado para el logotipo oficial de Fulbright COMEXUS.
+   El SVG de abajo es una recreación provisional; para publicar se
+   sustituye por el archivo que entregue COMEXUS sin tocar nada más:
+   <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
+        class="logo-oficial" width="176" height="34"> */
+.logo{display:flex;align-items:center;gap:9px;min-width:0;text-decoration:none;color:inherit}
+.logo .emblema{width:32px;height:32px;flex:none}
+.logo-oficial{height:34px;width:auto;flex:none}
+.lockup{display:flex;flex-direction:column;line-height:1.16;min-width:0}
+.lockup b{font-size:14px;font-weight:800;letter-spacing:-.02em;color:var(--legacy);white-space:nowrap}
+.lockup b em{font-style:normal;font-weight:600;color:var(--azure)}
+.lockup span{
+  font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (max-width:22rem){ .lockup b{font-size:12.5px} .lockup span{font-size:7.5px;letter-spacing:.08em} }
+
+.estado{
+  margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
+  padding:7px 11px;border-radius:var(--r-pill);
+  background:rgba(0,169,224,.12);border:1px solid rgba(0,119,200,.28);
+  font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--legacy);
+  white-space:nowrap;
+}
+.estado i{width:6px;height:6px;border-radius:50%;background:var(--sky);box-shadow:0 0 0 3px rgba(0,169,224,.22)}
+.estado.cerrada{background:rgba(199,201,199,.28);border-color:var(--gris-claro);color:var(--gris)}
+.estado.cerrada i{background:var(--gris);box-shadow:none}
+.estado .larga{display:none}
+@media (min-width:27rem){ .estado .larga{display:inline} .estado .corta{display:none} }
+
+/* Progreso del relato */
+.progreso{
+  position:fixed;left:0;top:calc(var(--barra-h) + var(--seguro-arriba));z-index:61;
+  height:3px;width:0;background:linear-gradient(90deg,var(--legacy),var(--sky));
+  transition:width .1s linear;
+}
+
+/* ── Portada ──────────────────────────────────────────────── */
+.portada{
+  min-height:100svh;padding:calc(var(--barra-h) + var(--seguro-arriba) + var(--s-8)) var(--pad) var(--s-12);
+  display:flex;flex-direction:column;justify-content:center;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(0,169,224,.14), transparent 62%),
+    var(--blanco);
+}
+.ceja{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  margin-bottom:var(--s-5);padding:7px 13px;border-radius:var(--r-pill);
+  background:var(--legacy);color:var(--blanco);
+  font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+}
+.portada h1{
+  font-size:var(--t-4);font-weight:800;line-height:1.02;letter-spacing:-.03em;
+  color:var(--legacy);text-wrap:balance;
+}
+.portada h1 em{
+  font-family:var(--ff-serif);font-style:italic;font-weight:400;
+  color:var(--azure);letter-spacing:-.01em;
+}
+.portada .lede{margin-top:var(--s-5);font-size:var(--t-1);color:var(--tinta);max-width:32ch}
+.portada .lede b{font-weight:700;color:var(--legacy)}
+
+.confianza{display:flex;flex-direction:column;gap:var(--s-2);margin-top:var(--s-6)}
+.confianza li{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 14px;border-radius:var(--r-sm);
+  background:var(--nieve);border:1px solid rgba(0,61,165,.10);
+  font-size:var(--t--1);font-weight:600;color:var(--tinta);
+}
+.confianza svg{flex:none}
+
+.acciones{display:flex;flex-direction:column;gap:var(--s-2);margin-top:var(--s-6)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:var(--toque);padding:0 24px;border:0;border-radius:var(--r-pill);
+  background:var(--legacy);color:var(--blanco);
+  font-family:var(--ff);font-size:var(--t-0);font-weight:700;letter-spacing:-.005em;
+  cursor:pointer;text-decoration:none;touch-action:manipulation;
+  box-shadow:0 8px 22px rgba(0,61,165,.26);
+  transition:transform .12s ease,background .2s ease,box-shadow .2s ease;
+}
+.btn:active{transform:scale(.975);background:#00307F}
+.btn:disabled{opacity:.5}
+.btn.fantasma{
+  background:var(--blanco);color:var(--legacy);
+  border:1.5px solid var(--legacy);box-shadow:none;
+}
+.btn.fantasma:active{background:var(--nieve)}
+
+.pista-scroll{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:var(--s-8);font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gris);
+}
+.pista-scroll svg{animation:baja 1.8s ease-in-out infinite}
+@keyframes baja{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ── Relato con escenario fijo ────────────────────────────── */
+.relato{position:relative}
+.escenario{
+  position:sticky;top:calc(var(--barra-h) + var(--seguro-arriba));
+  height:44svh;min-height:264px;z-index:3;
+  background:linear-gradient(180deg,var(--nieve),var(--blanco));
+  border-bottom:1px solid rgba(0,61,165,.09);
+  overflow:hidden;
+}
+.escenario svg.mapa{position:absolute;inset:0;width:100%;height:100%}
+.pais{fill:rgba(0,119,200,.07);stroke:var(--azure);stroke-width:1.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.pais.mx{fill:rgba(0,169,224,.16);stroke:var(--legacy);stroke-width:2}
+.arco{
+  fill:none;stroke:var(--legacy);stroke-width:2.6;stroke-linecap:round;
+  opacity:.9;vector-effect:non-scaling-stroke;
+}
+.arco.sec{stroke:var(--sky);stroke-width:2.2}
+.punto{fill:var(--legacy)}
+.punto.us{fill:var(--azure)}
+.halo{fill:none;stroke:var(--sky);stroke-width:1.6;opacity:.5;vector-effect:non-scaling-stroke}
+.rotulo{
+  font-family:var(--ff);font-size:15px;font-weight:700;fill:var(--tinta);
+  paint-order:stroke;stroke:var(--blanco);stroke-width:4px;stroke-linejoin:round;
+}
+
+/* Monumentos superpuestos al mapa */
+.monumentos{position:absolute;inset:0;pointer-events:none}
+.monumento{
+  position:absolute;bottom:0;left:3%;height:56%;width:auto;
+  filter:drop-shadow(0 6px 18px rgba(0,61,165,.22));
+  transition:opacity .1s linear;
+}
+.monumento .cuerpo{fill:var(--blanco);stroke:var(--legacy);stroke-width:3;stroke-linejoin:round}
+.monumento .detalle{fill:none;stroke:var(--azure);stroke-width:2.6;stroke-linecap:round}
+.monumento .acento{fill:var(--sky)}
+
+.sello{
+  position:absolute;left:var(--pad);top:12px;z-index:3;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 12px;border-radius:var(--r-pill);
+  background:var(--blanco);border:1px solid rgba(0,61,165,.16);
+  font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--legacy);
+  box-shadow:0 2px 10px rgba(0,61,165,.10);
+}
+
+/* Pasos del relato */
+.paso{
+  position:relative;z-index:1;scroll-margin-top:calc(var(--barra-h) + var(--seguro-arriba) + 46svh);
+  min-height:56svh;padding:var(--s-6) var(--pad) var(--s-8);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.tarjeta{
+  padding:var(--s-6) var(--s-5);border-radius:var(--r);
+  background:var(--blanco);border:1px solid rgba(0,61,165,.12);
+  box-shadow:0 10px 34px rgba(0,61,165,.10);
+  opacity:0;transform:translateY(26px);
+  transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1);
+}
+.paso.dentro .tarjeta{opacity:1;transform:none}
+.tarjeta .num{
+  display:inline-block;margin-bottom:var(--s-3);
+  font-family:var(--ff-serif);font-size:12px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--azure);
+}
+.tarjeta h2{
+  font-size:var(--t-3);font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--legacy);
+  text-wrap:balance;
+}
+.tarjeta h2 em{font-family:var(--ff-serif);font-style:italic;font-weight:400;color:var(--azure)}
+.tarjeta p{margin-top:var(--s-3);font-size:var(--t--1);color:var(--tinta)}
+.tarjeta p b{font-weight:700;color:var(--legacy)}
+
+/* Cifras */
+.montos{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3);margin-top:var(--s-5)}
+.monto{
+  padding:var(--s-4);border-radius:var(--r-sm);
+  background:var(--nieve);border:1px solid rgba(0,61,165,.10);
+}
+.monto .nivel{
+  display:block;font-size:9.5px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--azure);margin-bottom:6px;
+}
+.monto b{
+  display:block;font-size:1.5rem;font-weight:800;letter-spacing:-.035em;color:var(--legacy);
+  line-height:1;font-variant-numeric:tabular-nums;
+}
+.monto span{display:block;margin-top:6px;font-size:11.5px;color:var(--gris);line-height:1.4}
+
+/* Acompañamiento: el bloque que más peso visual recibe */
+.acompana{
+  margin-top:var(--s-5);padding:var(--s-5);border-radius:var(--r-sm);
+  background:var(--legacy);color:var(--blanco);
+}
+.acompana p{margin:0;color:rgba(255,255,255,.92);font-size:var(--t--1)}
+.acompana ul{display:flex;flex-direction:column;gap:10px;margin-top:var(--s-4)}
+.acompana li{display:flex;align-items:flex-start;gap:10px;font-size:var(--t--1);font-weight:600}
+.acompana li svg{flex:none;margin-top:2px}
+.acompana li small{display:block;font-weight:400;font-size:11.5px;color:rgba(255,255,255,.74);margin-top:1px}
+
+/* Filas de requisito */
+.filas{margin-top:var(--s-5)}
+.filas li{
+  display:flex;align-items:baseline;gap:var(--s-3);
+  padding:12px 0;border-bottom:1px solid rgba(0,61,165,.10);
+}
+.filas li:last-child{border-bottom:0;padding-bottom:0}
+.filas .k{flex:1;font-size:var(--t--1);font-weight:600}
+.filas .k small{display:block;font-weight:400;font-size:11.5px;color:var(--gris);margin-top:1px}
+.filas .v{
+  font-size:var(--t--1);font-weight:800;color:var(--legacy);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.filas li.critica .v{
+  color:var(--azure);
+  text-decoration:underline;text-decoration-color:var(--sky);
+  text-decoration-thickness:2px;text-underline-offset:4px;
+}
+
+/* Elegibilidad */
+.elig{display:grid;gap:var(--s-4);margin-top:var(--s-5)}
+.elig h3{
+  display:flex;align-items:center;gap:8px;margin-bottom:var(--s-3);
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--legacy);
+}
+.elig.no h3{color:var(--gris)}
+.elig ul{display:flex;flex-direction:column;gap:9px}
+.elig li{display:flex;gap:9px;font-size:var(--t--1);line-height:1.45}
+.elig li svg{flex:none;margin-top:3px}
+.elig.no li{color:var(--gris)}
+.elig li b{font-weight:700;color:var(--legacy)}
+
+/* Hitos */
+.hitos{margin-top:var(--s-5)}
+.hitos li{display:flex;gap:var(--s-4);padding-bottom:var(--s-5);position:relative}
+.hitos li:last-child{padding-bottom:0}
+.hitos li:not(:last-child)::before{
+  content:"";position:absolute;left:5px;top:16px;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--sky),rgba(0,169,224,.15));
+}
+.hitos i{
+  flex:none;width:12px;height:12px;border-radius:50%;margin-top:5px;
+  border:2px solid var(--sky);background:var(--blanco);
+}
+.hitos li.activo i{background:var(--sky);box-shadow:0 0 0 4px rgba(0,169,224,.20)}
+.hitos .fecha{
+  display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--azure);
+}
+.hitos b{display:block;font-size:var(--t--1);font-weight:700;margin-top:1px}
+.hitos p{margin-top:2px;font-size:12px;color:var(--gris)}
+
+/* ── Secciones fuera del relato ───────────────────────────── */
+.seccion{padding:var(--s-12) var(--pad);scroll-margin-top:calc(var(--barra-h) + var(--seguro-arriba) + 12px)}
+.seccion.tono{background:var(--nieve);border-block:1px solid rgba(0,61,165,.09)}
+.rotulo-sec{
+  font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--azure);margin-bottom:var(--s-3);
+}
+.seccion h2{
+  font-size:var(--t-3);font-weight:800;line-height:1.1;letter-spacing:-.025em;
+  color:var(--legacy);text-wrap:balance;
+}
+.seccion > p:not(.rotulo-sec){margin-top:var(--s-3);font-size:var(--t--1);color:var(--tinta);max-width:38ch}
+
+/* Contador */
+.reloj{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-2);margin-top:var(--s-5)}
+.reloj div{
+  padding:var(--s-3) var(--s-1);border-radius:var(--r-sm);
+  background:var(--blanco);border:1px solid rgba(0,61,165,.12);text-align:center;
+}
+.reloj b{
+  display:block;font-size:var(--t-2);font-weight:800;color:var(--legacy);
+  font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-.03em;
+}
+.reloj span{display:block;margin-top:3px;font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+
+/* Formulario */
+.campo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
+.campo label{font-size:12px;font-weight:700;color:var(--legacy)}
+.campo input[type=text],.campo input[type=email]{
+  min-height:var(--toque);padding:0 16px;border-radius:var(--r-sm);
+  background:var(--blanco);border:1.5px solid var(--gris-claro);
+  color:var(--tinta);font-size:16px;font-family:var(--ff);   /* 16px evita el zoom de iOS */
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.campo input::placeholder{color:var(--gris-claro)}
+.campo input:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(0,169,224,.18);outline:none}
+.campo input[aria-invalid="true"]{border-color:#B3261E}
+.err{font-size:11.5px;font-weight:600;color:#B3261E;min-height:15px}
+
+.grupo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
+.grupo > span:first-child{font-size:12px;font-weight:700;color:var(--legacy)}
+.pills{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.pill{position:relative}
+.pill input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.pill span{
+  display:flex;align-items:center;justify-content:center;
+  min-height:var(--toque);border-radius:var(--r-sm);
+  background:var(--blanco);border:1.5px solid var(--gris-claro);
+  font-size:14px;font-weight:600;color:var(--tinta);
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.pill input:checked + span{background:var(--legacy);color:var(--blanco);border-color:var(--legacy)}
+.pill input:focus-visible + span{outline:3px solid var(--sky);outline-offset:2px}
+
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;cursor:pointer;min-height:48px}
+.check input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--legacy)}
+.check span{font-size:12.5px;color:var(--tinta);line-height:1.45}
+.check a{color:var(--azure)}
+
+.exito{
+  display:none;padding:var(--s-5);border-radius:var(--r);
+  background:var(--legacy);color:var(--blanco);
+}
+.exito.visible{display:block}
+.exito h3{font-size:var(--t-2);font-weight:800;letter-spacing:-.02em;margin-bottom:var(--s-2)}
+.exito p{font-size:var(--t--1);color:rgba(255,255,255,.9)}
+.oculto{display:none !important}
+
+/* Cita formal en serif */
+.cita{
+  margin-top:var(--s-6);padding-left:var(--s-4);
+  border-left:3px solid var(--sky);
+  font-family:var(--ff-serif);font-size:1.0625rem;font-style:italic;
+  line-height:1.55;color:var(--legacy);
+}
+
+/* FAQ */
+details{border-bottom:1px solid rgba(0,61,165,.12)}
+details summary{
+  min-height:var(--toque);display:flex;align-items:center;gap:var(--s-3);
+  font-size:var(--t--1);font-weight:600;cursor:pointer;list-style:none;touch-action:manipulation;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{
+  content:"";margin-left:auto;flex:none;width:9px;height:9px;
+  border-right:2px solid var(--azure);border-bottom:2px solid var(--azure);
+  transform:rotate(45deg);transition:transform .22s ease;
+}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
+
+.pie{
+  padding:var(--s-8) var(--pad) calc(var(--s-8) + var(--seguro-abajo) + 76px);
+  background:var(--legacy);color:rgba(255,255,255,.78);
+  font-size:11.5px;line-height:1.6;
+}
+.pie b{display:block;color:var(--blanco);font-size:13px;font-weight:700;margin-bottom:var(--s-2)}
+
+/* Barra de acción fija */
+.dock{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  padding:10px var(--pad) calc(10px + var(--seguro-abajo));
+  display:flex;align-items:center;gap:var(--s-3);
+  background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-top:1px solid rgba(0,61,165,.12);
+  transform:translateY(0);transition:transform .3s cubic-bezier(.22,1,.36,1);
+}
+.dock.fuera{transform:translateY(130%)}
+.dock .txt{flex:1;min-width:0}
+.dock .txt b{display:block;font-size:13px;font-weight:800;color:var(--legacy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .txt span{display:block;font-size:10.5px;font-weight:600;color:var(--gris);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dock .btn{flex:none;padding:0 20px;min-height:48px;font-size:var(--t--1)}
+
+@media (min-width:46rem){
+  :root{--pad:40px}
+  .portada,.paso,.seccion{max-width:44rem;margin-inline:auto}
+  .escenario{height:48svh}
+  .elig{grid-template-columns:1fr 1fr}
+  .confianza{flex-direction:row;flex-wrap:wrap}
+  .confianza li{flex:1;min-width:14rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none !important;transition-duration:.001ms !important}
+  .tarjeta{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<a class="salto" href="#pre-registro">Saltar al pre-registro</a>
+
+<header class="barra">
+  <a class="logo" href="#inicio" aria-label="Fulbright COMEXUS, Becas Fulbright-García Robles">
+    <svg class="emblema" viewBox="0 0 44 44" aria-hidden="true">
+      <rect x="1.4" y="1.4" width="41.2" height="41.2" rx="10" fill="#FFFFFF" stroke="#003DA5" stroke-width="2"/>
+      <path d="M9 31C15 15 29 15 35 31" fill="none" stroke="#003DA5" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M9 31C15 23 29 23 35 31" fill="none" stroke="#00A9E0" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="9" cy="31" r="3.2" fill="#003DA5"/>
+      <circle cx="35" cy="31" r="3.2" fill="#00A9E0"/>
+    </svg>
+    <span class="lockup">
+      <b>Fulbright <em>COMEXUS</em></b>
+      <span>Becas Fulbright-García Robles</span>
+    </span>
+  </a>
+  <span class="estado" id="estado" role="status">
+    <i aria-hidden="true"></i>
+    <span class="larga">Convocatoria abierta</span>
+    <span class="corta">Abierta</span>
+  </span>
+</header>
+<div class="progreso" id="progreso" aria-hidden="true"></div>
+
+<main id="inicio">
+
+  <section class="portada">
+    <span class="ceja">Maestría y doctorado en EE. UU.</span>
+    <h1>Del Ángel<br>a la <em>Antorcha</em></h1>
+    <p class="lede">
+      La beca Fulbright-García Robles financia tu posgrado en Estados Unidos con
+      <b>hasta $37,000 USD al año</b>. Y no te suelta la mano: COMEXUS te asesora y te da
+      seguimiento puntual durante todo el proceso.
+    </p>
+
+    <ul class="confianza">
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Asesoramiento personalizado de principio a fin
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Sin carta de aceptación previa
+      </li>
+      <li>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Admisión en 4–5 universidades y visa J1
+      </li>
+    </ul>
+
+    <div class="acciones">
+      <a class="btn" href="#pre-registro" id="cta-portada">Recibir la guía de requisitos</a>
+      <a class="btn fantasma" href="#requisitos">Ver si califico</a>
+    </div>
+
+    <p class="pista-scroll">
+      Desliza para recorrerlo
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </p>
+  </section>
+
+  <!-- ══════════════ RELATO ══════════════ -->
+  <div class="relato" id="relato">
+
+    <div class="escenario" id="escenario">
+      <span class="sello" id="sello">Ciudad de México</span>
+
+      <svg class="mapa" viewBox="0 0 800 570" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g id="camara">
+          <path class="pais" d="M16.7 24.0 L38.6 15.0 L396.0 15.0 L469.3 16.5 L532.3 48.0 L546.4 69.0 L560.6 105.0 L594.0 115.5 L603.0 100.5 L637.7 88.5 L659.6 75.0 L700.7 75.0 L730.3 39.0 L748.3 45.0 L758.6 78.0 L717.4 94.5 L712.3 120.0 L696.9 130.5 L668.6 139.5 L663.4 160.5 L653.2 180.0 L642.9 196.5 L649.3 222.0 L618.4 240.0 L592.7 258.0 L573.4 283.5 L574.7 301.5 L590.2 345.0 L586.3 372.0 L573.4 363.0 L558.0 333.0 L547.7 304.5 L536.2 298.5 L498.9 294.0 L471.9 312.0 L412.7 304.5 L380.6 324.0 L370.3 360.0 L322.7 310.5 L298.3 303.0 L250.7 273.0 L192.9 280.5 L145.3 262.5 L114.4 262.5 L70.7 234.0 L51.4 196.5 L29.6 166.5 L23.1 124.5 L25.7 57.0 Z"/>
+          <path class="pais mx" d="M145.3 262.5 L250.7 273.0 L298.3 303.0 L322.7 310.5 L370.3 360.0 L362.6 402.0 L367.7 427.5 L384.4 462.0 L398.6 469.5 L443.6 471.0 L455.2 453.0 L488.6 426.0 L502.7 427.5 L495.0 456.0 L484.7 472.5 L474.4 483.0 L456.4 508.5 L434.6 531.0 L405.0 513.0 L396.0 507.0 L335.6 499.5 L315.0 486.0 L279.0 463.5 L266.2 439.5 L261.0 420.0 L252.0 402.0 L219.9 367.5 L192.9 331.5 L176.1 310.5 L165.9 280.5 Z"/>
+          <path class="pais mx" d="M114.4 262.5 L128.6 294.0 L147.9 330.0 L176.1 360.0 L185.1 384.0 L205.7 406.5 L201.9 390.0 L182.6 351.0 L160.7 318.0 L144.0 282.0 L141.4 264.0 Z"/>
+
+          <g id="arcos">
+            <path class="arco"     data-desde="0.16" d="M345.5 458.6 Q390.2 381.2 363.4 295.9"/>
+            <path class="arco sec" data-desde="0.28" d="M330.3 364.9 Q375.5 348.2 393.8 303.6"/>
+            <path class="arco"     data-desde="0.40" d="M330.3 364.9 Q242.7 251.4 99.8 239.3"/>
+            <path class="arco sec" data-desde="0.52" d="M291.2 439.9 Q239.6 297.5 99.8 239.3"/>
+            <path class="arco"     data-desde="0.64" d="M291.2 439.9 Q456.9 467.3 589.0 363.6"/>
+            <path class="arco sec" data-desde="0.76" d="M345.5 458.6 Q577.2 370.0 668.5 139.3"/>
+          </g>
+
+          <!-- Cada ciudad va en su grupo: la cámara la coloca, pero su
+               escala se compensa para que el rótulo y el punto midan
+               siempre lo mismo en pantalla. -->
+          <g id="ciudades">
+            <g class="ciudad" data-x="345.5" data-y="458.6"><circle class="halo" r="13"/><circle class="punto" r="6"/><text class="rotulo" x="14" y="5">Ciudad de México</text></g>
+            <g class="ciudad" data-x="330.3" data-y="364.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/><text class="rotulo" x="13" y="5">Monterrey</text></g>
+            <g class="ciudad" data-x="291.2" data-y="439.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/><text class="rotulo" x="-13" y="5" text-anchor="end">Guadalajara</text></g>
+            <g class="ciudad" data-x="99.8" data-y="239.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="5">Los Ángeles</text></g>
+            <g class="ciudad" data-x="363.4" data-y="295.9"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="-13" y="-9" text-anchor="end">Austin</text></g>
+            <g class="ciudad" data-x="393.8" data-y="303.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="9">Houston</text></g>
+            <g class="ciudad" data-x="589.0" data-y="363.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="5">Miami</text></g>
+            <g class="ciudad" data-x="668.5" data-y="139.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="-13" y="-9" text-anchor="end">Nueva York</text></g>
+          </g>
+        </g>
+      </svg>
+
+      <div class="monumentos">
+        <!-- Ángel de la Independencia -->
+        <svg class="monumento" id="angel" viewBox="0 0 100 250" aria-hidden="true">
+          <path class="cuerpo" d="M20 250 H80 L75 236 H25 Z"/>
+          <path class="cuerpo" d="M27 236 H73 L69 224 H31 Z"/>
+          <path class="cuerpo" d="M41 224 L44 82 H56 L59 224 Z"/>
+          <path class="detalle" d="M47 96 V218 M53 96 V218"/>
+          <path class="cuerpo" d="M37 82 H63 L60 68 H40 Z"/>
+          <path class="cuerpo" d="M34 68 H66 V60 H34 Z"/>
+          <path class="cuerpo" d="M50 60 L45 34 Q50 27 55 34 Z"/>
+          <circle class="cuerpo" cx="50" cy="25" r="5"/>
+          <path class="detalle" d="M54 33 L66 19"/>
+          <circle class="acento" cx="68" cy="16" r="5"/>
+          <path class="cuerpo" d="M45 36 Q28 30 22 8 Q38 19 47 30 Z"/>
+          <path class="cuerpo" d="M55 36 Q72 30 78 8 Q62 19 53 30 Z"/>
+        </svg>
+
+        <!-- Estatua de la Libertad -->
+        <svg class="monumento" id="libertad" viewBox="0 0 100 250" style="opacity:0" aria-hidden="true">
+          <path class="cuerpo" d="M16 250 H84 L79 234 H21 Z"/>
+          <path class="cuerpo" d="M23 234 H77 L72 200 H28 Z"/>
+          <path class="cuerpo" d="M35 200 L44 96 H56 L65 200 Z"/>
+          <path class="detalle" d="M45 118 L43 194 M55 118 L57 194"/>
+          <path class="cuerpo" d="M36 126 L28 112 L40 104 L48 118 Z"/>
+          <circle class="cuerpo" cx="50" cy="84" r="7"/>
+          <path class="detalle" d="M50 75 V62 M43 78 L38 66 M57 78 L62 66 M38 83 L27 76 M62 83 L73 76 M37 90 L25 89 M63 90 L75 89"/>
+          <path class="cuerpo" d="M56 100 L70 52 L76 54 L62 102 Z"/>
+          <path class="cuerpo" d="M66 52 H80 L78 40 H68 Z"/>
+          <path class="acento" d="M73 12 Q82 26 80 38 H66 Q64 26 73 12 Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Paso 1 -->
+    <section class="paso" data-paso="1" data-sello="Ciudad de México">
+      <article class="tarjeta">
+        <span class="num">01 · Origen</span>
+        <h2>Todo empieza en <em>tu ciudad</em></h2>
+        <p>
+          La convocatoria Posgrado Regular está abierta a mexicanas y mexicanos de todo el país.
+          Da igual desde dónde postules: el proceso, el acompañamiento y el monto son los mismos.
+        </p>
+        <p class="cita">«No necesitas una carta de aceptación previa de ninguna universidad.»</p>
+      </article>
+    </section>
+
+    <!-- Paso 2 -->
+    <section class="paso" data-paso="2" data-sello="Apoyo económico">
+      <article class="tarjeta">
+        <span class="num">02 · Apoyo</span>
+        <h2>Hasta $37,000 USD al año</h2>
+        <div class="montos">
+          <div class="monto">
+            <span class="nivel">Maestría</span>
+            <b>$37,000</b>
+            <span>USD al año<br>Hasta 18 meses</span>
+          </div>
+          <div class="monto">
+            <span class="nivel">Doctorado</span>
+            <b>$25,000</b>
+            <span>USD al año<br>Hasta 3 años</span>
+          </div>
+        </div>
+        <p>El apoyo cubre colegiatura y manutención según el costo del programa al que seas admitido.</p>
+      </article>
+    </section>
+
+    <!-- Paso 3 · el diferenciador -->
+    <section class="paso" data-paso="3" data-sello="Acompañamiento COMEXUS">
+      <article class="tarjeta">
+        <span class="num">03 · Acompañamiento</span>
+        <h2>No postulas <em>solo</em></h2>
+        <p>
+          Esta es la diferencia que casi nadie cuenta: <b>COMEXUS no te entrega un cheque y se
+          despide</b>. Te acompaña de principio a fin.
+        </p>
+        <div class="acompana">
+          <p>Durante todo el proceso recibes:</p>
+          <ul>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Asesoramiento personalizado
+                <small>Alguien revisa tu perfil y tu proyecto contigo, no un formulario automático.</small>
+              </span>
+            </li>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Seguimiento puntual
+                <small>Te avisan en cada etapa, con fechas concretas. No te quedas esperando sin saber.</small>
+              </span>
+            </li>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Gestión de tu admisión
+                <small>COMEXUS te postula a entre 4 y 5 universidades de Estados Unidos.</small>
+              </span>
+            </li>
+            <li>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Trámite de la visa J1
+                <small>El paso que más gente atora, resuelto contigo.</small>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- Paso 4 -->
+    <section class="paso" data-paso="4" data-sello="Requisitos" id="requisitos">
+      <article class="tarjeta">
+        <span class="num">04 · Requisitos</span>
+        <h2>¿Califico?</h2>
+        <ul class="filas">
+          <li><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></li>
+          <li><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></li>
+          <li><span class="k">IELTS</span><span class="v">6.5 mín.</span></li>
+          <li><span class="k">Duolingo</span><span class="v">120 mín.</span></li>
+          <li class="critica"><span class="k">Examen GRE<small>Sin excepciones</small></span><span class="v">Obligatorio</span></li>
+          <li class="critica"><span class="k">Escala de calidad COMEXUS</span><span class="v">55 pts. mín.</span></li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- Paso 5 -->
+    <section class="paso" data-paso="5" data-sello="Elegibilidad">
+      <article class="tarjeta">
+        <span class="num">05 · Elegibilidad</span>
+        <h2>Quién sí y quién no</h2>
+        <div class="elig">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003DA5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Sí puedes postular
+          </h3>
+          <ul>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de un área STEM.</span></li>
+          </ul>
+        </div>
+        <div class="elig no">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            No aplica este ciclo
+          </h3>
+          <ul>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Doble nacionalidad estadounidense.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría ya cursadas en EE. UU.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas clínicas.</span></li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- Paso 6 -->
+    <section class="paso" data-paso="6" data-sello="Nueva York · llegada">
+      <article class="tarjeta">
+        <span class="num">06 · Calendario</span>
+        <h2>Tres fechas que importan</h2>
+        <ul class="hitos">
+          <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2025</span><b>Abre la convocatoria</b></div></li>
+          <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
+          <li><i aria-hidden="true"></i><div><span class="fecha">Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></li>
+        </ul>
+      </article>
+    </section>
+  </div>
+
+  <!-- ══════════════ CONVERSIÓN ══════════════ -->
+  <section class="seccion tono" id="pre-registro">
+    <p class="rotulo-sec">Pre-registro</p>
+    <h2>Te avisamos antes de que cierre</h2>
+    <p id="form-intro">
+      Déjanos tu correo y recibes la guía de requisitos, más un recordatorio en cada etapa.
+      Todavía no estás llenando la solicitud.
+    </p>
+
+    <div class="reloj" id="reloj" aria-label="Tiempo restante para el cierre">
+      <div><b id="r-d">--</b><span>Días</span></div>
+      <div><b id="r-h">--</b><span>Horas</span></div>
+      <div><b id="r-m">--</b><span>Min</span></div>
+      <div><b id="r-s">--</b><span>Seg</span></div>
+    </div>
+
+    <form id="form" novalidate style="margin-top:var(--s-6)">
+      <div class="campo">
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-nombre">
+        <span class="err" id="e-nombre"></span>
+      </div>
+      <div class="campo">
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-correo">
+        <span class="err" id="e-correo"></span>
+      </div>
+      <div class="grupo" role="radiogroup" aria-labelledby="lbl-nivel">
+        <span id="lbl-nivel">Nivel al que quieres postular</span>
+        <div class="pills">
+          <label class="pill"><input type="radio" name="nivel" value="maestria"><span>Maestría</span></label>
+          <label class="pill"><input type="radio" name="nivel" value="doctorado"><span>Doctorado</span></label>
+        </div>
+        <span class="err" id="e-nivel"></span>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" id="elegible" name="elegible">
+        <span>Tengo nacionalidad mexicana y no he cursado licenciatura ni maestría en Estados Unidos.</span>
+      </label>
+      <span class="err" id="e-elegible"></span>
+
+      <label class="check">
+        <input type="checkbox" id="aviso" name="aviso">
+        <span>Acepto el <a href="#aviso-privacidad">aviso de privacidad</a> y que COMEXUS me escriba sobre esta convocatoria.</span>
+      </label>
+      <span class="err" id="e-aviso"></span>
+
+      <button class="btn" type="submit" id="enviar" style="width:100%;margin-top:var(--s-3)">Recibir la guía</button>
+    </form>
+
+    <div class="exito" id="exito" role="status" aria-live="polite">
+      <h3 tabindex="-1" id="exito-h">Listo</h3>
+      <p id="exito-p"></p>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <p class="rotulo-sec">Preguntas frecuentes</p>
+    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión en 4 o 5 universidades como parte del proceso.</p></details>
+    <details><summary>¿En qué consiste el acompañamiento?</summary><p>Asesoramiento personalizado sobre tu perfil y tu proyecto, y seguimiento puntual en cada etapa: postulación, admisión y visa J1.</p></details>
+    <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción.</p></details>
+    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El mínimo de la escala de calidad con la que se evalúa tu expediente completo: promedio, exámenes, trayectoria y proyecto. No es un examen aparte.</p></details>
+    <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
+  </section>
+</main>
+
+<footer class="pie" id="aviso-privacidad">
+  <b>Comisión México-Estados Unidos para el Intercambio Educativo y Cultural</b>
+  Los datos del pre-registro se usan únicamente para enviarte información de esta convocatoria
+  y puedes solicitar tu baja en cualquier momento. Cifras, fechas y criterios de elegibilidad
+  conforme a la convocatoria oficial vigente.
+</footer>
+
+<div class="dock" id="dock">
+  <div class="txt">
+    <b>$37,000 USD al año</b>
+    <span id="dock-s">Quedan -- días</span>
+  </div>
+  <a class="btn" href="#pre-registro" id="dock-cta">Pre-registrarme</a>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  APERTURA_SIGUIENTE: '1 de septiembre',
+  ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
+  VARIANTE: 'modelo-1-scrollytelling'
+};
+
+const ABIERTA = Date.now() < CONFIG.CIERRE.getTime();
+const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sujeta = (v, a, b) => Math.max(a, Math.min(b, v));
+
+/* ═══════════════════════════════════════════════════════════════
+   1 · RELATO — el scroll mueve la cámara del mapa
+   ═══════════════════════════════════════════════════════════════ */
+(function relato(){
+  const relato = document.getElementById('relato');
+  const camara = document.getElementById('camara');
+  const angel = document.getElementById('angel');
+  const libertad = document.getElementById('libertad');
+  const sello = document.getElementById('sello');
+  const progreso = document.getElementById('progreso');
+  const arcos = [...document.querySelectorAll('.arco')];
+  const pasos = [...document.querySelectorAll('.paso')];
+  const ciudades = [...document.querySelectorAll('.ciudad')];
+
+  /* El viewBox del mapa. La cámara encuadra centrando un punto a
+     una escala dada; se interpola entre estas paradas. */
+  const VB = { w:800, h:570 };
+  const PARADAS = [
+    { p:0.00, x:345, y:452, s:2.7 },   // Ciudad de México
+    { p:0.18, x:322, y:420, s:2.0 },   // las tres ciudades emisoras
+    { p:0.38, x:350, y:360, s:1.5 },   // el cruce
+    { p:0.58, x:400, y:305, s:1.6 },   // sur de Estados Unidos
+    { p:0.78, x:430, y:320, s:1.05 },  // el corredor completo
+    { p:1.00, x:600, y:230, s:1.5 }    // llegada al noreste
+  ];
+
+  function encuadre(p){
+    let a = PARADAS[0], b = PARADAS[PARADAS.length - 1];
+    for (let i = 0; i < PARADAS.length - 1; i++){
+      if (p >= PARADAS[i].p && p <= PARADAS[i + 1].p){ a = PARADAS[i]; b = PARADAS[i + 1]; break; }
+    }
+    const t = b.p === a.p ? 0 : (p - a.p) / (b.p - a.p);
+    const e = t * t * (3 - 2 * t);                       // suavizado
+    return {
+      x: a.x + (b.x - a.x) * e,
+      y: a.y + (b.y - a.y) * e,
+      s: a.s + (b.s - a.s) * e
+    };
+  }
+
+  /* Los arcos se trazan solos: cada uno tiene su ventana de avance. */
+  arcos.forEach(a => {
+    const largo = a.getTotalLength();
+    a.style.strokeDasharray = largo;
+    a.style.strokeDashoffset = largo;
+    a.dataset.largo = largo;
+  });
+
+  /* La cámara escala el grupo entero. Sin compensar, a 2.7 aumentos
+     los rótulos se leerían al triple de su tamaño. */
+  function escalaCiudades(s){
+    const k = (1 / s).toFixed(4);
+    for (const g of ciudades){
+      g.setAttribute('transform', `translate(${g.dataset.x} ${g.dataset.y}) scale(${k})`);
+    }
+  }
+
+  let p = 0;
+  function pintar(){
+    const caja = relato.getBoundingClientRect();
+    const recorrido = caja.height - innerHeight;
+    p = sujeta(recorrido <= 0 ? 0 : -caja.top / recorrido, 0, 1);
+
+    const c = encuadre(p);
+    camara.setAttribute('transform',
+      `translate(${(VB.w / 2 - c.x * c.s).toFixed(1)} ${(VB.h / 2 - c.y * c.s).toFixed(1)}) scale(${c.s.toFixed(3)})`);
+    escalaCiudades(c.s);
+
+    for (const a of arcos){
+      const desde = +a.dataset.desde, largo = +a.dataset.largo;
+      const k = sujeta((p - desde) / 0.14, 0, 1);
+      a.style.strokeDashoffset = largo * (1 - k);
+    }
+
+    /* El Ángel cede el sitio a la Antorcha a mitad del trayecto. */
+    angel.style.opacity = sujeta(1 - (p - 0.34) / 0.20, 0, 1);
+    libertad.style.opacity = sujeta((p - 0.44) / 0.20, 0, 1);
+
+    progreso.style.width = (p * 100).toFixed(1) + '%';
+  }
+
+  if (REDUCIR){
+    /* Sin movimiento: mapa completo, arcos trazados, los dos hitos. */
+    camara.setAttribute('transform', 'translate(0 0) scale(1)');
+    escalaCiudades(1);
+    arcos.forEach(a => { a.style.strokeDashoffset = 0; });
+    angel.style.opacity = 1; libertad.style.opacity = 1;
+    libertad.style.left = '26%';
+  } else {
+    let pendiente = false;
+    const alScroll = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(() => { pintar(); pendiente = false; });
+    };
+    addEventListener('scroll', alScroll, { passive:true });
+    addEventListener('resize', alScroll);
+    pintar();
+  }
+
+  /* Revelado de tarjetas y rótulo del escenario */
+  const obs = new IntersectionObserver(ents => {
+    ents.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('dentro');
+      if (e.target.dataset.sello) sello.textContent = e.target.dataset.sello;
+    });
+  }, { rootMargin:'0px 0px -34% 0px', threshold:0.15 });
+  pasos.forEach(s => obs.observe(s));
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   2 · ESTADO DE LA CONVOCATORIA Y CONTADOR
+   ═══════════════════════════════════════════════════════════════ */
+(function reloj(){
+  const d = document.getElementById('r-d'), h = document.getElementById('r-h');
+  const m = document.getElementById('r-m'), s = document.getElementById('r-s');
+  const dockS = document.getElementById('dock-s');
+
+  if (!ABIERTA){
+    document.getElementById('reloj').style.display = 'none';
+    const est = document.getElementById('estado');
+    est.classList.add('cerrada');
+    est.querySelector('.larga').textContent = 'Convocatoria cerrada';
+    est.querySelector('.corta').textContent = 'Cerrada';
+    document.getElementById('hito-cierre').classList.remove('activo');
+    dockS.textContent = `Abre el ${CONFIG.APERTURA_SIGUIENTE}`;
+    document.getElementById('dock-cta').textContent = 'Avísame';
+    document.getElementById('cta-portada').textContent = 'Avisarme cuando abra';
+    document.getElementById('enviar').textContent = 'Avísame cuando abra';
+    document.getElementById('form-intro').textContent =
+      `El ciclo cerró. Déjanos tu correo y te escribimos en cuanto abra la siguiente convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    return;
+  }
+
+  function tic(){
+    let x = Math.max(0, CONFIG.CIERRE.getTime() - Date.now());
+    const dd = Math.floor(x / 864e5); x -= dd * 864e5;
+    const hh = Math.floor(x / 36e5);  x -= hh * 36e5;
+    const mm = Math.floor(x / 6e4);   x -= mm * 6e4;
+    const ss = Math.floor(x / 1e3);
+    d.textContent = dd;
+    h.textContent = String(hh).padStart(2, '0');
+    m.textContent = String(mm).padStart(2, '0');
+    s.textContent = String(ss).padStart(2, '0');
+    dockS.textContent = `Quedan ${dd} días`;
+  }
+  tic(); setInterval(tic, 1000);
+})();
+
+/* El dock se retira cuando el formulario ya está a la vista. */
+new IntersectionObserver(ents => {
+  ents.forEach(e => document.getElementById('dock').classList.toggle('fuera', e.isIntersecting));
+}, { threshold:0.2 }).observe(document.getElementById('pre-registro'));
+
+/* ═══════════════════════════════════════════════════════════════
+   3 · FORMULARIO DE PRE-REGISTRO
+   ═══════════════════════════════════════════════════════════════ */
+(function formulario(){
+  const form = document.getElementById('form');
+  const exito = document.getElementById('exito');
+  const boton = document.getElementById('enviar');
+  const q = new URLSearchParams(location.search);
+  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function err(campo, msg){
+    const el = document.getElementById(campo);
+    const caja = document.getElementById('e-' + campo);
+    if (caja) caja.textContent = msg || '';
+    if (el && el.type !== 'checkbox') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+  const val = id => (document.getElementById(id).value || '').trim();
+
+  function valida(campo){
+    switch (campo){
+      case 'nombre':   return err('nombre', val('nombre').length >= 3 ? '' : 'Escribe tu nombre completo.');
+      case 'correo':   return err('correo', CORREO.test(val('correo')) ? '' : 'Revisa el correo: parece que le falta algo.');
+      case 'nivel':    return err('nivel', form.querySelector('input[name=nivel]:checked') ? '' : 'Elige maestría o doctorado.');
+      case 'elegible': return err('elegible', document.getElementById('elegible').checked ? '' : 'Necesitamos esta confirmación para poder escribirte.');
+      case 'aviso':    return err('aviso', document.getElementById('aviso').checked ? '' : 'Marca la casilla para que podamos enviarte la guía.');
+    }
+  }
+
+  ['nombre','correo'].forEach(id => document.getElementById(id).addEventListener('blur', () => valida(id)));
+  form.querySelectorAll('input[name=nivel]').forEach(r => r.addEventListener('change', () => valida('nivel')));
+  ['elegible','aviso'].forEach(id => document.getElementById(id).addEventListener('change', () => valida(id)));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const malos = ['nombre','correo','nivel','elegible','aviso'].filter(c => !valida(c));
+    if (malos.length){
+      (document.getElementById(malos[0]) || form.querySelector('input[name=nivel]')).focus();
+      return;
+    }
+
+    const datos = {
+      nombre: val('nombre'),
+      correo: val('correo').toLowerCase(),
+      nivel: form.querySelector('input[name=nivel]:checked').value,
+      elegibilidad_confirmada: true,
+      consentimiento_aviso: true,
+      convocatoria_abierta: ABIERTA,
+      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
+      utm_source: q.get('utm_source') || 'volante_impreso',
+      utm_medium: q.get('utm_medium') || 'qr',
+      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      utm_content: q.get('utm_content') || '',
+      qr_id: q.get('qr_id') || '',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+
+    boton.disabled = true;
+    const etiqueta = boton.textContent;
+    boton.textContent = 'Enviando…';
+    try {
+      if (CONFIG.ENDPOINT){
+        const r = await fetch(CONFIG.ENDPOINT, {
+          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      } else {
+        console.info('[modo demo] payload para Zapier:', datos);
+        await new Promise(r => setTimeout(r, 420));
+      }
+      form.classList.add('oculto');
+      exito.classList.add('visible');
+      document.getElementById('exito-p').textContent = ABIERTA
+        ? `Te llegó la guía a ${datos.correo}. El próximo aviso es a 60 días del cierre.`
+        : `Guardamos ${datos.correo}. Te escribimos en cuanto abra la convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+      document.getElementById('exito-h').focus();
+    } catch (_) {
+      boton.disabled = false;
+      boton.textContent = etiqueta;
+      err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+    }
+  });
+})();
+</script>
+</body>
+</html>

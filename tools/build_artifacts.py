@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-PAGINAS = ["modelo-1-recorrido-binacional.html", "modelo-2-bento-vertical.html"]
+PAGINAS = ["modelo-1-scrollytelling.html", "modelo-2-bento-vertical.html"]
 
 
 def a_fragmento(html: str) -> str:
@@ -26,6 +26,9 @@ def a_fragmento(html: str) -> str:
     titulo = re.search(r"<title>.*?</title>", html, re.S)
     estilos = re.findall(r"<style>.*?</style>", html, re.S)
     mapa = re.findall(r'<script type="importmap">.*?</script>', html, re.S)
+    # Google Fonts es el único host externo que la CSP del visor permite,
+    # así que los <link> viajan con el fragmento.
+    fuentes = re.findall(r'<link[^>]+fonts\.(?:googleapis|gstatic)\.com[^>]*>', html)
     cuerpo = re.search(r"<body[^>]*>(.*)</body>", html, re.S)
 
     if not cuerpo:
@@ -34,6 +37,7 @@ def a_fragmento(html: str) -> str:
     partes = []
     if titulo:
         partes.append(titulo.group(0))
+    partes.extend(fuentes)
     partes.extend(estilos)
     partes.extend(mapa)
     partes.append(cuerpo.group(1).strip())
