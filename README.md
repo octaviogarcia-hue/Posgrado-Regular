@@ -91,18 +91,31 @@ WCAG. En las dos páginas pinta **solo gráficos** —arcos, halos, bordes, la a
 reglas, la barra de progreso—; el texto usa Legacy Blue, Azure Blue o blanco según el fondo.
 Se ve igual de vivo y se lee.
 
-Ambas páginas abren con un **sticky header** que contiene el lockup
-`Fulbright COMEXUS · Becas Fulbright-García Robles`, dibujado en **SVG puro**: un emblema de
-dos trayectorias entre dos puntos —el motivo del corredor binacional— más la marca
-denominativa.
-
-Es una **recreación provisional**. El uso de la marca Fulbright está regulado, así que antes
-de publicar hay que sustituir el bloque por el archivo oficial que entregue COMEXUS. El
-contenedor ya está dimensionado para recibirlo sin tocar el resto del encabezado:
+Ambas páginas abren con un **sticky header** con un `<img class="logo-oficial">` listo para
+recibir el logotipo oficial:
 
 ```html
-<img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
-     class="logo-oficial" width="188" height="34">
+<img class="logo-oficial" src="logo-fulbright-comexus.png"
+     alt="Fulbright COMEXUS — Becas Fulbright-García Robles"
+     onerror="...">
+```
+
+Para activarlo, **coloca el PNG que entregue COMEXUS junto a cada HTML** con el nombre
+`logo-fulbright-comexus.png` —o cambia el `src` por su URL, si se va a alojar aparte—. No hay
+que tocar nada más del encabezado. Mientras el archivo no exista, el `onerror` del propio
+`<img>` lo oculta y muestra en su lugar un lockup de texto (`Fulbright COMEXUS · Becas
+Fulbright-García Robles`) para que el encabezado nunca se vea roto. En el Modelo 2 el logo
+va además sobre un chip blanco, porque el fondo del encabezado es oscuro y no se sabe de
+antemano si el archivo real tiene tinta clara u oscura.
+
+### Pie de página con contacto
+
+Las dos páginas cierran con un bloque **Contacto** en el pie, con el correo oficial de
+recepción de solicitudes y el enlace al sitio de COMEXUS:
+
+```html
+<a href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+<a href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
 ```
 
 ---
@@ -157,8 +170,8 @@ Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 p
 
 ## Pendiente antes de publicar
 
-- [ ] Sustituir el wordmark tipográfico provisional por el lockup oficial de
-      COMEXUS / Fulbright en SVG (marcado con un comentario en ambos HTML).
+- [ ] Colocar `logo-fulbright-comexus.png` junto a cada HTML (el `<img>` ya está
+      configurado para recibirlo; ver «Identidad oficial» arriba).
 - [ ] Pegar la URL del Catch Hook de Zapier en `CONFIG.ENDPOINT`.
 - [ ] Enlazar el aviso de privacidad real de COMEXUS (hoy es un ancla interna).
 - [ ] Confirmar cifras, fechas y criterios de elegibilidad contra la convocatoria oficial

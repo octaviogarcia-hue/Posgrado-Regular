@@ -119,9 +119,14 @@ button{font:inherit;color:inherit}
    <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
         class="logo-oficial" width="176" height="34"> */
 .logo{display:flex;align-items:center;gap:9px;min-width:0;text-decoration:none;color:inherit}
-.logo .emblema{width:32px;height:32px;flex:none}
-.logo-oficial{height:34px;width:auto;flex:none}
+.logo-chip{
+  display:inline-flex;align-items:center;flex:none;
+  background:var(--blanco);border-radius:10px;padding:4px 10px;
+}
+.logo-chip[hidden]{display:none}
+.logo-oficial{display:block;height:26px;width:auto;max-width:46vw}
 .lockup{display:flex;flex-direction:column;line-height:1.16;min-width:0}
+.lockup[hidden]{display:none}                          /* la regla de abajo, sin esto, le gana al atributo */
 .lockup b{font-size:14px;font-weight:800;letter-spacing:-.02em;color:var(--blanco);white-space:nowrap}
 .lockup b em{font-style:normal;font-weight:600;color:var(--sky)}
 .lockup > span{
@@ -144,7 +149,7 @@ button{font:inherit;color:inherit}
 /* ── Bento vertical ───────────────────────────────────────── */
 .bento{
   display:grid;grid-template-columns:1fr;gap:var(--gap);
-  padding:var(--s-2) var(--pad) calc(var(--seguro-abajo) + 108px);
+  padding:var(--s-2) var(--pad) var(--s-6);
   max-width:78rem;margin:0 auto;
 }
 .tile{
@@ -381,7 +386,20 @@ summary::after{
 details[open] summary::after{transform:rotate(-135deg)}
 details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 
+.pie-oficial{max-width:78rem;margin:0 auto;padding:0 0 calc(var(--seguro-abajo) + 108px)}
 .pie-legal{padding:var(--s-5) var(--pad) 0;font-size:11px;color:var(--texto-3);line-height:1.55;text-align:center}
+.pie-oficial .contacto{
+  margin:var(--s-5) var(--pad) 0;padding-top:var(--s-5);
+  border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+}
+.pie-oficial .contacto-tit{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-3);
+}
+.pie-oficial .contacto-link{
+  color:var(--blanco);font-weight:700;font-size:13px;
+  text-decoration:underline;text-decoration-color:var(--sky);text-underline-offset:3px;
+}
 
 /* ── Barra de acción fija ─────────────────────────────────── */
 .dock{
@@ -438,14 +456,17 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 
 <header class="barra">
   <a class="logo" href="#inicio" aria-label="Fulbright COMEXUS, Becas Fulbright-García Robles">
-    <svg class="emblema" viewBox="0 0 44 44" aria-hidden="true">
-      <rect x="1.4" y="1.4" width="41.2" height="41.2" rx="10" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-opacity=".55"/>
-      <path d="M9 31C15 15 29 15 35 31" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M9 31C15 23 29 23 35 31" fill="none" stroke="#00A9E0" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="9" cy="31" r="3.2" fill="#00A9E0"/>
-      <circle cx="35" cy="31" r="3.2" fill="#FFFFFF"/>
-    </svg>
-    <span class="lockup">
+    <!-- Logotipo oficial. Coloca el PNG que entregue COMEXUS junto a este
+         archivo con el nombre de abajo, o cambia el src por su URL. El
+         chip blanco es para que el logo se lea sobre el fondo oscuro,
+         sin importar el color de su trazo. Si la imagen no carga, el
+         bloque de texto de respaldo aparece solo. -->
+    <span class="logo-chip">
+      <img class="logo-oficial" src="logo-fulbright-comexus.png"
+           alt="Fulbright COMEXUS — Becas Fulbright-García Robles"
+           onerror="this.closest('.logo-chip').hidden=true;this.closest('.logo-chip').nextElementSibling.hidden=false">
+    </span>
+    <span class="lockup" hidden>
       <b>Fulbright <em>COMEXUS</em></b>
       <span>Becas Fulbright-García Robles</span>
     </span>
@@ -676,13 +697,21 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
   </section>
 
+</main>
+
+<footer class="pie-oficial">
   <p class="pie-legal" id="aviso-privacidad">
     Comisión México-Estados Unidos para el Intercambio Educativo y Cultural (COMEXUS).
     Los datos del pre-registro se usan únicamente para enviarte información de esta convocatoria
     y puedes solicitar tu baja en cualquier momento.<br>
     Cifras, fechas y criterios de elegibilidad conforme a la convocatoria oficial vigente.
   </p>
-</main>
+  <div class="contacto">
+    <p class="contacto-tit">Contacto</p>
+    <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+    <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+  </div>
+</footer>
 
 <div class="dock" id="dock">
   <div class="txt">

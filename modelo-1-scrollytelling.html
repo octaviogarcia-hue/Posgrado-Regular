@@ -93,15 +93,15 @@ button{font:inherit;color:inherit}
   -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
   border-bottom:1px solid rgba(0,61,165,.10);
 }
-/* Contenedor reservado para el logotipo oficial de Fulbright COMEXUS.
-   El SVG de abajo es una recreación provisional; para publicar se
-   sustituye por el archivo que entregue COMEXUS sin tocar nada más:
-   <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
-        class="logo-oficial" width="176" height="34"> */
+/* Logotipo oficial: <img> apuntando al PNG que entregue COMEXUS (ver
+   comentario junto al <img> en el encabezado). Sin width/height fijos
+   en el HTML para no forzar una proporción distinta a la del archivo
+   real; la altura se fija aquí y el ancho se ajusta solo. */
 .logo{display:flex;align-items:center;gap:9px;min-width:0;text-decoration:none;color:inherit}
-.logo .emblema{width:32px;height:32px;flex:none}
-.logo-oficial{height:34px;width:auto;flex:none}
+.logo-oficial{display:block;height:34px;width:auto;max-width:58vw;flex:none}
+.logo-oficial[hidden]{display:none}
 .lockup{display:flex;flex-direction:column;line-height:1.16;min-width:0}
+.lockup[hidden]{display:none}                          /* la regla de arriba, sin esto, le gana al atributo */
 .lockup b{font-size:14px;font-weight:800;letter-spacing:-.02em;color:var(--legacy);white-space:nowrap}
 .lockup b em{font-style:normal;font-weight:600;color:var(--azure)}
 .lockup span{
@@ -434,6 +434,19 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   font-size:11.5px;line-height:1.6;
 }
 .pie b{display:block;color:var(--blanco);font-size:13px;font-weight:700;margin-bottom:var(--s-2)}
+.pie .contacto{
+  margin-top:var(--s-5);padding-top:var(--s-5);
+  border-top:1px solid rgba(255,255,255,.18);
+  display:flex;flex-direction:column;gap:6px;
+}
+.pie .contacto-tit{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);margin-bottom:2px;
+}
+.pie .contacto-link{
+  color:var(--blanco);font-weight:700;font-size:13px;word-break:break-word;
+  text-decoration:underline;text-decoration-color:var(--sky);text-underline-offset:3px;
+}
 
 /* Barra de acción fija */
 .dock{
@@ -473,14 +486,13 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 
 <header class="barra">
   <a class="logo" href="#inicio" aria-label="Fulbright COMEXUS, Becas Fulbright-García Robles">
-    <svg class="emblema" viewBox="0 0 44 44" aria-hidden="true">
-      <rect x="1.4" y="1.4" width="41.2" height="41.2" rx="10" fill="#FFFFFF" stroke="#003DA5" stroke-width="2"/>
-      <path d="M9 31C15 15 29 15 35 31" fill="none" stroke="#003DA5" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M9 31C15 23 29 23 35 31" fill="none" stroke="#00A9E0" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="9" cy="31" r="3.2" fill="#003DA5"/>
-      <circle cx="35" cy="31" r="3.2" fill="#00A9E0"/>
-    </svg>
-    <span class="lockup">
+    <!-- Logotipo oficial. Coloca el PNG que entregue COMEXUS junto a este
+         archivo con el nombre de abajo, o cambia el src por su URL. Si la
+         imagen no carga, el bloque de texto de respaldo aparece solo. -->
+    <img class="logo-oficial" src="logo-fulbright-comexus.png"
+         alt="Fulbright COMEXUS — Becas Fulbright-García Robles"
+         onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+    <span class="lockup" hidden>
       <b>Fulbright <em>COMEXUS</em></b>
       <span>Becas Fulbright-García Robles</span>
     </span>
@@ -808,6 +820,12 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   Los datos del pre-registro se usan únicamente para enviarte información de esta convocatoria
   y puedes solicitar tu baja en cualquier momento. Cifras, fechas y criterios de elegibilidad
   conforme a la convocatoria oficial vigente.
+
+  <div class="contacto">
+    <p class="contacto-tit">Contacto</p>
+    <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+    <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+  </div>
 </footer>
 
 <div class="dock" id="dock">
