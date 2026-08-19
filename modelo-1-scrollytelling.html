@@ -448,6 +448,59 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   color:var(--blanco);font-weight:700;font-size:13px;word-break:break-word;
   text-decoration:underline;text-decoration-color:var(--sky);text-underline-offset:3px;
 }
+.btn-contacto{
+  background:none;border:none;padding:0;cursor:pointer;font:inherit;
+  text-align:left;
+}
+.btn-contacto:hover{text-decoration-color:var(--blanco)}
+.btn-contacto:active{opacity:.8}
+
+/* Modal de contacto */
+.modal-contacto{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(18,41,74,.85);backdrop-filter:blur(4px);
+  border:none;padding:var(--pad);
+  animation:modal-entra .3s ease-out;
+}
+.modal-contacto::backdrop{background:transparent}
+@keyframes modal-entra{from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none}}
+.modal-contacto:not([open]){display:none}
+.modal-contenido{
+  background:var(--blanco);color:var(--tinta);
+  border-radius:var(--r);padding:var(--s-6);
+  max-width:480px;margin:auto;
+  max-height:90vh;overflow-y:auto;
+  animation:contenido-entra .3s ease-out;
+}
+@keyframes contenido-entra{from{opacity:0;scale:.95} to{opacity:1;scale:1}}
+.modal-encabezado{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s-4);
+  margin-bottom:var(--s-5);
+}
+.modal-encabezado h3{margin:0;font-size:var(--t-2);color:var(--legacy)}
+.btn-cerrar{
+  background:none;border:none;font-size:32px;padding:0;color:var(--tinta);
+  cursor:pointer;line-height:1;min-width:40px;min-height:40px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.btn-cerrar:hover{color:var(--azure)}
+.form-contacto{display:flex;flex-direction:column;gap:var(--s-4)}
+.form-contacto textarea{
+  font-family:var(--ff);font-size:var(--t-0);
+  border:1px solid var(--gris-claro);border-radius:var(--r-sm);
+  padding:var(--s-3);color:var(--tinta);background:var(--blanco);
+  resize:none;
+}
+.form-contacto textarea::placeholder{color:var(--gris-claro)}
+.form-contacto textarea:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(0,169,224,.18);outline:none}
+.form-contacto textarea[aria-invalid="true"]{border-color:#B3261E}
+.contacto-exito{
+  padding:var(--s-4);background:#F1F8F6;border-radius:var(--r-sm);
+  border-left:4px solid #047857;
+}
+.contacto-exito.oculto{display:none}
+.contacto-exito strong{color:#047857}
 
 /* Barra de acción fija */
 .dock{
@@ -824,15 +877,52 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 
   <div class="contacto">
     <div class="contacto-grupo">
-      <p class="contacto-tit">Correos para recepción de solicitudes</p>
-      <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
-      <a class="contacto-link" href="mailto:fernanda.chaparro@comexus.org.mx">fernanda.chaparro@comexus.org.mx</a>
+      <p class="contacto-tit">Contacto</p>
+      <button class="contacto-link btn-contacto" type="button" id="btn-contacto-abierto">Enviar mensaje</button>
     </div>
     <div class="contacto-grupo">
       <p class="contacto-tit">Sitio web oficial</p>
       <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
     </div>
   </div>
+
+  <!-- Modal para formulario de contacto -->
+  <dialog id="modal-contacto" class="modal-contacto">
+    <div class="modal-contenido">
+      <div class="modal-encabezado">
+        <h3>Enviar mensaje a COMEXUS</h3>
+        <button class="btn-cerrar" type="button" aria-label="Cerrar formulario">×</button>
+      </div>
+      <form id="form-contacto" novalidate class="form-contacto">
+        <div class="campo">
+          <label for="contacto-nombre">Tu nombre</label>
+          <input id="contacto-nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-contacto-nombre" required>
+          <span class="err" id="e-contacto-nombre"></span>
+        </div>
+        <div class="campo">
+          <label for="contacto-email">Tu correo</label>
+          <input id="contacto-email" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-contacto-email" required>
+          <span class="err" id="e-contacto-email"></span>
+        </div>
+        <div class="campo">
+          <label for="contacto-asunto">Asunto</label>
+          <input id="contacto-asunto" name="asunto" type="text" placeholder="¿En qué te podemos ayudar?" aria-describedby="e-contacto-asunto" required>
+          <span class="err" id="e-contacto-asunto"></span>
+        </div>
+        <div class="campo">
+          <label for="contacto-mensaje">Mensaje</label>
+          <textarea id="contacto-mensaje" name="mensaje" rows="4" placeholder="Cuéntanos más…" aria-describedby="e-contacto-mensaje" required></textarea>
+          <span class="err" id="e-contacto-mensaje"></span>
+        </div>
+        <button type="submit" class="btn btn-primario">Enviar mensaje</button>
+        <span class="err" id="e-contacto-general" style="margin-top:var(--s-3)"></span>
+      </form>
+      <div id="contacto-exito" class="contacto-exito oculto">
+        <p><strong>¡Mensaje enviado!</strong></p>
+        <p>COMEXUS te responderá a la brevedad en <span id="contacto-exito-email"></span>.</p>
+      </div>
+    </div>
+  </dialog>
 </footer>
 
 <div class="dock" id="dock">
@@ -1096,6 +1186,108 @@ new IntersectionObserver(ents => {
       boton.disabled = false;
       boton.textContent = etiqueta;
       err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   4 · FORMULARIO DE CONTACTO (Modal)
+   ═══════════════════════════════════════════════════════════════ */
+(function formularioContacto(){
+  const modal = document.getElementById('modal-contacto');
+  const btnAbrir = document.getElementById('btn-contacto-abierto');
+  const btnCerrar = modal.querySelector('.btn-cerrar');
+  const form = document.getElementById('form-contacto');
+  const q = new URLSearchParams(location.search);
+  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function err(campo, msg){
+    const caja = document.getElementById('e-contacto-' + campo);
+    const el = document.getElementById('contacto-' + campo);
+    if (caja) caja.textContent = msg || '';
+    if (el && el.type !== 'textarea') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+  const val = id => (document.getElementById('contacto-' + id).value || '').trim();
+
+  function valida(campo){
+    switch (campo){
+      case 'nombre':   return err('nombre', val('nombre').length >= 2 ? '' : 'Escribe tu nombre.');
+      case 'correo':   return err('correo', CORREO.test(val('correo')) ? '' : 'Revisa el correo.');
+      case 'asunto':   return err('asunto', val('asunto').length >= 5 ? '' : 'Describe el asunto.');
+      case 'mensaje':  return err('mensaje', val('mensaje').length >= 10 ? '' : 'Cuéntanos más (mínimo 10 caracteres).');
+    }
+  }
+
+  ['nombre','correo','asunto','mensaje'].forEach(id => {
+    const el = document.getElementById('contacto-' + id);
+    if (el) el.addEventListener('blur', () => valida(id));
+  });
+
+  // Abrir modal
+  btnAbrir.addEventListener('click', () => {
+    modal.showModal();
+    form.reset();
+    err('general', '');
+  });
+
+  // Cerrar modal
+  btnCerrar.addEventListener('click', () => modal.close());
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+
+  // Enviar formulario
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const malos = ['nombre','correo','asunto','mensaje'].filter(c => !valida(c));
+    if (malos.length){
+      document.getElementById('contacto-' + malos[0]).focus();
+      return;
+    }
+
+    const datos = {
+      tipo: 'contacto',
+      nombre: val('nombre'),
+      correo: val('correo').toLowerCase(),
+      asunto: val('asunto'),
+      mensaje: val('mensaje'),
+      utm_source: q.get('utm_source') || 'volante_impreso',
+      utm_medium: q.get('utm_medium') || 'qr',
+      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+
+    const boton = form.querySelector('button[type=submit]');
+    boton.disabled = true;
+    const etiqueta = boton.textContent;
+    boton.textContent = 'Enviando…';
+
+    try {
+      if (CONFIG.ENDPOINT){
+        const r = await fetch(CONFIG.ENDPOINT, {
+          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      } else {
+        console.info('[modo demo] payload de contacto para Zapier:', datos);
+        await new Promise(r => setTimeout(r, 420));
+      }
+
+      // Mostrar éxito
+      form.classList.add('oculto');
+      document.getElementById('contacto-exito').classList.remove('oculto');
+      document.getElementById('contacto-exito-email').textContent = datos.correo;
+
+      // Cerrar modal después de 3 segundos
+      setTimeout(() => modal.close(), 3000);
+    } catch (_) {
+      boton.disabled = false;
+      boton.textContent = etiqueta;
+      err('general', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
     }
   });
 })();
