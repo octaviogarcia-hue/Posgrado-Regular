@@ -45,9 +45,11 @@ la Libertad** a mitad del trayecto, en SVG 2D.
   entre 0 y 1, y de ahí salen el encuadre de la cámara, el trazado de cada arco, la
   transición entre monumentos y la barra de progreso. No hay animaciones sueltas que se
   desincronicen.
-- **La cámara escala el grupo, no los rótulos.** Cada ciudad va en su propio grupo con la
-  escala compensada, y los trazos usan `vector-effect: non-scaling-stroke`. Sin eso, a 2.7
-  aumentos los nombres se leerían al triple y las fronteras se verían como tuberías.
+- **Diseño geográfico minimalista, sin rótulos.** Las ciudades son solo marcadores —punto y
+  halo en azules institucionales— unidos por sus rutas; no llevan nombre en el mapa. Cada
+  grupo de ciudad compensa la escala de la cámara y los trazos usan
+  `vector-effect: non-scaling-stroke`, así que ni los marcadores ni las fronteras se
+  deforman a 2.7 aumentos.
 - **`prefers-reduced-motion`** entrega el mapa completo, los seis arcos trazados y los dos
   monumentos a la vez, sin movimiento.
 - **Formulario de un paso, tres campos** — máxima tasa de conversión.
@@ -142,7 +144,7 @@ Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 p
 | Desbordamiento horizontal (390 y 1440 px) | Ninguno |
 | Montserrat y Source Serif 4 | Cargan en los dos modelos y en los fragmentos publicados |
 | Modelo 1: recorrido de la cámara | Encuadre, arcos, monumentos y progreso avanzan sincronizados |
-| Modelo 1: rótulos del mapa a cualquier zoom | Tamaño constante; los trazos no engordan |
+| Modelo 1: marcadores del mapa a cualquier zoom | Sin rótulos de texto; tamaño constante y trazos que no engordan |
 | Logotipo del encabezado fijo | Presente y legible en los dos modelos |
 | Zonas táctiles por debajo de 44 px | Ninguna |
 | Contador con convocatoria abierta | 61 d 13 h 59 m 12 s, avanza al segundo |

@@ -210,10 +210,6 @@ button{font:inherit;color:inherit}
 .punto{fill:var(--legacy)}
 .punto.us{fill:var(--azure)}
 .halo{fill:none;stroke:var(--sky);stroke-width:1.6;opacity:.5;vector-effect:non-scaling-stroke}
-.rotulo{
-  font-family:var(--ff);font-size:15px;font-weight:700;fill:var(--tinta);
-  paint-order:stroke;stroke:var(--blanco);stroke-width:4px;stroke-linejoin:round;
-}
 
 /* Monumentos superpuestos al mapa */
 .monumentos{position:absolute;inset:0;pointer-events:none}
@@ -556,17 +552,18 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
           </g>
 
           <!-- Cada ciudad va en su grupo: la cámara la coloca, pero su
-               escala se compensa para que el rótulo y el punto midan
-               siempre lo mismo en pantalla. -->
+               escala se compensa para que el marcador mida siempre lo
+               mismo en pantalla. Minimalista y geográfico: sin rótulos,
+               solo puntos y las rutas que los conectan. -->
           <g id="ciudades">
-            <g class="ciudad" data-x="345.5" data-y="458.6"><circle class="halo" r="13"/><circle class="punto" r="6"/><text class="rotulo" x="14" y="5">Ciudad de México</text></g>
-            <g class="ciudad" data-x="330.3" data-y="364.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/><text class="rotulo" x="13" y="5">Monterrey</text></g>
-            <g class="ciudad" data-x="291.2" data-y="439.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/><text class="rotulo" x="-13" y="5" text-anchor="end">Guadalajara</text></g>
-            <g class="ciudad" data-x="99.8" data-y="239.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="5">Los Ángeles</text></g>
-            <g class="ciudad" data-x="363.4" data-y="295.9"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="-13" y="-9" text-anchor="end">Austin</text></g>
-            <g class="ciudad" data-x="393.8" data-y="303.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="9">Houston</text></g>
-            <g class="ciudad" data-x="589.0" data-y="363.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="13" y="5">Miami</text></g>
-            <g class="ciudad" data-x="668.5" data-y="139.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/><text class="rotulo" x="-13" y="-9" text-anchor="end">Nueva York</text></g>
+            <g class="ciudad" data-x="345.5" data-y="458.6"><circle class="halo" r="13"/><circle class="punto" r="6"/></g>
+            <g class="ciudad" data-x="330.3" data-y="364.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/></g>
+            <g class="ciudad" data-x="291.2" data-y="439.9"><circle class="halo" r="12"/><circle class="punto" r="5.5"/></g>
+            <g class="ciudad" data-x="99.8" data-y="239.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/></g>
+            <g class="ciudad" data-x="363.4" data-y="295.9"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/></g>
+            <g class="ciudad" data-x="393.8" data-y="303.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/></g>
+            <g class="ciudad" data-x="589.0" data-y="363.6"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/></g>
+            <g class="ciudad" data-x="668.5" data-y="139.3"><circle class="halo" r="12"/><circle class="punto us" r="5.5"/></g>
           </g>
         </g>
       </svg>
@@ -885,7 +882,7 @@ const sujeta = (v, a, b) => Math.max(a, Math.min(b, v));
   });
 
   /* La cámara escala el grupo entero. Sin compensar, a 2.7 aumentos
-     los rótulos se leerían al triple de su tamaño. */
+     los marcadores se verían al triple de su tamaño. */
   function escalaCiudades(s){
     const k = (1 / s).toFixed(4);
     for (const g of ciudades){
