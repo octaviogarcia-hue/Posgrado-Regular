@@ -437,8 +437,9 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 .pie .contacto{
   margin-top:var(--s-5);padding-top:var(--s-5);
   border-top:1px solid rgba(255,255,255,.18);
-  display:flex;flex-direction:column;gap:6px;
+  display:flex;flex-direction:column;gap:var(--s-4);
 }
+.pie .contacto-grupo{display:flex;flex-direction:column;gap:6px}
 .pie .contacto-tit{
   font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
   color:rgba(255,255,255,.6);margin-bottom:2px;
@@ -822,9 +823,15 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   conforme a la convocatoria oficial vigente.
 
   <div class="contacto">
-    <p class="contacto-tit">Contacto</p>
-    <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
-    <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+    <div class="contacto-grupo">
+      <p class="contacto-tit">Correos para recepción de solicitudes</p>
+      <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+      <a class="contacto-link" href="mailto:fernanda.chaparro@comexus.org.mx">fernanda.chaparro@comexus.org.mx</a>
+    </div>
+    <div class="contacto-grupo">
+      <p class="contacto-tit">Sitio web oficial</p>
+      <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+    </div>
   </div>
 </footer>
 

@@ -110,11 +110,14 @@ antemano si el archivo real tiene tinta clara u oscura.
 
 ### Pie de página con contacto
 
-Las dos páginas cierran con un bloque **Contacto** en el pie, con el correo oficial de
-recepción de solicitudes y el enlace al sitio de COMEXUS:
+Las dos páginas cierran con un bloque de contacto en el pie, en dos grupos:
 
 ```html
+<!-- Correos para recepción de solicitudes -->
 <a href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+<a href="mailto:fernanda.chaparro@comexus.org.mx">fernanda.chaparro@comexus.org.mx</a>
+
+<!-- Sitio web oficial -->
 <a href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
 ```
 

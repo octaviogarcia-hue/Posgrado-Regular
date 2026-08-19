@@ -391,8 +391,9 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 .pie-oficial .contacto{
   margin:var(--s-5) var(--pad) 0;padding-top:var(--s-5);
   border-top:1px solid rgba(255,255,255,.14);
-  display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:var(--s-4);text-align:center;
 }
+.pie-oficial .contacto-grupo{display:flex;flex-direction:column;align-items:center;gap:6px}
 .pie-oficial .contacto-tit{
   font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--texto-3);
 }
@@ -707,9 +708,15 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     Cifras, fechas y criterios de elegibilidad conforme a la convocatoria oficial vigente.
   </p>
   <div class="contacto">
-    <p class="contacto-tit">Contacto</p>
-    <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
-    <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+    <div class="contacto-grupo">
+      <p class="contacto-tit">Correos para recepción de solicitudes</p>
+      <a class="contacto-link" href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
+      <a class="contacto-link" href="mailto:fernanda.chaparro@comexus.org.mx">fernanda.chaparro@comexus.org.mx</a>
+    </div>
+    <div class="contacto-grupo">
+      <p class="contacto-tit">Sitio web oficial</p>
+      <a class="contacto-link" href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+    </div>
   </div>
 </footer>
 
