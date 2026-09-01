@@ -771,28 +771,39 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     <h2 id="contacto-t">Escríbele a COMEXUS</h2>
     <p>¿Tu duda no aparece arriba? Déjanos tu mensaje y te respondemos por correo.</p>
 
-    <!-- Pega aquí el enlace de tu procesador (Jotform, Formspree…) en action. -->
-    <form class="tarjeta-vidrio form-contacto" action="TU_ENLACE_AQUI" method="POST">
+    <!-- Contacto: POST nativo a Jotform. Sin iframe ni SDK; al enviar, el
+         navegador sale a la pantalla de agradecimiento del propio Jotform. -->
+    <form class="tarjeta-vidrio form-contacto"
+          action="https://submit.jotform.com/submit/262434743012045" method="POST">
+
+      <!-- Jotform exige estos dos para aceptar un envío directo. -->
+      <input type="hidden" name="formID" value="262434743012045">
+      <input type="hidden" name="simple_spc" value="262434743012045-262434743012045">
+
       <div class="campo-vidrio">
         <label for="c-nombre">Nombre completo</label>
-        <input id="c-nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" required>
+        <input id="c-nombre" name="q3_name[first]" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" required>
       </div>
       <div class="campo-vidrio">
         <label for="c-email">Correo electrónico</label>
-        <input id="c-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" required>
+        <input id="c-email" name="q4_email" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" required>
       </div>
       <div class="campo-vidrio">
         <label for="c-asunto">Asunto</label>
-        <input id="c-asunto" name="asunto" type="text" placeholder="¿En qué te podemos ayudar?" required>
+        <input id="c-asunto" name="q6_typeA" type="text" placeholder="¿En qué te podemos ayudar?" required>
       </div>
       <div class="campo-vidrio">
         <label for="c-mensaje">Mensaje</label>
-        <textarea id="c-mensaje" name="mensaje" rows="5" placeholder="Cuéntanos con detalle…" required></textarea>
+        <textarea id="c-mensaje" name="q7_typeA7" rows="5" placeholder="Cuéntanos con detalle…" required></textarea>
       </div>
 
-      <input class="trampa" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <!-- Trampa antispam propia de Jotform: debe viajar vacía. -->
+      <input class="trampa" type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <!-- Trazabilidad de campaña: el script los rellena al cargar. -->
+      <!-- Trazabilidad de campaña. Jotform descarta lo que no tenga un campo
+           equivalente en el formulario; quedan listos para el día que se
+           agreguen allá, sobre todo landing_variant, que es lo que dice
+           cuál de las dos landings convirtió. -->
       <input type="hidden" name="utm_source" id="c-utm-source">
       <input type="hidden" name="utm_medium" id="c-utm-medium">
       <input type="hidden" name="utm_campaign" id="c-utm-campaign">
