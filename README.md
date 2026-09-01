@@ -164,8 +164,6 @@ falso en el formulario de producción.
 
 ## Pendiente antes de publicar
 
-- [ ] Colocar `logo-fulbright-comexus.png` junto al HTML (el `<img>` ya está configurado
-      para recibirlo; ver «Identidad oficial» arriba).
 - [ ] Hacer un envío de prueba del formulario de contacto y confirmar que llegan los cuatro
       campos.
 - [ ] Renombrar en el editor de Jotform las etiquetas de los campos 6 y 7, que siguen como
