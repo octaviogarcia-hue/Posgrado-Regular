@@ -83,8 +83,8 @@
     },
     "landing_variant": {
       "type": "string",
-      "enum": ["modelo-1-scrollytelling", "modelo-2-bento-vertical"],
-      "description": "Modelo de landing que generó el registro. Base de la prueba A/B."
+      "enum": ["modelo-1-scrollytelling"],
+      "description": "Modelo de landing que generó el registro."
     },
     "referrer": { "type": "string", "description": "document.referrer o 'directo'." },
     "locale": { "type": "string", "default": "es-MX" },
@@ -100,13 +100,13 @@
       "elegibilidad_confirmada": true,
       "consentimiento_aviso": true,
       "convocatoria_abierta": true,
-      "fecha_cierre_objetivo": "2026-02-01T05:59:59.000Z",
+      "fecha_cierre_objetivo": "2027-01-16T05:59:59.000Z",
       "utm_source": "volante_impreso",
       "utm_medium": "qr",
       "utm_campaign": "fulbright_posgrado_regular_2026",
       "utm_content": "hook_a",
       "qr_id": "feria_unam_01",
-      "landing_variant": "modelo-2-bento-vertical",
+      "landing_variant": "modelo-1-scrollytelling",
       "referrer": "directo",
       "locale": "es-MX",
       "timestamp_iso": "2025-12-01T16:04:22.113Z"

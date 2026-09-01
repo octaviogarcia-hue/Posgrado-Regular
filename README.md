@@ -1,11 +1,11 @@
 # Campaña Phygital — Beca Fulbright-García Robles · Posgrado Regular
 
 Del volante impreso al pre-registro digital. Un código QR en papel lleva a una landing page
-orientada a conversión; **dos modelos de diseño distintos** compiten por el mismo objetivo.
+orientada a conversión.
 
-El 99 % del tráfico llega por teléfono, así que las dos páginas son **mobile-first en
-retrato**: proporciones verticales, tipografía dimensionada para la mano, y gestos táctiles
-en lugar de eventos de ratón.
+El 99 % del tráfico llega por teléfono, así que la página es **mobile-first en retrato**:
+proporciones verticales, tipografía dimensionada para la mano, y gestos táctiles en lugar de
+eventos de ratón.
 
 ---
 
@@ -13,33 +13,30 @@ en lugar de eventos de ratón.
 
 ```
 modelo-1-scrollytelling.html         Relato guiado por scroll con mapa SVG animado
-modelo-2-bento-vertical.html         Bento apilado, glassmorphism, sin motores 3D
 docs/
-  01-copy.md                         Hook del volante y microcopy de las landings
+  01-copy.md                         Hook del volante y microcopy de la landing
   02-zapier.md                       Pre-registro y recordatorios automáticos
   preregistro.schema.json            Esquema del payload de pre-registro
 tools/
-  build_artifacts.py                 Genera fragmentos publicables desde los HTML
+  build_artifacts.py                 Genera fragmentos publicables desde el HTML
 archivo/                             Versiones anteriores del encargo (v1: icosaedro;
                                      v2: globo y mapa 3D en WebGL), como referencia
 ```
 
-Los dos HTML son **autónomos**: CSS y JavaScript embebidos, sin build, sin fuentes externas,
-sin dependencias obligatorias. Se abren con doble clic.
+El HTML es **autónomo**: CSS y JavaScript embebidos, sin build, sin dependencias
+obligatorias más allá de las fuentes de Google. Se abre con doble clic.
 
 ---
 
-## Los dos modelos
-
-### Modelo 1 — Del Ángel a la Antorcha
+## El modelo — Del Ángel a la Antorcha
 
 Un relato guiado por el scroll. El escenario queda fijo bajo el encabezado mientras las
 tarjetas de contenido pasan por debajo, y el desplazamiento mueve una **cámara sobre un mapa
-SVG** de México y Estados Unidos: arranca cerrada sobre Ciudad de México, se abre a las tres
+SVG** de México y Estados Unidos: arranca cerrada sobre el origen, se abre a las tres
 ciudades emisoras, cruza la frontera y termina en el noreste. Seis **trayectorias que se
-trazan solas** unen Ciudad de México, Monterrey y Guadalajara con Los Ángeles, Austin,
-Houston, Miami y Nueva York. El **Ángel de la Independencia** cede el sitio a la **Estatua de
-la Libertad** a mitad del trayecto, en SVG 2D.
+trazan solas** unen las ciudades de salida con las de destino. El **Ángel de la
+Independencia** cede el sitio a la **Estatua de la Libertad** a mitad del trayecto, en
+SVG 2D.
 
 - **Un solo cálculo gobierna todo.** El avance del scroll dentro del relato produce un valor
   entre 0 y 1, y de ahí salen el encuadre de la cámara, el trazado de cada arco, la
@@ -52,23 +49,7 @@ la Libertad** a mitad del trayecto, en SVG 2D.
   deforman a 2.7 aumentos.
 - **`prefers-reduced-motion`** entrega el mapa completo, los seis arcos trazados y los dos
   monumentos a la vez, sin movimiento.
-- **Formulario de un paso, tres campos** — máxima tasa de conversión.
-
-### Modelo 2 — Corredor Fulbright
-
-Interfaz contemporánea sin animaciones de scroll: **bento apilado en vertical** (1 columna en
-móvil, 4 a partir de 46rem, 6 a partir de 70rem), **glassmorphism** sobre el degradado
-corporativo con auroras en movimiento, Montserrat de peso 800 con tracking negativo y
-micro-interacciones —reflejo que sigue al dedo, revelado escalonado, contadores de monto,
-reloj de cierre al segundo—.
-
-La pieza de acompañamiento es la **única tarjeta de fondo blanco** del bento: en una pila de
-vidrio azul, invertir el valor es lo que hace que un bloque destaque sin gritar.
-
-- **Zonas táctiles de 56 px** en todos los controles.
-- Control segmentado para alternar entre «Sí puedes» y «No aplica» en elegibilidad.
-- **Formulario de dos pasos, seis campos** — menos conversión bruta, mucha mejor
-  segmentación de la secuencia de correos.
+- **Formulario de pre-registro de un paso, tres campos** — máxima tasa de conversión.
 
 ---
 
@@ -86,12 +67,11 @@ Aplicada según la Fulbright Brand Guide:
 | Blanco, `#C7C9C7`, `#707372` | Fondos y textos de soporte |
 
 **Una advertencia de contraste que conviene conocer.** Sky Blue es un color de acento: sobre
-blanco da 2.5:1 y sobre el azul del bento menos de 2:1, ambos por debajo del mínimo de la
-WCAG. En las dos páginas pinta **solo gráficos** —arcos, halos, bordes, la antorcha, las
-reglas, la barra de progreso—; el texto usa Legacy Blue, Azure Blue o blanco según el fondo.
-Se ve igual de vivo y se lee.
+blanco da 2.5:1, por debajo del mínimo de la WCAG. En la página pinta **solo gráficos**
+—arcos, halos, bordes, la antorcha, las reglas, la barra de progreso—; el texto usa Legacy
+Blue, Azure Blue o blanco según el fondo. Se ve igual de vivo y se lee.
 
-Ambas páginas abren con un **sticky header** con un `<img class="logo-oficial">` listo para
+La página abre con un **sticky header** con un `<img class="logo-oficial">` listo para
 recibir el logotipo oficial:
 
 ```html
@@ -100,82 +80,97 @@ recibir el logotipo oficial:
      onerror="...">
 ```
 
-Para activarlo, **coloca el PNG que entregue COMEXUS junto a cada HTML** con el nombre
+Para activarlo, **coloca el PNG que entregue COMEXUS junto al HTML** con el nombre
 `logo-fulbright-comexus.png` —o cambia el `src` por su URL, si se va a alojar aparte—. No hay
 que tocar nada más del encabezado. Mientras el archivo no exista, el `onerror` del propio
 `<img>` lo oculta y muestra en su lugar un lockup de texto (`Fulbright COMEXUS · Becas
-Fulbright-García Robles`) para que el encabezado nunca se vea roto. En el Modelo 2 el logo
-va además sobre un chip blanco, porque el fondo del encabezado es oscuro y no se sabe de
-antemano si el archivo real tiene tinta clara u oscura.
+Fulbright-García Robles`) para que el encabezado nunca se vea roto.
 
-### Pie de página con contacto
+### Contacto: formulario nativo, no `mailto:`
 
-Las dos páginas cierran con un bloque de contacto en el pie, en dos grupos:
+Los enlaces `mailto:` quedaban bloqueados en varios clientes, así que el contacto es una
+**sección propia al final del relato** con el formulario maquetado a mano en HTML y CSS:
+glassmorphism sobre una banda con el degradado corporativo, campos con línea inferior y
+botón a todo el ancho en Legacy Blue.
+
+El envío es un **POST nativo del propio `<form>`** a Jotform —sin iframe, sin SDK, sin
+JavaScript de por medio—. Al enviar, el navegador sale a la pantalla de agradecimiento de
+Jotform:
 
 ```html
-<!-- Correos para recepción de solicitudes -->
-<a href="mailto:becas@comexus.org.mx">becas@comexus.org.mx</a>
-<a href="mailto:fernanda.chaparro@comexus.org.mx">fernanda.chaparro@comexus.org.mx</a>
-
-<!-- Sitio web oficial -->
-<a href="https://www.comexus.org.mx" target="_blank" rel="noopener">www.comexus.org.mx</a>
+<form action="https://submit.jotform.com/submit/262434743012045" method="POST">
+  <input type="hidden" name="formID"     value="262434743012045">
+  <input type="hidden" name="simple_spc" value="262434743012045-262434743012045">
+  <input name="q3_name[first]" ...>   <!-- Nombre completo -->
+  <input name="q4_email"       ...>   <!-- Correo          -->
+  <input name="q6_typeA"       ...>   <!-- Asunto          -->
+  <textarea name="q7_typeA7"   ...>   <!-- Mensaje         -->
 ```
+
+`formID` y `simple_spc` son obligatorios para que Jotform acepte un envío directo. El campo
+de nombre es de tipo *Full Name* en Jotform, así que el nombre completo llega en la columna
+«First Name»; para separarlo hay que cambiar ese campo a *Short Text* en el editor. Los
+`utm_*` viajan como campos ocultos pero **Jotform los descarta** mientras no existan campos
+equivalentes en el formulario.
 
 ---
 
 ## Configuración por ciclo
 
-Cada landing tiene un único bloque de configuración al inicio de su `<script>`:
+La landing tiene un único bloque de configuración al inicio de su `<script>`:
 
 ```js
 const CONFIG = {
-  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  CIERRE: new Date('2027-01-15T23:59:59-06:00'),
   APERTURA_SIGUIENTE: '1 de septiembre',
   ENDPOINT: '',            // URL del Catch Hook de Zapier. Vacío = modo demo.
-  VARIANTE: 'modelo-1-recorrido-binacional'
+  VARIANTE: 'modelo-1-scrollytelling'
 };
 ```
 
 Cambiar `CIERRE` recalcula el contador, la píldora de estado, la etiqueta del CTA, el texto
-del dock y el mensaje de confirmación.
+del dock y el mensaje de confirmación. Las fechas escritas a mano —los tres hitos del
+calendario y la `<meta description>`— sí hay que tocarlas aparte.
 
 ### Estado «convocatoria cerrada»
 
-Cuando la fecha de cierre ya pasó, ambas páginas cambian solas de discurso: dejan de
-prometer una postulación imposible y ofrecen aviso para la siguiente apertura. No hay que
-despublicar nada ni editar textos con prisa.
+Cuando la fecha de cierre ya pasó, la página cambia sola de discurso: deja de prometer una
+postulación imposible y ofrece aviso para la siguiente apertura. No hay que despublicar nada
+ni editar textos con prisa.
 
-Con `ENDPOINT` vacío el formulario funciona en **modo demo**: valida, muestra la
-confirmación y escribe en la consola el payload exacto que recibiría Zapier.
+`ENDPOINT` gobierna solo el **pre-registro**, no el formulario de contacto. Con `ENDPOINT`
+vacío el pre-registro funciona en **modo demo**: valida, muestra la confirmación y escribe en
+la consola el payload exacto que recibiría Zapier.
 
 ---
 
 ## Verificación
 
-Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 px.
+Probado en Chromium (Playwright) a 360, 390, 768 y 1280 px.
 
 | Comprobación | Resultado |
 |---|---|
 | Errores de consola y de JavaScript | Ninguno |
-| Desbordamiento horizontal (390 y 1440 px) | Ninguno |
-| Montserrat y Source Serif 4 | Cargan en los dos modelos y en los fragmentos publicados |
-| Modelo 1: recorrido de la cámara | Encuadre, arcos, monumentos y progreso avanzan sincronizados |
-| Modelo 1: marcadores del mapa a cualquier zoom | Sin rótulos de texto; tamaño constante y trazos que no engordan |
-| Logotipo del encabezado fijo | Presente y legible en los dos modelos |
-| Zonas táctiles por debajo de 44 px | Ninguna |
-| Contador con convocatoria abierta | 61 d 13 h 59 m 12 s, avanza al segundo |
-| Estado de convocatoria cerrada | Píldora, reloj, hito, dock, CTA y formulario cambian a la vez |
-| Formulario: paso vacío, correo inválido, consentimiento | Bloquea y enfoca el primer campo con error |
-| Formulario: envío completo | Muestra confirmación y mueve el foco |
+| Desbordamiento horizontal (360, 390, 768, 1280 px) | Ninguno |
+| Contacto: `action`, `method` y los cuatro campos de Jotform | Correctos y en orden |
+| Contador con convocatoria abierta | Píldora en «Abierta», 136 días al 1 de septiembre de 2026 |
 | Montos sin JavaScript | Se leen correctos: la cifra real vive en el HTML |
+| Zonas táctiles por debajo de 44 px | Ninguna |
+
+Un **envío de prueba real a Jotform está pendiente**: no se hizo para no dejar un registro
+falso en el formulario de producción.
 
 ---
 
 ## Pendiente antes de publicar
 
-- [ ] Colocar `logo-fulbright-comexus.png` junto a cada HTML (el `<img>` ya está
-      configurado para recibirlo; ver «Identidad oficial» arriba).
-- [ ] Pegar la URL del Catch Hook de Zapier en `CONFIG.ENDPOINT`.
+- [ ] Colocar `logo-fulbright-comexus.png` junto al HTML (el `<img>` ya está configurado
+      para recibirlo; ver «Identidad oficial» arriba).
+- [ ] Hacer un envío de prueba del formulario de contacto y confirmar que llegan los cuatro
+      campos.
+- [ ] Renombrar en el editor de Jotform las etiquetas de los campos 6 y 7, que siguen como
+      «Type a question» y así aparecen en los correos de aviso.
+- [ ] Pegar la URL del Catch Hook de Zapier en `CONFIG.ENDPOINT` para el pre-registro.
 - [ ] Enlazar el aviso de privacidad real de COMEXUS (hoy es un ancla interna).
 - [ ] Confirmar cifras, fechas y criterios de elegibilidad contra la convocatoria oficial
       vigente.
@@ -184,13 +179,12 @@ Probado en Chromium (Playwright) a 390 × 844 con emulación táctil, y a 1440 p
 
 ## Dos notas
 
-**Sobre el calendario.** El material usa las fechas del brief: convocatoria del 1 de
-septiembre de 2025 al 31 de enero de 2026, con inicio de estudios en agosto de 2027. Ese
-periodo ya concluyó, de modo que hoy las páginas se muestran en su estado de convocatoria
-cerrada. Para activar el ciclo vigente basta actualizar `CIERRE`.
+**Sobre el calendario.** El material usa el ciclo vigente: convocatoria del 1 de septiembre
+de 2026 al 15 de enero de 2027, con inicio de estudios en otoño de 2028. Los montos se
+enuncian siempre con «hasta», porque la cantidad varía según el programa.
 
 **Sobre `user-scalable=no`.** El brief pide esa etiqueta de viewport y está puesta tal cual.
 Conviene saber que bloquea el zoom del navegador, lo que incumple el criterio WCAG 1.4.4 y
-afecta a quien necesita ampliar el texto. Las páginas están construidas para no necesitarlo
+afecta a quien necesita ampliar el texto. La página está construida para no necesitarlo
 —cuerpo de 16 px mínimo, controles de 52–56 px—, así que quitar `maximum-scale=1.0,
 user-scalable=no` no cambia nada del diseño y devuelve el zoom. Es una decisión de una línea.
