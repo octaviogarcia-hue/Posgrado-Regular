@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año, con asesoramiento personalizado y seguimiento puntual de COMEXUS. Convocatoria hasta el 31 de enero.">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año, con asesoramiento personalizado y seguimiento puntual de COMEXUS. Convocatoria hasta el 15 de enero de 2027.">
 <title>Corredor Fulbright</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -195,10 +195,12 @@ button{font:inherit;color:inherit}
 .confianza{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-top:var(--s-5)}
 .confianza li{
   display:inline-flex;align-items:center;gap:7px;
-  padding:9px 13px;border-radius:var(--r-pill);
+  max-width:100%;min-width:0;
+  padding:9px 13px;border-radius:var(--r);
   background:var(--vidrio-2);border:1px solid var(--borde);
   font-size:11.5px;font-weight:600;color:var(--blanco);
 }
+.confianza li svg{flex:none}
 
 /* ── Botones ──────────────────────────────────────────────── */
 .btn{
@@ -223,6 +225,11 @@ button{font:inherit;color:inherit}
   display:block;margin-top:var(--s-3);
   font-size:clamp(1.6rem,7.4vw,2.1rem);font-weight:800;letter-spacing:-.04em;
   color:var(--blanco);line-height:1;font-variant-numeric:tabular-nums;
+}
+/* El monto es un techo, no una cifra fija: «hasta» viaja pegado al número. */
+.t-monto .cifra small{
+  display:block;margin-bottom:3px;font-size:.42em;font-weight:700;
+  letter-spacing:.04em;color:var(--texto-3);
 }
 .t-monto .pie{margin-top:var(--s-2);font-size:11.5px;color:var(--texto-3);line-height:1.4}
 
@@ -550,11 +557,11 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 <main class="bento" id="inicio">
 
   <section class="tile t-hero">
-    <span class="eyebrow">Maestría y doctorado en EE. UU.</span>
-    <h1>Hasta $37,000 USD al año para tu <em>posgrado</em></h1>
+    <span class="eyebrow">Del Ángel a la Antorcha</span>
+    <h1>Tu posgrado en EE. UU. <em>empieza aquí</em></h1>
     <p class="lede">
-      Estudia en Estados Unidos con la beca Fulbright-García Robles. <b>COMEXUS te asesora y
-      te da seguimiento puntual</b> durante todo el proceso.
+      Estudia en Estados Unidos con la beca Fulbright-García Robles, con <b>hasta
+      $37,000 USD al año</b>. COMEXUS te acompaña con asesoría en tu proceso de admisión.
     </p>
     <ul class="confianza">
       <li>
@@ -563,11 +570,11 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
       </li>
       <li>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        Sin carta de aceptación previa
+        No requieres carta de aceptación de alguna universidad.
       </li>
       <li>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        Visa J1 incluida
+        Postulación a 4-5 universidades y trámite de visa J1
       </li>
     </ul>
   </section>
@@ -576,14 +583,14 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     <section class="tile t-monto">
       <div>
         <span class="rotulo">Maestría</span>
-        <b class="cifra" data-contador="37000">$37,000</b>
+        <b class="cifra"><small>hasta</small><span data-contador="37000">$37,000</span></b>
       </div>
       <p class="pie">USD al año<br>Hasta 18 meses</p>
     </section>
     <section class="tile t-monto">
       <div>
         <span class="rotulo">Doctorado</span>
-        <b class="cifra" data-contador="25000">$25,000</b>
+        <b class="cifra"><small>hasta</small><span data-contador="25000">$25,000</span></b>
       </div>
       <p class="pie">USD al año<br>Hasta 3 años</p>
     </section>
@@ -593,7 +600,6 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
   <section class="tile t-acompana" aria-labelledby="ac-t">
     <p class="rotulo">Acompañamiento COMEXUS</p>
     <h2 id="ac-t">No postulas <em>solo</em></h2>
-    <p>Esta es la diferencia que casi nadie cuenta: <b>COMEXUS no te entrega un cheque y se despide</b>.</p>
     <ul class="acompana">
       <li>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
@@ -605,7 +611,7 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
       </li>
       <li>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        <span><b>Gestión de tu admisión</b><small>Te postula a entre 4 y 5 universidades de Estados Unidos.</small></span>
+        <span><b>Apoyo en tu postulación</b><small>COMEXUS te apoya para postular a entre 4 y 5 universidades de Estados Unidos.</small></span>
       </li>
       <li>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
@@ -623,13 +629,13 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
       <div><b id="r-m">--</b><span>Min</span></div>
       <div><b id="r-s">--</b><span>Seg</span></div>
     </div>
-    <p id="reloj-txt">El 31 de enero de 2026 se cierra sin prórroga.</p>
+    <p id="reloj-txt">El 15 de enero de 2027 se cierra sin prórroga.</p>
   </section>
 
   <section class="tile t-req" aria-labelledby="req-t">
     <h2 class="rotulo" id="req-t">Requisitos</h2>
     <ul class="req">
-      <li><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></li>
+      <li><span class="k">Promedio<small>Del grado completo más reciente</small></span><span class="v">8 mín.</span></li>
       <li><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></li>
       <li><span class="k">IELTS</span><span class="v">6.5 mín.</span></li>
       <li><span class="k">Duolingo</span><span class="v">120 mín.</span></li>
@@ -647,12 +653,11 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     <ul class="elig" id="elig-si" role="tabpanel" aria-labelledby="tab-si">
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de un área STEM.</span></li>
     </ul>
     <ul class="elig" id="elig-no" role="tabpanel" aria-labelledby="tab-no" hidden>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span><b>Doble nacionalidad</b> estadounidense.</span></li>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría <b>ya cursadas en EE. UU.</b></span></li>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas <b>clínicas</b>.</span></li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si tienes <b>nacionalidad, ciudadanía o residencia</b> de EE. UU.</span></li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si cursaste <b>licenciatura o maestría</b> en EE. UU.</span></li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C7C9C7" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si cuentas con <b>carta de aceptación</b> de una universidad.</span></li>
     </ul>
   </section>
 
@@ -661,7 +666,7 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
     <ol class="pasos">
       <li><span class="n">01</span><div><b>Verificas tu perfil</b><p>Promedio, inglés, GRE y elegibilidad.</p></div></li>
       <li><span class="n">02</span><div><b>Envías tu postulación</b><p>Sin carta de aceptación previa.</p></div></li>
-      <li><span class="n">03</span><div><b>COMEXUS gestiona tu admisión</b><p>Con asesoría y seguimiento en cada etapa.</p></div></li>
+      <li><span class="n">03</span><div><b>COMEXUS te apoya en tu postulación</b><p>Con asesoría y seguimiento en cada etapa.</p></div></li>
       <li><span class="n">04</span><div><b>Tramitas la visa J1</b><p>COMEXUS lleva el proceso contigo.</p></div></li>
     </ol>
   </section>
@@ -669,9 +674,9 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
   <section class="tile t-fechas" aria-labelledby="fe-t">
     <h2 class="rotulo" id="fe-t">Fechas</h2>
     <ul class="hitos">
-      <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2025</span><b>Abre la convocatoria</b></div></li>
-      <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
-      <li><i aria-hidden="true"></i><div><span class="fecha">Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></li>
+      <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2026</span><b>Abre la convocatoria</b></div></li>
+      <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">15 ene 2027</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
+      <li><i aria-hidden="true"></i><div><span class="fecha">Otoño 2028</span><b>Inicias estudios en EE. UU.</b></div></li>
     </ul>
   </section>
 
@@ -759,10 +764,9 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 
   <section class="tile t-faq" aria-labelledby="fq-t">
     <h2 class="rotulo" id="fq-t">Preguntas frecuentes</h2>
-    <details><summary>¿En qué consiste el acompañamiento?</summary><p>Asesoramiento personalizado sobre tu perfil y tu proyecto, y seguimiento puntual en cada etapa: postulación, admisión en 4 o 5 universidades y trámite de visa J1.</p></details>
-    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión como parte del proceso.</p></details>
+    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. No gestionamos la admisión, apoyamos en el proceso de solicitud.</p></details>
     <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción.</p></details>
-    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El mínimo de la escala de calidad con la que se evalúa tu expediente completo. No es un examen aparte.</p></details>
+    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El mínimo de la escala de calidad con la que se evalúa tu expediente, pondera el promedio y los resultados de los exámenes solicitados.</p></details>
     <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
   </section>
 
@@ -837,7 +841,7 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
 
 <div class="dock" id="dock">
   <div class="txt">
-    <b>$37,000 USD al año</b>
+    <b>Hasta $37,000 USD al año</b>
     <span id="dock-s">Quedan -- días</span>
   </div>
   <button class="btn" type="button" id="dock-cta">Pre-registrarme</button>
@@ -848,7 +852,7 @@ details p{font-size:12.5px;color:var(--texto-3);padding:0 0 var(--s-4)}
    CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
    ═══════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  CIERRE: new Date('2027-01-15T23:59:59-06:00'),
   APERTURA_SIGUIENTE: '1 de septiembre',
   ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
   VARIANTE: 'modelo-2-bento-vertical'
