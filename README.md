@@ -12,7 +12,9 @@ eventos de ratón.
 ## Contenido
 
 ```
-modelo-1-scrollytelling.html         Relato guiado por scroll con mapa SVG animado
+index.html                           La landing: relato guiado por scroll con mapa
+                                     SVG animado. Es la raíz del sitio publicado.
+logo-fulbright-comexus.png           Logotipo oficial del encabezado
 docs/
   01-copy.md                         Hook del volante y microcopy de la landing
   02-zapier.md                       Pre-registro y recordatorios automáticos
@@ -123,7 +125,7 @@ La landing tiene un único bloque de configuración al inicio de su `<script>`:
 const CONFIG = {
   CIERRE: new Date('2027-01-15T23:59:59-06:00'),
   APERTURA_SIGUIENTE: '1 de septiembre',
-  ENDPOINT: '',            // URL del Catch Hook de Zapier. Vacío = modo demo.
+  ENDPOINT: '',            // Destino del pre-registro. Vacío = modo demo.
   VARIANTE: 'modelo-1-scrollytelling'
 };
 ```
@@ -139,8 +141,13 @@ postulación imposible y ofrece aviso para la siguiente apertura. No hay que des
 ni editar textos con prisa.
 
 `ENDPOINT` gobierna solo el **pre-registro**, no el formulario de contacto. Con `ENDPOINT`
-vacío el pre-registro funciona en **modo demo**: valida, muestra la confirmación y escribe en
-la consola el payload exacto que recibiría Zapier.
+vacío el pre-registro funciona en **modo demo**: valida, muestra la confirmación y escribe el
+payload en la consola.
+
+**Zapier quedó descartado.** El contacto va por POST directo a Jotform y no necesita
+automatización de por medio. El pre-registro sigue en el HTML y sigue en modo demo: `docs/`
+conserva el esquema del payload por si más adelante se le conecta un destino, pero hoy no
+envía a ningún lado.
 
 ---
 
@@ -166,9 +173,6 @@ falso en el formulario de producción.
 
 - [ ] Hacer un envío de prueba del formulario de contacto y confirmar que llegan los cuatro
       campos.
-- [ ] Renombrar en el editor de Jotform las etiquetas de los campos 6 y 7, que siguen como
-      «Type a question» y así aparecen en los correos de aviso.
-- [ ] Pegar la URL del Catch Hook de Zapier en `CONFIG.ENDPOINT` para el pre-registro.
 - [ ] Enlazar el aviso de privacidad real de COMEXUS (hoy es un ancla interna).
 - [ ] Confirmar cifras, fechas y criterios de elegibilidad contra la convocatoria oficial
       vigente.
