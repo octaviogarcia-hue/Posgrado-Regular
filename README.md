@@ -1,7 +1,7 @@
 # Campaña Phygital — Beca Fulbright-García Robles · Posgrado Regular
 
-Del volante impreso al pre-registro digital. Un código QR en papel lleva a una landing page
-orientada a conversión.
+Del volante impreso a la landing. Un código QR en papel lleva a una página que cuenta la beca
+y termina en un formulario de contacto.
 
 El 99 % del tráfico llega por teléfono, así que la página es **mobile-first en retrato**:
 proporciones verticales, tipografía dimensionada para la mano, y gestos táctiles en lugar de
@@ -17,8 +17,6 @@ index.html                           La landing: relato guiado por scroll con ma
 logo-fulbright-comexus.png           Logotipo oficial del encabezado
 docs/
   01-copy.md                         Hook del volante y microcopy de la landing
-  02-zapier.md                       Pre-registro y recordatorios automáticos
-  preregistro.schema.json            Esquema del payload de pre-registro
 tools/
   build_artifacts.py                 Genera fragmentos publicables desde el HTML
 archivo/                             Versiones anteriores del encargo (v1: icosaedro;
@@ -51,7 +49,8 @@ SVG 2D.
   deforman a 2.7 aumentos.
 - **`prefers-reduced-motion`** entrega el mapa completo, los seis arcos trazados y los dos
   monumentos a la vez, sin movimiento.
-- **Formulario de pre-registro de un paso, tres campos** — máxima tasa de conversión.
+- **Un solo formulario en toda la página**, el de contacto, al final del relato. Todos los
+  llamados a la acción apuntan ahí.
 
 ---
 
@@ -124,30 +123,30 @@ La landing tiene un único bloque de configuración al inicio de su `<script>`:
 ```js
 const CONFIG = {
   CIERRE: new Date('2027-01-15T23:59:59-06:00'),
-  APERTURA_SIGUIENTE: '1 de septiembre',
-  ENDPOINT: '',            // Destino del pre-registro. Vacío = modo demo.
-  VARIANTE: 'modelo-1-scrollytelling'
+  APERTURA_SIGUIENTE: '1 de septiembre'
 };
 ```
 
-Cambiar `CIERRE` recalcula el contador, la píldora de estado, la etiqueta del CTA, el texto
-del dock y el mensaje de confirmación. Las fechas escritas a mano —los tres hitos del
-calendario y la `<meta description>`— sí hay que tocarlas aparte.
+Cambiar `CIERRE` recalcula el contador, la píldora de estado y el texto del dock. Las fechas
+escritas a mano —los tres hitos del calendario, el párrafo de la cuenta regresiva y la
+`<meta description>`— sí hay que tocarlas aparte.
 
 ### Estado «convocatoria cerrada»
 
-Cuando la fecha de cierre ya pasó, la página cambia sola de discurso: deja de prometer una
-postulación imposible y ofrece aviso para la siguiente apertura. No hay que despublicar nada
-ni editar textos con prisa.
+Cuando la fecha de cierre ya pasó, la página cambia sola de discurso: la píldora del
+encabezado pasa a «Cerrada», el contador desaparece y la sección de cuenta regresiva anuncia
+la siguiente apertura en lugar de una postulación imposible. No hay que despublicar nada ni
+editar textos con prisa.
 
-`ENDPOINT` gobierna solo el **pre-registro**, no el formulario de contacto. Con `ENDPOINT`
-vacío el pre-registro funciona en **modo demo**: valida, muestra la confirmación y escribe el
-payload en la consola.
+### Sin pre-registro y sin Zapier
 
-**Zapier quedó descartado.** El contacto va por POST directo a Jotform y no necesita
-automatización de por medio. El pre-registro sigue en el HTML y sigue en modo demo: `docs/`
-conserva el esquema del payload por si más adelante se le conecta un destino, pero hoy no
-envía a ningún lado.
+La página tuvo un formulario de pre-registro que enviaba a un *Catch Hook* de Zapier. **Los
+dos se retiraron.** El contacto va por POST directo a Jotform y no necesita automatización de
+por medio, y un formulario sin destino habría prometido un correo que nunca iba a llegar. Del
+pre-registro solo queda el contador de cierre, que no promete nada.
+
+Si algún día se quiere recuperar, el formulario, su esquema de payload y la guía de Zapier
+están en el historial de git, en el commit anterior a este cambio.
 
 ---
 
@@ -159,10 +158,12 @@ Probado en Chromium (Playwright) a 360, 390, 768 y 1280 px.
 |---|---|
 | Errores de consola y de JavaScript | Ninguno |
 | Desbordamiento horizontal (360, 390, 768, 1280 px) | Ninguno |
+| Formularios en la página | Uno solo, el de contacto, apuntando a Jotform |
 | Contacto: `action`, `method` y los cuatro campos de Jotform | Correctos y en orden |
-| Contador con convocatoria abierta | Píldora en «Abierta», 136 días al 1 de septiembre de 2026 |
+| Contador con convocatoria abierta | Píldora en «Abierta», 136 días al cierre |
+| Identificadores referenciados desde el JavaScript | Todos existen en el documento |
 | Montos sin JavaScript | Se leen correctos: la cifra real vive en el HTML |
-| Zonas táctiles por debajo de 44 px | Ninguna |
+| Zonas táctiles por debajo de 44 px | Solo la trampa antispam, oculta por diseño |
 
 Un **envío de prueba real a Jotform está pendiente**: no se hizo para no dejar un registro
 falso en el formulario de producción.

@@ -114,9 +114,10 @@ $37,000. Romper esa continuidad es la forma más rápida de perder a alguien que
 - **15 de enero de 2027** — cierra. Sin prórroga.
 - **Otoño de 2028** — inicias estudios en Estados Unidos.
 
-> Contador en vivo: «Quedan **N días** para el cierre.»
-> Estado cerrado: «La convocatoria de este ciclo cerró. La siguiente abre el 1 de
-> septiembre.»
+> Contador en vivo, en la sección «Cuenta regresiva»: titular «Lo que falta para el cierre»,
+> con días, horas, minutos y segundos.
+> Estado cerrado: «La convocatoria de este ciclo cerró. La siguiente convocatoria abre el 1
+> de septiembre; escríbenos si quieres preparar tu postulación desde ahora.»
 
 ### Acompañamiento — el bloque con más peso
 
@@ -144,29 +145,33 @@ Es el diferenciador y por eso ocupa una sección propia del relato.
    asesoría y seguimiento en cada etapa.
 4. **Tramitas la visa J1.** COMEXUS lleva el proceso contigo.
 
-### Formulario de pre-registro
+### Formulario de contacto
 
-- **Encabezado:** «Recibe la guía de requisitos y los recordatorios del cierre»
-- **Subtexto:** «Te escribimos con lo que necesitas preparar y te avisamos antes del 15 de
-  enero. Sin llenar la solicitud todavía.»
-- **Campos:** Nombre completo · Correo electrónico · Nivel (Maestría / Doctorado) ·
-  Área de estudio · ¿Ya tienes examen de inglés? · Confirmación de elegibilidad
-- **Botón:** `Recibir la guía` → estado de envío: `Enviando…`
-- **Nota legal:** «Solo para enviarte información de esta convocatoria. Puedes darte de baja
-  en cualquier momento.»
-- **Confirmación:** «Listo. Te llegó la guía a **{correo}**. El próximo aviso es a 60 días del
-  cierre.»
+Es el **único formulario de la página**. La landing no captura correos para una secuencia de
+recordatorios: quien tiene una duda escribe, y COMEXUS responde. Nada en la pantalla promete
+un envío que no vaya a ocurrir.
 
-### Mensajes de error
+- **Encabezado:** «Escríbele a COMEXUS»
+- **Subtexto:** «¿Tu duda no aparece arriba? Déjanos tu mensaje y te respondemos por correo.»
+- **Campos:** Nombre completo · Correo electrónico · Asunto · Mensaje
+- **Botón:** `Enviar mensaje`
+- **Nota bajo el botón:** «Respondemos en días hábiles al correo que indiques.»
+- **Confirmación:** la pantalla de agradecimiento del propio Jotform, a la que el navegador
+  sale tras el envío.
 
-| Campo | Error |
-|---|---|
-| Nombre | «Escribe tu nombre completo.» |
-| Correo | «Revisa el correo: parece que le falta algo.» |
-| Nivel | «Elige maestría o doctorado.» |
-| Elegibilidad | «Necesitamos esta confirmación para poder escribirte.» |
-| Aviso | «Marca la casilla para que podamos enviarte la guía.» |
-| Red | «No se pudo enviar. Revisa tu conexión y vuelve a intentar.» |
+> **Sobre los errores.** La validación es la nativa del navegador (`required`, `type="email"`),
+> así que los mensajes son los del sistema operativo y no se redactan aquí. Es una decisión
+> deliberada: sin JavaScript de por medio, el formulario funciona aunque el script falle.
+
+### Llamados a la acción
+
+| Sitio | Texto | Destino |
+|---|---|---|
+| Portada | `Escríbele a COMEXUS` | `#contacto` |
+| Portada, secundario | `Ver si califico` | `#requisitos` |
+| Cuenta regresiva | `Escríbele a COMEXUS` | `#contacto` |
+| Barra inferior fija | `Escríbenos` | `#contacto` |
+| Pie | `Enviar mensaje` | `#contacto` |
 
 ### Preguntas frecuentes
 
