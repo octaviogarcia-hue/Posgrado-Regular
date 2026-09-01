@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trayecto Fulbright</title>
+<meta name="description" content="Beca Fulbright-García Robles Posgrado Regular: hasta 37,000 USD al año para una maestría o doctorado en Estados Unidos. Requisitos, fechas y pre-registro.">
+<meta name="theme-color" content="#080A18">
+
+<!--
+  MODELO 2 — "Trayecto"
+  Enfoque UI/UX contemporáneo, sin motores 3D. Bento grid, tipografía
+  display de alto peso, glassmorphism sobre una aurora en movimiento y
+  micro-interacciones en CSS + un mínimo de JS.
+
+  Tema: oscuro por decisión de diseño (el glassmorphism necesita un fondo
+  con luz detrás para leerse). Todos los colores están declarados de forma
+  explícita, así que la página se sostiene sobre cualquier fondo anfitrión.
+
+  El wordmark es texto. Sustituir por los assets oficiales de COMEXUS /
+  Fulbright antes de publicar.
+-->
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   TOKENS — tema oscuro único y deliberado
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --bg:#080A18;
+  --bg-2:#0C0F22;
+  --glass:rgba(255,255,255,.055);
+  --glass-2:rgba(255,255,255,.085);
+  --edge:rgba(255,255,255,.13);
+  --edge-2:rgba(255,255,255,.24);
+
+  --text:#F3F4FB;
+  --text-2:#A8AFCD;
+  --text-3:#767DA0;
+
+  --rosa:#FF2E7E;
+  --rosa-2:#FF7FB0;
+  --violeta:#6C4BFF;
+  --ambar:#FFC24B;
+  --jade:#39E0A8;
+
+  --on-rosa:#12030A;
+
+  --ff-display:"Helvetica Neue",Helvetica,"Arial Black",system-ui,sans-serif;
+  --ff-body:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-data:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  --step--1:clamp(.8rem,.77rem + .15vw,.88rem);
+  --step-0:clamp(1rem,.97rem + .16vw,1.06rem);
+  --step-1:clamp(1.15rem,1.06rem + .4vw,1.38rem);
+  --step-2:clamp(1.5rem,1.28rem + 1vw,2.1rem);
+  --step-3:clamp(2rem,1.5rem + 2.3vw,3.4rem);
+  --step-4:clamp(2.6rem,1.7rem + 4.4vw,5.6rem);
+
+  --pad:clamp(1.1rem,4.5vw,2rem);
+  --gap:clamp(.7rem,2.2vw,1.1rem);
+  --r:20px;
+  --r-sm:12px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--ff-body);
+  font-size:var(--step-0);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100svh;
+}
+h1,h2,h3{margin:0;font-family:var(--ff-display);font-weight:800;letter-spacing:-.035em;line-height:.95;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--ambar);outline-offset:3px;border-radius:6px}
+
+.skip{position:absolute;left:.5rem;top:-4rem;z-index:99;background:var(--rosa);color:var(--on-rosa);padding:.7rem 1rem;border-radius:999px;font-weight:700;text-decoration:none;transition:top .15s ease}
+.skip:focus{top:.5rem}
+
+/* ── Aurora de fondo: lo que el vidrio difumina ──────────── */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--bg)}
+.aurora i{
+  position:absolute;display:block;border-radius:50%;filter:blur(80px);opacity:.5;
+  will-change:transform;
+}
+.aurora i:nth-child(1){width:62vmax;height:62vmax;left:-18vmax;top:-22vmax;background:radial-gradient(circle,var(--violeta),transparent 62%);animation:deriva-a 34s ease-in-out infinite alternate}
+.aurora i:nth-child(2){width:48vmax;height:48vmax;right:-14vmax;top:14vmax;background:radial-gradient(circle,var(--rosa),transparent 62%);animation:deriva-b 28s ease-in-out infinite alternate}
+.aurora i:nth-child(3){width:40vmax;height:40vmax;left:22vmax;bottom:-18vmax;background:radial-gradient(circle,var(--ambar),transparent 65%);opacity:.28;animation:deriva-c 40s ease-in-out infinite alternate}
+@keyframes deriva-a{to{transform:translate3d(9vmax,7vmax,0) scale(1.12)}}
+@keyframes deriva-b{to{transform:translate3d(-11vmax,10vmax,0) scale(.9)}}
+@keyframes deriva-c{to{transform:translate3d(7vmax,-9vmax,0) scale(1.15)}}
+
+.wrap{width:100%;max-width:80rem;margin-inline:auto;padding-inline:var(--pad)}
+
+/* ── Encabezado ──────────────────────────────────────────── */
+.top{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding-block:1.1rem;position:sticky;top:0;z-index:30;
+  background:linear-gradient(to bottom,rgba(8,10,24,.92),rgba(8,10,24,0));
+  backdrop-filter:blur(10px);
+}
+.mark{display:flex;flex-direction:column;line-height:1.15}
+.mark b{font-family:var(--ff-display);font-weight:800;font-size:1rem;letter-spacing:-.02em}
+.mark span{font-family:var(--ff-data);font-size:.58rem;letter-spacing:.11em;text-transform:uppercase;color:var(--text-3);white-space:nowrap}
+.pill{
+  display:inline-flex;align-items:center;gap:.5rem;flex:none;
+  padding:.45rem .85rem;border-radius:999px;
+  background:var(--glass);border:1px solid var(--edge);
+  font-family:var(--ff-data);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);
+  white-space:nowrap;
+}
+.pill .larga{display:none}
+@media (min-width:30rem){
+  .mark span{font-size:.63rem;letter-spacing:.18em}
+  .pill{font-size:.66rem;letter-spacing:.1em}
+  .pill .larga{display:inline}
+  .pill .corta{display:none}
+}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--jade);flex:none;box-shadow:0 0 0 0 rgba(57,224,168,.6);animation:latir 2.4s ease-out infinite}
+.pulse[data-state="closed"]{background:var(--ambar);box-shadow:none;animation:none}
+@keyframes latir{70%{box-shadow:0 0 0 9px rgba(57,224,168,0)}100%{box-shadow:0 0 0 0 rgba(57,224,168,0)}}
+
+/* ── Bento ───────────────────────────────────────────────── */
+.bento{display:grid;grid-template-columns:1fr;gap:var(--gap);padding-bottom:clamp(3rem,10vw,5rem)}
+@media (min-width:46rem){.bento{grid-template-columns:repeat(4,1fr)}}
+@media (min-width:70rem){.bento{grid-template-columns:repeat(6,1fr)}}
+
+.tile{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:var(--glass);
+  border:1px solid var(--edge);
+  border-radius:var(--r);
+  padding:clamp(1.2rem,3.6vw,1.9rem);
+  backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09), 0 18px 40px -30px rgba(0,0,0,.9);
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),border-color .3s ease,background-color .3s ease;
+  opacity:0;transform:translateY(18px);
+}
+.tile[data-vis="true"]{opacity:1;transform:translateY(0)}
+/* Reflejo que sigue al puntero */
+.tile::before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.11),transparent 62%);
+  transition:opacity .3s ease;
+}
+@media (hover:hover){
+  .tile:hover{transform:translateY(-4px);border-color:var(--edge-2);background:var(--glass-2)}
+  .tile:hover::before{opacity:1}
+}
+
+/* Repartos del bento */
+@media (min-width:46rem){
+  .t-hero{grid-column:span 4}
+  .t-monto{grid-column:span 2}
+  .t-reloj{grid-column:span 4}
+  .t-req{grid-column:span 4}
+  .t-claim{grid-column:span 4}
+  .t-proceso{grid-column:span 4}
+  .t-fechas{grid-column:span 4}
+  .t-form{grid-column:span 4}
+  .t-faq{grid-column:span 4}
+}
+@media (min-width:70rem){
+  .t-hero{grid-column:span 4;grid-row:span 2}
+  .t-monto{grid-column:span 2}
+  .t-reloj{grid-column:span 2}
+  .t-claim{grid-column:span 4}
+  .t-req{grid-column:span 3}
+  .t-proceso{grid-column:span 3}
+  .t-fechas{grid-column:span 2}
+  .t-form{grid-column:span 4}
+  .t-faq{grid-column:span 6}
+}
+
+.eyebrow{
+  font-family:var(--ff-data);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:.9rem;display:block;
+}
+
+/* ── Tile hero ───────────────────────────────────────────── */
+.t-hero{display:flex;flex-direction:column;justify-content:flex-end;gap:1.1rem;min-height:clamp(340px,52svh,520px)}
+.t-hero h1{font-size:var(--step-4)}
+.t-hero h1 span{
+  display:block;
+  background:linear-gradient(96deg,var(--rosa) 0%,var(--ambar) 78%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.t-hero p{color:var(--text-2);max-width:34rem;font-size:var(--step-1);line-height:1.45}
+
+.cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  min-height:56px;padding:.95rem 1.7rem;border-radius:999px;
+  background:var(--rosa);color:var(--on-rosa);font-weight:800;letter-spacing:-.01em;
+  text-decoration:none;border:0;cursor:pointer;position:relative;overflow:hidden;
+  transition:transform .22s cubic-bezier(.2,.8,.3,1),box-shadow .22s ease;
+  box-shadow:0 10px 30px -12px rgba(255,46,126,.75);
+}
+.cta:hover{transform:translateY(-2px) scale(1.015);box-shadow:0 16px 38px -12px rgba(255,46,126,.85)}
+.cta:active{transform:translateY(0) scale(.985)}
+.cta svg{width:17px;height:17px;flex:none;transition:transform .22s ease}
+.cta:hover svg{transform:translateX(3px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}
+.cta-alt{
+  min-height:56px;padding:.95rem 1.4rem;border-radius:999px;
+  background:transparent;border:1px solid var(--edge-2);color:var(--text);
+  font-weight:600;text-decoration:none;display:inline-flex;align-items:center;
+  transition:background-color .2s ease,border-color .2s ease;
+}
+.cta-alt:hover{background:var(--glass-2);border-color:var(--text-3)}
+
+/* ── Tiles de monto ──────────────────────────────────────── */
+.t-monto{display:flex;flex-direction:column;justify-content:space-between;gap:1rem;min-height:190px}
+.t-monto .cifra{
+  font-family:var(--ff-display);font-weight:800;font-size:var(--step-3);
+  letter-spacing:-.045em;font-variant-numeric:tabular-nums;line-height:1;
+}
+.t-monto[data-tono="doc"] .cifra{color:var(--ambar)}
+.t-monto[data-tono="mtr"] .cifra{color:var(--rosa-2)}
+.t-monto .unidad{font-family:var(--ff-body);font-size:var(--step--1);font-weight:500;color:var(--text-3);letter-spacing:0;display:block;margin-top:.35rem}
+.t-monto .nivel{font-family:var(--ff-display);font-weight:800;font-size:var(--step-1);letter-spacing:-.02em}
+.t-monto .dur{color:var(--text-2);font-size:var(--step--1);margin-top:.2rem}
+
+/* ── Tile reloj ──────────────────────────────────────────── */
+.t-reloj{display:flex;flex-direction:column;justify-content:space-between;gap:1rem}
+.reloj{display:flex;gap:.55rem;flex-wrap:wrap}
+.unidad-t{
+  flex:1 1 3.6rem;text-align:center;padding:.7rem .3rem;border-radius:var(--r-sm);
+  background:rgba(255,255,255,.045);border:1px solid var(--edge);
+}
+.unidad-t b{
+  display:block;font-family:var(--ff-display);font-weight:800;font-size:var(--step-2);
+  font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:1;
+}
+.unidad-t span{font-family:var(--ff-data);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3)}
+.t-reloj .pie{font-size:var(--step--1);color:var(--text-2)}
+.reloj[data-cerrada="true"] .unidad-t b{color:var(--text-3)}
+
+/* ── Tile declaración ────────────────────────────────────── */
+.t-claim{display:flex;flex-direction:column;gap:1rem;justify-content:center}
+.t-claim h2{font-size:var(--step-3)}
+.t-claim h2 mark{background:none;color:var(--jade)}
+.t-claim ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+.t-claim li{
+  font-family:var(--ff-data);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:.5rem .85rem;border-radius:999px;border:1px solid var(--edge);color:var(--text-2);
+  background:rgba(255,255,255,.04);
+}
+
+/* ── Tile requisitos ─────────────────────────────────────── */
+.t-req h2,.t-proceso h2,.t-fechas h2,.t-form h2,.t-faq h2{font-size:var(--step-2);margin-bottom:1.2rem}
+.req-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.req-list li{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding-block:.8rem;border-top:1px solid var(--edge);
+}
+.req-list li:first-child{border-top:0;padding-top:0}
+.req-list .que{font-weight:600}
+.req-list .que small{display:block;font-weight:400;font-size:var(--step--1);color:var(--text-3);margin-top:.15rem}
+.req-list .val{
+  font-family:var(--ff-data);font-variant-numeric:tabular-nums;font-size:var(--step--1);
+  color:var(--jade);white-space:nowrap;flex:none;
+}
+.req-list li[data-critico="true"] .val{color:var(--rosa-2)}
+
+/* ── Tile proceso ────────────────────────────────────────── */
+.pasos{list-style:none;margin:0;padding:0;counter-reset:p;display:flex;flex-direction:column;gap:1rem}
+.pasos li{display:grid;grid-template-columns:auto 1fr;gap:.15rem .9rem;counter-increment:p}
+.pasos li::before{
+  content:counter(p,decimal-leading-zero);grid-row:1/3;
+  font-family:var(--ff-data);font-size:.72rem;color:var(--rosa-2);
+  padding-top:.28rem;font-variant-numeric:tabular-nums;
+}
+.pasos strong{font-weight:700}
+.pasos p{font-size:var(--step--1);color:var(--text-2)}
+
+/* ── Tile fechas ─────────────────────────────────────────── */
+.hitos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1.1rem}
+.hitos time{display:block;font-family:var(--ff-data);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.hitos strong{display:block;font-weight:700;margin-top:.15rem}
+.hitos li[data-fin="true"] strong{color:var(--rosa-2)}
+
+/* ── Tile formulario ─────────────────────────────────────── */
+.barra{height:3px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-bottom:1.3rem}
+.barra i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--rosa),var(--ambar));transition:width .35s cubic-bezier(.2,.8,.3,1)}
+.paso-info{font-family:var(--ff-data);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:.9rem}
+
+.paso[hidden]{display:none}
+.campo{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
+.campo label,.grupo legend{font-weight:600;font-size:var(--step--1)}
+.campo input,.campo select{
+  min-height:54px;padding:.85rem .95rem;font:inherit;color:var(--text);
+  background:rgba(255,255,255,.05);border:1px solid var(--edge);border-radius:var(--r-sm);
+  transition:border-color .2s ease,background-color .2s ease;
+  appearance:none;
+}
+.campo select{
+  background-image:linear-gradient(45deg,transparent 50%,var(--text-2) 50%),linear-gradient(135deg,var(--text-2) 50%,transparent 50%);
+  background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;
+  background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:2.6rem;
+}
+.campo select option{background:var(--bg-2);color:var(--text)}
+.campo input::placeholder{color:var(--text-3)}
+.campo input:focus,.campo select:focus{border-color:var(--rosa);background:rgba(255,255,255,.08)}
+.campo input[aria-invalid="true"]{border-color:var(--rosa);background:rgba(255,46,126,.09)}
+.campo .ayuda{font-size:var(--step--1);color:var(--text-3)}
+.error{font-size:var(--step--1);color:var(--rosa-2);font-weight:600;display:none}
+.error[data-show="true"]{display:block}
+
+.grupo{border:0;padding:0;margin:0 0 1.1rem}
+.grupo legend{padding:0;margin-bottom:.55rem}
+.opciones{display:flex;gap:.55rem;flex-wrap:wrap}
+.opciones label{
+  flex:1 1 8.5rem;display:flex;align-items:center;gap:.55rem;min-height:52px;
+  padding:.7rem 1rem;border:1px solid var(--edge);border-radius:999px;cursor:pointer;
+  font-size:var(--step--1);background:rgba(255,255,255,.035);
+  transition:border-color .2s ease,background-color .2s ease;
+}
+.opciones input{accent-color:var(--rosa);width:18px;height:18px;flex:none}
+.opciones label:has(input:checked){border-color:var(--rosa);background:rgba(255,46,126,.14);font-weight:700}
+.opciones label:has(input:focus-visible){outline:3px solid var(--ambar);outline-offset:2px}
+
+.acepto{display:flex;gap:.7rem;align-items:flex-start;font-size:var(--step--1);color:var(--text-2);margin-bottom:1.1rem}
+.acepto input{width:20px;height:20px;margin-top:.1rem;accent-color:var(--rosa);flex:none}
+.acepto a{color:var(--text)}
+
+.acciones{display:flex;gap:.7rem;flex-wrap:wrap}
+.acciones .cta{flex:1 1 12rem}
+.acciones .cta-alt{flex:0 0 auto;cursor:pointer}
+.nota-seg{font-size:var(--step--1);color:var(--text-3);margin-top:1rem;display:flex;gap:.5rem;align-items:flex-start}
+.nota-seg svg{width:14px;height:14px;flex:none;margin-top:.22rem}
+
+.exito{display:none}
+.exito[data-show="true"]{display:block}
+.exito .marca{
+  width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(57,224,168,.14);border:1px solid rgba(57,224,168,.4);margin-bottom:1rem;
+}
+.exito .marca svg{width:26px;height:26px;color:var(--jade)}
+.exito h3{font-size:var(--step-2)}
+.exito p{color:var(--text-2);margin-top:.7rem;max-width:32rem}
+form[data-hidden="true"]{display:none}
+
+/* ── Tile FAQ ────────────────────────────────────────────── */
+.acordeon details{border-top:1px solid var(--edge)}
+.acordeon details:first-of-type{border-top:0}
+.acordeon summary{
+  cursor:pointer;list-style:none;min-height:56px;display:flex;align-items:center;
+  justify-content:space-between;gap:1rem;padding-block:1rem;font-weight:600;
+}
+.acordeon summary::-webkit-details-marker{display:none}
+.acordeon .cruz{position:relative;width:14px;height:14px;flex:none}
+.acordeon .cruz::before,.acordeon .cruz::after{
+  content:"";position:absolute;background:var(--rosa-2);border-radius:2px;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1);
+}
+.acordeon .cruz::before{inset:6px 0;height:2px}
+.acordeon .cruz::after{inset:0 6px;width:2px}
+.acordeon details[open] .cruz::after{transform:scaleY(0)}
+.acordeon p{color:var(--text-2);font-size:var(--step--1);padding-bottom:1.1rem;max-width:56ch}
+
+/* ── Barra fija móvil ────────────────────────────────────── */
+.dock{
+  position:fixed;left:var(--pad);right:var(--pad);bottom:calc(.8rem + env(safe-area-inset-bottom));z-index:40;
+  display:flex;align-items:center;gap:.8rem;padding:.6rem .6rem .6rem 1.1rem;
+  border-radius:999px;background:rgba(12,15,34,.82);border:1px solid var(--edge);
+  backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:0 20px 50px -24px rgba(0,0,0,.95);
+  transform:translateY(160%);transition:transform .32s cubic-bezier(.2,.8,.3,1);
+}
+.dock[data-show="true"]{transform:translateY(0)}
+.dock .info{flex:1;min-width:0}
+.dock .info b{display:block;font-size:var(--step--1);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock .info span{font-family:var(--ff-data);font-size:.62rem;color:var(--text-3);letter-spacing:.08em}
+.dock .cta{min-height:46px;padding:.6rem 1.2rem;font-size:var(--step--1);flex:none}
+@media (min-width:70rem){.dock{display:none}}
+
+footer{padding-block:2rem 7rem;font-size:var(--step--1);color:var(--text-3);border-top:1px solid var(--edge)}
+footer p + p{margin-top:.55rem}
+footer a{color:var(--text-2)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition-duration:.001ms !important}
+  .tile{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<a class="skip" href="#registro">Saltar al pre-registro</a>
+
+<div class="wrap">
+  <header class="top">
+    <!-- Sustituir por el lockup oficial COMEXUS / Fulbright -->
+    <div class="mark">
+      <b>Fulbright&#8209;García&nbsp;Robles</b>
+      <span>COMEXUS · Posgrado Regular</span>
+    </div>
+    <p class="pill">
+      <span class="pulse" id="pulse"></span>
+      <span class="larga" id="estadoTexto">Convocatoria abierta</span>
+      <span class="corta" id="estadoCorto">Abierta</span>
+    </p>
+  </header>
+
+  <main id="main" class="bento">
+
+    <!-- ── HERO ─────────────────────────────────────────── -->
+    <section class="tile t-hero">
+      <span class="eyebrow">Ciclo 2026 · Inicio agosto 2027</span>
+      <h1>Tu posgrado en Estados Unidos <span>sin pagarlo tú.</span></h1>
+      <p>
+        Maestrías y doctorados financiados para mexicanas y mexicanos.
+        Postulas sin carta de aceptación: COMEXUS gestiona tu admisión y tu visa.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="#registro" id="ctaHero">
+          Reservar mi lugar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="cta-alt" href="#requisitos">Ver requisitos</a>
+      </div>
+    </section>
+
+    <!-- ── MONTOS ───────────────────────────────────────── -->
+    <section class="tile t-monto" data-tono="mtr" aria-labelledby="m-mtr">
+      <span class="eyebrow">Apoyo anual</span>
+      <p class="cifra"><span data-contador="37000">$37,000</span> USD<span class="unidad">por año de estudios</span></p>
+      <div>
+        <p class="nivel" id="m-mtr">Maestría</p>
+        <p class="dur">Hasta 18 meses</p>
+      </div>
+    </section>
+
+    <section class="tile t-monto" data-tono="doc" aria-labelledby="m-doc">
+      <span class="eyebrow">Apoyo anual</span>
+      <p class="cifra"><span data-contador="25000">$25,000</span> USD<span class="unidad">por año de estudios</span></p>
+      <div>
+        <p class="nivel" id="m-doc">Doctorado</p>
+        <p class="dur">Hasta 3 años</p>
+      </div>
+    </section>
+
+    <!-- ── RELOJ ────────────────────────────────────────── -->
+    <section class="tile t-reloj" aria-labelledby="reloj-tit">
+      <span class="eyebrow" id="reloj-tit">Cierre de convocatoria</span>
+      <div class="reloj" id="reloj" role="timer" aria-live="off">
+        <p class="unidad-t"><b id="uD">—</b><span>Días</span></p>
+        <p class="unidad-t"><b id="uH">—</b><span>Horas</span></p>
+        <p class="unidad-t"><b id="uM">—</b><span>Min</span></p>
+        <p class="unidad-t"><b id="uS">—</b><span>Seg</span></p>
+      </div>
+      <p class="pie" id="relojPie">31 de enero de 2026, 23:59 h. No hay prórroga.</p>
+    </section>
+
+    <!-- ── DECLARACIÓN ──────────────────────────────────── -->
+    <section class="tile t-claim">
+      <h2>No necesitas carta de aceptación. <mark>Nosotros gestionamos la admisión.</mark></h2>
+      <ul>
+        <li>4 a 5 universidades</li>
+        <li>Visa J&#8209;1 tramitada</li>
+        <li>Expediente único</li>
+      </ul>
+    </section>
+
+    <!-- ── REQUISITOS ───────────────────────────────────── -->
+    <section class="tile t-req" id="requisitos">
+      <span class="eyebrow">Perfil</span>
+      <h2>Los números que te piden</h2>
+      <ul class="req-list">
+        <li><span class="que">Promedio de licenciatura<small>Escala de 10</small></span><span class="val">8.0 mín.</span></li>
+        <li><span class="que">TOEFL iBT<small>Opción de inglés 1 de 3</small></span><span class="val">80 mín.</span></li>
+        <li><span class="que">IELTS<small>Opción de inglés 2 de 3</small></span><span class="val">6.5 mín.</span></li>
+        <li><span class="que">Duolingo English Test<small>Opción de inglés 3 de 3</small></span><span class="val">120 mín.</span></li>
+        <li data-critico="true"><span class="que">Examen GRE<small>Obligatorio. Mínimo 152 en la sección de tu área</small></span><span class="val">152 mín.</span></li>
+      </ul>
+    </section>
+
+    <!-- ── PROCESO ──────────────────────────────────────── -->
+    <section class="tile t-proceso">
+      <span class="eyebrow">Ruta</span>
+      <h2>De aquí a la universidad</h2>
+      <ol class="pasos">
+        <li><strong>Verificas tu perfil</strong><p>Promedio, examen de inglés y GRE.</p></li>
+        <li><strong>Envías un expediente</strong><p>En línea, antes del 31 de enero.</p></li>
+        <li><strong>COMEXUS te postula</strong><p>Ante 4 o 5 universidades de Estados Unidos.</p></li>
+        <li><strong>Tramitas la visa J&#8209;1</strong><p>COMEXUS la gestiona contigo.</p></li>
+      </ol>
+    </section>
+
+    <!-- ── FECHAS ───────────────────────────────────────── -->
+    <section class="tile t-fechas">
+      <span class="eyebrow">Calendario</span>
+      <h2>Tres fechas</h2>
+      <ol class="hitos">
+        <li><time>1 sep 2025</time><strong>Abre la convocatoria</strong></li>
+        <li data-fin="true"><time>31 ene 2026</time><strong>Cierra la convocatoria</strong></li>
+        <li><time>Ago 2027</time><strong>Inicias estudios</strong></li>
+      </ol>
+    </section>
+
+    <!-- ── PRE-REGISTRO ─────────────────────────────────── -->
+    <section class="tile t-form" id="registro">
+      <span class="eyebrow">Pre&#8209;registro</span>
+      <h2>Te avisamos antes del cierre</h2>
+
+      <div class="barra" aria-hidden="true"><i id="barra"></i></div>
+      <p class="paso-info" id="pasoInfo">Paso 1 de 2 · Tus datos</p>
+
+      <form id="form" novalidate>
+        <div class="paso" data-paso="1">
+          <div class="campo">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Como aparece en tu título" required>
+            <p class="error" id="err-nombre">Escribe tu nombre completo.</p>
+          </div>
+          <div class="campo">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" autocomplete="email" inputmode="email" placeholder="tu@correo.com" required>
+            <p class="ayuda">Aquí llegan la guía de requisitos y los recordatorios.</p>
+            <p class="error" id="err-correo">Revisa el correo: falta el @ o el dominio.</p>
+          </div>
+          <div class="acciones">
+            <button class="cta" type="button" id="siguiente">
+              Continuar
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="paso" data-paso="2" hidden>
+          <fieldset class="grupo">
+            <legend>Nivel que te interesa</legend>
+            <div class="opciones">
+              <label><input type="radio" name="nivel" value="maestria" checked> Maestría</label>
+              <label><input type="radio" name="nivel" value="doctorado"> Doctorado</label>
+            </div>
+          </fieldset>
+
+          <div class="campo">
+            <label for="area">Área de estudio</label>
+            <select id="area" name="area">
+              <option value="ciencias_ingenieria">Ciencias e Ingeniería</option>
+              <option value="ciencias_sociales">Ciencias Sociales y Humanidades</option>
+              <option value="artes">Artes y Diseño</option>
+              <option value="negocios">Negocios y Administración</option>
+              <option value="salud">Ciencias de la Salud</option>
+            </select>
+            <p class="ayuda">Define qué sección del GRE se te evalúa.</p>
+          </div>
+
+          <div class="campo">
+            <label for="ingles">¿Ya tienes examen de inglés vigente?</label>
+            <select id="ingles" name="estatus_ingles">
+              <option value="si">Sí, ya lo presenté</option>
+              <option value="agendado">Ya lo agendé</option>
+              <option value="no">Todavía no</option>
+            </select>
+            <p class="ayuda">Con esto ajustamos los recordatorios que te enviamos.</p>
+          </div>
+
+          <label class="acepto">
+            <input type="checkbox" id="aviso" name="aviso" required>
+            <span>Acepto el <a href="#privacidad">aviso de privacidad</a> y recibir correos sobre esta convocatoria.</span>
+          </label>
+          <p class="error" id="err-aviso" style="margin:-.8rem 0 1rem">Necesitamos tu consentimiento para escribirte.</p>
+
+          <div class="acciones">
+            <button class="cta" type="submit" id="enviar">Recibir guía y recordatorios</button>
+            <button class="cta-alt" type="button" id="atras">Atrás</button>
+          </div>
+        </div>
+
+        <p class="nota-seg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Usamos tus datos solo para informarte sobre esta beca. Puedes darte de baja en cualquier correo.
+        </p>
+      </form>
+
+      <div class="exito" id="exito" role="status" aria-live="polite">
+        <div class="marca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7.5"/></svg></div>
+        <h3 tabindex="-1">Quedaste pre&#8209;registrado</h3>
+        <p id="exitoMsg">La guía de requisitos ya va a tu correo. Te escribiremos otra vez a 60, 30 y 7 días del cierre.</p>
+      </div>
+    </section>
+
+    <!-- ── FAQ ──────────────────────────────────────────── -->
+    <section class="tile t-faq">
+      <span class="eyebrow">Dudas frecuentes</span>
+      <h2>Lo que todo el mundo pregunta</h2>
+      <div class="acordeon">
+        <details>
+          <summary>¿Necesito carta de aceptación de la universidad?<span class="cruz" aria-hidden="true"></span></summary>
+          <p>No. Postulas sin carta de aceptación previa. COMEXUS presenta tu expediente ante 4 o 5 universidades de Estados Unidos y gestiona la admisión por ti.</p>
+        </details>
+        <details>
+          <summary>¿El GRE es obligatorio?<span class="cruz" aria-hidden="true"></span></summary>
+          <p>Sí. El puntaje mínimo es de 152 en la sección que corresponde a tu área de estudio.</p>
+        </details>
+        <details>
+          <summary>¿Puedo acreditar el inglés con Duolingo?<span class="cruz" aria-hidden="true"></span></summary>
+          <p>Sí. Se acepta TOEFL iBT con 80, IELTS con 6.5 o Duolingo English Test con 120. Basta con una de las tres.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto dura el apoyo?<span class="cruz" aria-hidden="true"></span></summary>
+          <p>Hasta 18 meses para maestría y hasta 3 años para doctorado, con un apoyo de hasta 37,000 USD y 25,000 USD por año respectivamente.</p>
+        </details>
+        <details>
+          <summary>¿Cuándo empiezo a estudiar?<span class="cruz" aria-hidden="true"></span></summary>
+          <p>En agosto de 2027. El tiempo intermedio se usa para la admisión, la asignación de universidad y el trámite de la visa J&#8209;1.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer id="privacidad">
+    <p><strong>COMEXUS</strong> — Comisión México&#8209;Estados Unidos para el Intercambio Educativo y Cultural.</p>
+    <p>Material informativo de campaña. La información oficial y vinculante se publica en el sitio de COMEXUS. Consulta el <a href="#privacidad">aviso de privacidad</a>.</p>
+  </footer>
+</div>
+
+<div class="dock" id="dock">
+  <div class="info">
+    <b>Hasta $37,000 USD al año</b>
+    <span id="dockCount">Convocatoria abierta</span>
+  </div>
+  <a class="cta" href="#registro">Pre&#8209;registrarme</a>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   1. CONFIGURACIÓN — un solo lugar por ciclo de convocatoria
+   ═══════════════════════════════════════════════════════════ */
+const CONFIG = {
+  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  APERTURA_SIGUIENTE: '1 de septiembre',
+  ENDPOINT: '',            // URL del Zapier Catch Hook. Vacío = modo demo.
+  VARIANTE: 'modelo-2-trayecto'
+};
+const QUIETO = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══════════════════════════════════════════════════════════
+   2. RELOJ DE CIERRE
+   ═══════════════════════════════════════════════════════════ */
+const convocatoriaAbierta = CONFIG.CIERRE.getTime() > Date.now();
+
+(function () {
+  const uD = document.getElementById('uD'), uH = document.getElementById('uH');
+  const uM = document.getElementById('uM'), uS = document.getElementById('uS');
+  const pie = document.getElementById('relojPie');
+  const dock = document.getElementById('dockCount');
+  const dos = n => String(n).padStart(2, '0');
+
+  if (!convocatoriaAbierta) {
+    document.getElementById('reloj').dataset.cerrada = 'true';
+    [uD, uH, uM, uS].forEach(el => { el.textContent = '00'; });
+    uD.textContent = '00';
+    pie.textContent = 'La convocatoria 2026 cerró el 31 de enero. La siguiente abre el '
+      + CONFIG.APERTURA_SIGUIENTE + ': regístrate y te avisamos el primer día.';
+    document.getElementById('estadoTexto').textContent = 'Próxima convocatoria';
+    document.getElementById('estadoCorto').textContent = 'Próxima';
+    document.getElementById('pulse').dataset.state = 'closed';
+    dock.textContent = 'Avísame en la próxima';
+    document.getElementById('ctaHero').firstChild.textContent = 'Avisarme cuando abra ';
+    document.getElementById('enviar').textContent = 'Avisarme cuando abra';
+    document.getElementById('exitoMsg').textContent =
+      'Te escribiremos el ' + CONFIG.APERTURA_SIGUIENTE + ', el día que abra la convocatoria, con la guía completa de requisitos.';
+    return;
+  }
+
+  function tic() {
+    let resto = Math.max(0, CONFIG.CIERRE - Date.now());
+    const d = Math.floor(resto / 86400000); resto -= d * 86400000;
+    const h = Math.floor(resto / 3600000); resto -= h * 3600000;
+    const m = Math.floor(resto / 60000); resto -= m * 60000;
+    const s = Math.floor(resto / 1000);
+    uD.textContent = d; uH.textContent = dos(h); uM.textContent = dos(m); uS.textContent = dos(s);
+    dock.textContent = 'Quedan ' + d + (d === 1 ? ' día' : ' días');
+  }
+  tic();
+  setInterval(tic, 1000);
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   3. MICRO-INTERACCIONES
+      a) revelado escalonado de tiles
+      b) reflejo que sigue al puntero
+      c) contadores de monto
+      d) barra fija móvil
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  const tiles = [...document.querySelectorAll('.tile')];
+
+  if (QUIETO) {
+    tiles.forEach(t => { t.dataset.vis = 'true'; });
+  } else {
+    const obs = new IntersectionObserver((entradas, o) => {
+      entradas.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => { e.target.dataset.vis = 'true'; }, i * 45);
+        o.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    tiles.forEach(t => obs.observe(t));
+  }
+
+  if (matchMedia('(hover:hover)').matches) {
+    tiles.forEach(t => {
+      t.addEventListener('pointermove', e => {
+        const r = t.getBoundingClientRect();
+        t.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        t.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+  }
+
+  /* La cifra real vive en el HTML: sin JS, con JS lento o si algo falla,
+     el usuario siempre ve el monto correcto. El conteo solo se activa
+     cuando la tarjeta va a entrar en pantalla. */
+  const nf = new Intl.NumberFormat('es-MX');
+  document.querySelectorAll('[data-contador]').forEach(el => {
+    const fin = Number(el.dataset.contador);
+    if (QUIETO) return;
+
+    const animar = () => {
+      const t0 = performance.now(), dur = 1100;
+      (function paso(t) {
+        const k = Math.min(1, (t - t0) / dur);
+        const suave = 1 - Math.pow(1 - k, 3);
+        el.textContent = '$' + nf.format(Math.round(fin * suave));
+        if (k < 1) requestAnimationFrame(paso);
+      })(t0);
+    };
+
+    const obs = new IntersectionObserver(([e], o) => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      animar();
+    }, { threshold: 0.5 });
+
+    /* Solo se pone a cero lo que todavía no se ha visto */
+    if (el.getBoundingClientRect().top > innerHeight) el.textContent = '$0';
+    obs.observe(el);
+  });
+
+  const dock = document.getElementById('dock');
+  const hero = document.querySelector('.t-hero');
+  const form = document.getElementById('registro');
+  let pasoHero = false, enForm = false;
+  const sync = () => { dock.dataset.show = String(pasoHero && !enForm); };
+  new IntersectionObserver(([e]) => { pasoHero = !e.isIntersecting; sync(); },
+    { rootMargin: '-45% 0px 0px 0px' }).observe(hero);
+  new IntersectionObserver(([e]) => { enForm = e.isIntersecting; sync(); },
+    { threshold: 0.2 }).observe(form);
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   4. FORMULARIO EN DOS PASOS
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  const form = document.getElementById('form');
+  const exito = document.getElementById('exito');
+  const barra = document.getElementById('barra');
+  const pasoInfo = document.getElementById('pasoInfo');
+  const p1 = form.querySelector('[data-paso="1"]');
+  const p2 = form.querySelector('[data-paso="2"]');
+  const enviar = document.getElementById('enviar');
+
+  const reglas = {
+    nombre: v => v.trim().length >= 3,
+    correo: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
+  };
+
+  const marcar = (campo, ok) => {
+    const input = document.getElementById(campo);
+    const err = document.getElementById('err-' + campo);
+    input.setAttribute('aria-invalid', String(!ok));
+    input.setAttribute('aria-describedby', 'err-' + campo);
+    err.dataset.show = String(!ok);
+    return ok;
+  };
+
+  Object.keys(reglas).forEach(campo => {
+    const input = document.getElementById(campo);
+    input.addEventListener('blur', () => { if (input.value) marcar(campo, reglas[campo](input.value)); });
+    input.addEventListener('input', () => {
+      if (input.getAttribute('aria-invalid') === 'true' && reglas[campo](input.value)) marcar(campo, true);
+    });
+  });
+
+  document.getElementById('siguiente').addEventListener('click', () => {
+    let ok = true;
+    Object.keys(reglas).forEach(c => {
+      if (!marcar(c, reglas[c](document.getElementById(c).value))) ok = false;
+    });
+    if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+    p1.hidden = true; p2.hidden = false;
+    barra.style.width = '100%';
+    pasoInfo.textContent = 'Paso 2 de 2 · Tu perfil';
+    p2.querySelector('input,select').focus();
+  });
+
+  document.getElementById('atras').addEventListener('click', () => {
+    p2.hidden = true; p1.hidden = false;
+    barra.style.width = '50%';
+    pasoInfo.textContent = 'Paso 1 de 2 · Tus datos';
+    document.getElementById('nombre').focus();
+  });
+
+  const contexto = () => {
+    const p = new URLSearchParams(location.search);
+    return {
+      utm_source: p.get('utm_source') || 'volante_impreso',
+      utm_medium: p.get('utm_medium') || 'qr',
+      utm_campaign: p.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      utm_content: p.get('utm_content') || '',
+      qr_id: p.get('qr') || '',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: navigator.language || 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+  };
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const aviso = document.getElementById('aviso');
+    document.getElementById('err-aviso').dataset.show = String(!aviso.checked);
+    if (!aviso.checked) { aviso.focus(); return; }
+
+    const carga = {
+      nombre: document.getElementById('nombre').value.trim(),
+      correo: document.getElementById('correo').value.trim().toLowerCase(),
+      nivel: form.querySelector('[name="nivel"]:checked').value,
+      area: document.getElementById('area').value,
+      estatus_ingles: document.getElementById('ingles').value,
+      consentimiento_aviso: true,
+      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
+      ...contexto()
+    };
+
+    const etiqueta = enviar.textContent;
+    enviar.disabled = true;
+    enviar.textContent = 'Enviando…';
+
+    try {
+      if (CONFIG.ENDPOINT) {
+        await fetch(CONFIG.ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(carga)
+        });
+      } else {
+        console.info('[modo demo] payload que recibiría Zapier:', carga);
+        await new Promise(r => setTimeout(r, 550));
+      }
+      form.dataset.hidden = 'true';
+      barra.style.width = '100%';
+      pasoInfo.hidden = true;
+      exito.dataset.show = 'true';
+      exito.querySelector('h3').focus();
+    } catch (err) {
+      enviar.disabled = false;
+      enviar.textContent = 'Reintentar envío';
+      const errAviso = document.getElementById('err-aviso');
+      errAviso.textContent = 'No pudimos enviar tu registro. Revisa tu conexión e inténtalo otra vez.';
+      errAviso.dataset.show = 'true';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

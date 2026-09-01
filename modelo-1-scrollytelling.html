@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="color-scheme" content="light">
-<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año, con asesoramiento personalizado y seguimiento puntual de COMEXUS. Convocatoria hasta el 31 de enero.">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año, con asesoramiento personalizado y seguimiento puntual de COMEXUS. Convocatoria hasta el 15 de enero de 2027.">
 <title>Del Ángel a la Antorcha</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -272,6 +272,11 @@ button{font:inherit;color:inherit}
   display:block;font-size:1.5rem;font-weight:800;letter-spacing:-.035em;color:var(--legacy);
   line-height:1;font-variant-numeric:tabular-nums;
 }
+/* El monto es un techo, no una cifra fija: «hasta» viaja pegado al número. */
+.monto b small{
+  display:block;margin-bottom:3px;font-size:.46em;font-weight:700;
+  letter-spacing:.04em;color:var(--gris);
+}
 .monto span{display:block;margin-top:6px;font-size:11.5px;color:var(--gris);line-height:1.4}
 
 /* Acompañamiento: el bloque que más peso visual recibe */
@@ -448,59 +453,88 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   color:var(--blanco);font-weight:700;font-size:13px;word-break:break-word;
   text-decoration:underline;text-decoration-color:var(--sky);text-underline-offset:3px;
 }
-.btn-contacto{
-  background:none;border:none;padding:0;cursor:pointer;font:inherit;
-  text-align:left;
+/* ── Contacto: formulario nativo en vidrio ──────────────────
+   El glassmorphism necesita luz detrás, así que la sección pinta
+   una banda con el degradado corporativo y la tarjeta flota encima,
+   semitransparente y desenfocada. No hay iframe ni script de envío:
+   el <form> hace un POST nativo al servicio que se conecte en su
+   atributo action (Jotform, Formspree, etc.). */
+.contacto-seccion{
+  position:relative;isolation:isolate;
+  padding:var(--s-12) var(--pad);
+  background:
+    radial-gradient(120% 82% at 10% 0%,rgba(0,169,224,.42),transparent 60%),
+    radial-gradient(96% 70% at 94% 100%,rgba(0,119,200,.40),transparent 58%),
+    linear-gradient(158deg,var(--legacy),#001B4D);
+  scroll-margin-top:calc(var(--barra-h) + var(--seguro-arriba) + 12px);
 }
-.btn-contacto:hover{text-decoration-color:var(--blanco)}
-.btn-contacto:active{opacity:.8}
+.contacto-seccion .rotulo-sec{color:var(--sky)}
+.contacto-seccion h2{color:var(--blanco)}
+.contacto-seccion > p:not(.rotulo-sec){
+  margin-top:var(--s-3);font-size:var(--t--1);color:rgba(255,255,255,.80);max-width:38ch;
+}
 
-/* Modal de contacto */
-.modal-contacto{
-  position:fixed;inset:0;z-index:100;
-  background:rgba(18,41,74,.85);backdrop-filter:blur(4px);
-  border:none;padding:var(--pad);
-  animation:modal-entra .3s ease-out;
+.tarjeta-vidrio{
+  margin-top:var(--s-6);padding:var(--s-6);border-radius:var(--r);
+  background:rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  backdrop-filter:blur(20px) saturate(140%);
+  border:1px solid rgba(255,255,255,.24);
+  box-shadow:0 18px 44px rgba(0,27,77,.34),inset 0 1px 0 rgba(255,255,255,.26);
 }
-.modal-contacto::backdrop{background:transparent}
-@keyframes modal-entra{from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none}}
-.modal-contacto:not([open]){display:none}
-.modal-contenido{
-  background:var(--blanco);color:var(--tinta);
-  border-radius:var(--r);padding:var(--s-6);
-  max-width:480px;margin:auto;
-  max-height:90vh;overflow-y:auto;
-  animation:contenido-entra .3s ease-out;
+/* Sin soporte de desenfoque la tarjeta se vuelve opaca: el contraste
+   del texto blanco manda sobre el efecto. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .tarjeta-vidrio{background:rgba(0,27,77,.72)}
 }
-@keyframes contenido-entra{from{opacity:0;scale:.95} to{opacity:1;scale:1}}
-.modal-encabezado{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s-4);
-  margin-bottom:var(--s-5);
+
+/* Campos minimalistas: sin caja marcada, solo una línea inferior que
+   se enciende al enfocar. Montserrat heredado de --ff. */
+.form-contacto{display:flex;flex-direction:column;gap:var(--s-5)}
+.campo-vidrio{display:flex;flex-direction:column;gap:6px}
+.campo-vidrio label{
+  font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.74);
 }
-.modal-encabezado h3{margin:0;font-size:var(--t-2);color:var(--legacy)}
-.btn-cerrar{
-  background:none;border:none;font-size:32px;padding:0;color:var(--tinta);
-  cursor:pointer;line-height:1;min-width:40px;min-height:40px;
+.campo-vidrio input,
+.campo-vidrio textarea{
+  width:100%;font-family:var(--ff);font-weight:500;
+  font-size:16px;                               /* 16px evita el zoom de iOS */
+  color:var(--blanco);background:rgba(255,255,255,.07);
+  border:none;border-bottom:1.5px solid rgba(255,255,255,.32);
+  border-radius:var(--r-sm) var(--r-sm) 0 0;
+  padding:14px var(--s-3);
+  appearance:none;-webkit-appearance:none;
+  transition:background .2s ease,border-color .2s ease;
+}
+.campo-vidrio input{min-height:var(--toque)}
+.campo-vidrio textarea{resize:none;line-height:1.5}
+.campo-vidrio input::placeholder,
+.campo-vidrio textarea::placeholder{color:rgba(255,255,255,.52);font-weight:400}
+.campo-vidrio input:focus,
+.campo-vidrio textarea:focus{
+  outline:none;background:rgba(255,255,255,.14);border-bottom-color:var(--sky);
+}
+.campo-vidrio input:user-invalid,
+.campo-vidrio textarea:user-invalid{border-bottom-color:#FFB4AB}
+
+/* Botón amplio: alto de toque cómodo y hundido al presionar. */
+.btn-enviar{
+  width:100%;min-height:var(--toque);margin-top:var(--s-2);
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
+  border:none;border-radius:var(--r-pill);cursor:pointer;
+  background:var(--legacy);color:var(--blanco);
+  font-family:var(--ff);font-size:var(--t-0);font-weight:800;
+  box-shadow:0 10px 24px rgba(0,27,77,.42),inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .12s ease,background .2s ease,box-shadow .2s ease;
 }
-.btn-cerrar:hover{color:var(--azure)}
-.form-contacto{display:flex;flex-direction:column;gap:var(--s-4)}
-.form-contacto textarea{
-  font-family:var(--ff);font-size:var(--t-0);
-  border:1px solid var(--gris-claro);border-radius:var(--r-sm);
-  padding:var(--s-3);color:var(--tinta);background:var(--blanco);
-  resize:none;
-}
-.form-contacto textarea::placeholder{color:var(--gris-claro)}
-.form-contacto textarea:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(0,169,224,.18);outline:none}
-.form-contacto textarea[aria-invalid="true"]{border-color:#B3261E}
-.contacto-exito{
-  padding:var(--s-4);background:#F1F8F6;border-radius:var(--r-sm);
-  border-left:4px solid #047857;
-}
-.contacto-exito.oculto{display:none}
-.contacto-exito strong{color:#047857}
+.btn-enviar:hover{background:#00308A}
+.btn-enviar:active{transform:scale(.97);box-shadow:0 4px 12px rgba(0,27,77,.40)}
+.btn-enviar:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.nota-form{font-size:11.5px;color:rgba(255,255,255,.62);text-align:center}
+/* Trampa antispam: invisible para personas, tentadora para los bots. */
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+
 
 /* Barra de acción fija */
 .dock{
@@ -562,12 +596,12 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 <main id="inicio">
 
   <section class="portada">
-    <span class="ceja">Maestría y doctorado en EE. UU.</span>
-    <h1>Del Ángel<br>a la <em>Antorcha</em></h1>
+    <span class="ceja">Del Ángel a la Antorcha</span>
+    <h1>Tu posgrado en EE. UU.<br><em>empieza aquí</em></h1>
     <p class="lede">
       La beca Fulbright-García Robles financia tu posgrado en Estados Unidos con
-      <b>hasta $37,000 USD al año</b>. Y no te suelta la mano: COMEXUS te asesora y te da
-      seguimiento puntual durante todo el proceso.
+      <b>hasta $37,000 USD al año</b>. COMEXUS te acompaña con asesoría en tu proceso
+      de admisión.
     </p>
 
     <ul class="confianza">
@@ -577,11 +611,11 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
       </li>
       <li>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        Sin carta de aceptación previa
+        No requieres carta de aceptación de alguna universidad.
       </li>
       <li>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-        Admisión en 4–5 universidades y visa J1
+        Postulación a 4-5 universidades y trámite de visa J1
       </li>
     </ul>
 
@@ -688,16 +722,16 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
         <div class="montos">
           <div class="monto">
             <span class="nivel">Maestría</span>
-            <b>$37,000</b>
+            <b><small>hasta</small>$37,000</b>
             <span>USD al año<br>Hasta 18 meses</span>
           </div>
           <div class="monto">
             <span class="nivel">Doctorado</span>
-            <b>$25,000</b>
+            <b><small>hasta</small>$25,000</b>
             <span>USD al año<br>Hasta 3 años</span>
           </div>
         </div>
-        <p>El apoyo cubre colegiatura y manutención según el costo del programa al que seas admitido.</p>
+        <p>Tú administras la beca según tus necesidades durante tu estancia.</p>
       </article>
     </section>
 
@@ -706,10 +740,6 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
       <article class="tarjeta">
         <span class="num">03 · Acompañamiento</span>
         <h2>No postulas <em>solo</em></h2>
-        <p>
-          Esta es la diferencia que casi nadie cuenta: <b>COMEXUS no te entrega un cheque y se
-          despide</b>. Te acompaña de principio a fin.
-        </p>
         <div class="acompana">
           <p>Durante todo el proceso recibes:</p>
           <ul>
@@ -727,8 +757,8 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
             </li>
             <li>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#00A9E0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Gestión de tu admisión
-                <small>COMEXUS te postula a entre 4 y 5 universidades de Estados Unidos.</small>
+              <span>Apoyo en tu postulación
+                <small>COMEXUS te apoya para postular a entre 4 y 5 universidades de Estados Unidos.</small>
               </span>
             </li>
             <li>
@@ -748,7 +778,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
         <span class="num">04 · Requisitos</span>
         <h2>¿Califico?</h2>
         <ul class="filas">
-          <li><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></li>
+          <li><span class="k">Promedio<small>Del grado completo más reciente</small></span><span class="v">8 mín.</span></li>
           <li><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></li>
           <li><span class="k">IELTS</span><span class="v">6.5 mín.</span></li>
           <li><span class="k">Duolingo</span><span class="v">120 mín.</span></li>
@@ -762,7 +792,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
     <section class="paso" data-paso="5" data-sello="Elegibilidad">
       <article class="tarjeta">
         <span class="num">05 · Elegibilidad</span>
-        <h2>Quién sí y quién no</h2>
+        <h2>Quiénes pueden postular</h2>
         <div class="elig">
           <h3>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#003DA5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
@@ -771,7 +801,6 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
           <ul>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0077C8" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de un área STEM.</span></li>
           </ul>
         </div>
         <div class="elig no">
@@ -780,9 +809,9 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
             No aplica este ciclo
           </h3>
           <ul>
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Doble nacionalidad estadounidense.</span></li>
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría ya cursadas en EE. UU.</span></li>
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas clínicas.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si tienes <b>nacionalidad, ciudadanía o residencia</b> de EE. UU.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si cursaste <b>licenciatura o maestría</b> en EE. UU.</span></li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#707372" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Si cuentas con <b>carta de aceptación</b> de una universidad.</span></li>
           </ul>
         </div>
       </article>
@@ -794,9 +823,9 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
         <span class="num">06 · Calendario</span>
         <h2>Tres fechas que importan</h2>
         <ul class="hitos">
-          <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2025</span><b>Abre la convocatoria</b></div></li>
-          <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
-          <li><i aria-hidden="true"></i><div><span class="fecha">Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></li>
+          <li><i aria-hidden="true"></i><div><span class="fecha">1 sep 2026</span><b>Abre la convocatoria</b></div></li>
+          <li class="activo" id="hito-cierre"><i aria-hidden="true"></i><div><span class="fecha">15 ene 2027</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></li>
+          <li><i aria-hidden="true"></i><div><span class="fecha">Otoño 2028</span><b>Inicias estudios en EE. UU.</b></div></li>
         </ul>
       </article>
     </section>
@@ -861,11 +890,57 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 
   <section class="seccion">
     <p class="rotulo-sec">Preguntas frecuentes</p>
-    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión en 4 o 5 universidades como parte del proceso.</p></details>
-    <details><summary>¿En qué consiste el acompañamiento?</summary><p>Asesoramiento personalizado sobre tu perfil y tu proyecto, y seguimiento puntual en cada etapa: postulación, admisión y visa J1.</p></details>
+    <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. No gestionamos la admisión, apoyamos en el proceso de solicitud.</p></details>
     <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción.</p></details>
-    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El mínimo de la escala de calidad con la que se evalúa tu expediente completo: promedio, exámenes, trayectoria y proyecto. No es un examen aparte.</p></details>
+    <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El mínimo de la escala de calidad con la que se evalúa tu expediente, pondera el promedio y los resultados de los exámenes solicitados.</p></details>
     <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
+  </section>
+  <section class="contacto-seccion" id="contacto" aria-labelledby="contacto-t">
+    <p class="rotulo-sec">Contacto</p>
+    <h2 id="contacto-t">Escríbele a COMEXUS</h2>
+    <p>¿Tu duda no aparece arriba? Déjanos tu mensaje y te respondemos por correo.</p>
+
+    <!-- Contacto: POST nativo a Jotform. Sin iframe ni SDK; al enviar, el
+         navegador sale a la pantalla de agradecimiento del propio Jotform. -->
+    <form class="tarjeta-vidrio form-contacto"
+          action="https://submit.jotform.com/submit/262434743012045" method="POST">
+
+      <!-- Jotform exige estos dos para aceptar un envío directo. -->
+      <input type="hidden" name="formID" value="262434743012045">
+      <input type="hidden" name="simple_spc" value="262434743012045-262434743012045">
+
+      <div class="campo-vidrio">
+        <label for="c-nombre">Nombre completo</label>
+        <input id="c-nombre" name="q3_name[first]" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" required>
+      </div>
+      <div class="campo-vidrio">
+        <label for="c-email">Correo electrónico</label>
+        <input id="c-email" name="q4_email" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" required>
+      </div>
+      <div class="campo-vidrio">
+        <label for="c-asunto">Asunto</label>
+        <input id="c-asunto" name="q6_typeA" type="text" placeholder="¿En qué te podemos ayudar?" required>
+      </div>
+      <div class="campo-vidrio">
+        <label for="c-mensaje">Mensaje</label>
+        <textarea id="c-mensaje" name="q7_typeA7" rows="5" placeholder="Cuéntanos con detalle…" required></textarea>
+      </div>
+
+      <!-- Trampa antispam propia de Jotform: debe viajar vacía. -->
+      <input class="trampa" type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <!-- Trazabilidad de campaña. Jotform descarta lo que no tenga un campo
+           equivalente en el formulario; quedan listos para el día que se
+           agreguen allá, sobre todo landing_variant, que es lo que dice
+           cuál de las dos landings convirtió. -->
+      <input type="hidden" name="utm_source" id="c-utm-source">
+      <input type="hidden" name="utm_medium" id="c-utm-medium">
+      <input type="hidden" name="utm_campaign" id="c-utm-campaign">
+      <input type="hidden" name="landing_variant" value="modelo-1-scrollytelling">
+
+      <button class="btn-enviar" type="submit">Enviar mensaje</button>
+      <p class="nota-form">Respondemos en días hábiles al correo que indiques.</p>
+    </form>
   </section>
 </main>
 
@@ -878,7 +953,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
   <div class="contacto">
     <div class="contacto-grupo">
       <p class="contacto-tit">Contacto</p>
-      <button class="contacto-link btn-contacto" type="button" id="btn-contacto-abierto">Enviar mensaje</button>
+      <a class="contacto-link" href="#contacto">Enviar mensaje</a>
     </div>
     <div class="contacto-grupo">
       <p class="contacto-tit">Sitio web oficial</p>
@@ -886,48 +961,11 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
     </div>
   </div>
 
-  <!-- Modal para formulario de contacto -->
-  <dialog id="modal-contacto" class="modal-contacto">
-    <div class="modal-contenido">
-      <div class="modal-encabezado">
-        <h3>Enviar mensaje a COMEXUS</h3>
-        <button class="btn-cerrar" type="button" aria-label="Cerrar formulario">×</button>
-      </div>
-      <form id="form-contacto" novalidate class="form-contacto">
-        <div class="campo">
-          <label for="contacto-nombre">Tu nombre</label>
-          <input id="contacto-nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-contacto-nombre" required>
-          <span class="err" id="e-contacto-nombre"></span>
-        </div>
-        <div class="campo">
-          <label for="contacto-email">Tu correo</label>
-          <input id="contacto-email" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-contacto-email" required>
-          <span class="err" id="e-contacto-email"></span>
-        </div>
-        <div class="campo">
-          <label for="contacto-asunto">Asunto</label>
-          <input id="contacto-asunto" name="asunto" type="text" placeholder="¿En qué te podemos ayudar?" aria-describedby="e-contacto-asunto" required>
-          <span class="err" id="e-contacto-asunto"></span>
-        </div>
-        <div class="campo">
-          <label for="contacto-mensaje">Mensaje</label>
-          <textarea id="contacto-mensaje" name="mensaje" rows="4" placeholder="Cuéntanos más…" aria-describedby="e-contacto-mensaje" required></textarea>
-          <span class="err" id="e-contacto-mensaje"></span>
-        </div>
-        <button type="submit" class="btn btn-primario">Enviar mensaje</button>
-        <span class="err" id="e-contacto-general" style="margin-top:var(--s-3)"></span>
-      </form>
-      <div id="contacto-exito" class="contacto-exito oculto">
-        <p><strong>¡Mensaje enviado!</strong></p>
-        <p>COMEXUS te responderá a la brevedad en <span id="contacto-exito-email"></span>.</p>
-      </div>
-    </div>
-  </dialog>
 </footer>
 
 <div class="dock" id="dock">
   <div class="txt">
-    <b>$37,000 USD al año</b>
+    <b>Hasta $37,000 USD al año</b>
     <span id="dock-s">Quedan -- días</span>
   </div>
   <a class="btn" href="#pre-registro" id="dock-cta">Pre-registrarme</a>
@@ -938,7 +976,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
    CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
    ═══════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  CIERRE: new Date('2027-01-15T23:59:59-06:00'),
   APERTURA_SIGUIENTE: '1 de septiembre',
   ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
   VARIANTE: 'modelo-1-scrollytelling'
@@ -1190,106 +1228,18 @@ new IntersectionObserver(ents => {
   });
 })();
 
-/* ═══════════════════════════════════════════════════════════════
-   4 · FORMULARIO DE CONTACTO (Modal)
-   ═══════════════════════════════════════════════════════════════ */
-(function formularioContacto(){
-  const modal = document.getElementById('modal-contacto');
-  const btnAbrir = document.getElementById('btn-contacto-abierto');
-  const btnCerrar = modal.querySelector('.btn-cerrar');
-  const form = document.getElementById('form-contacto');
+/* ══════════════════════════════════════════════════════════════
+   4 · CONTACTO — trazabilidad de campaña
+   El envío lo hace el propio <form> con un POST nativo al servicio
+   conectado en su action; aquí solo se copian los parámetros de
+   campaña a los campos ocultos para que viajen con el mensaje.
+   ══════════════════════════════════════════════════════════════ */
+(function trazaContacto(){
   const q = new URLSearchParams(location.search);
-  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
-
-  function err(campo, msg){
-    const caja = document.getElementById('e-contacto-' + campo);
-    const el = document.getElementById('contacto-' + campo);
-    if (caja) caja.textContent = msg || '';
-    if (el && el.type !== 'textarea') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
-    return !msg;
-  }
-  const val = id => (document.getElementById('contacto-' + id).value || '').trim();
-
-  function valida(campo){
-    switch (campo){
-      case 'nombre':   return err('nombre', val('nombre').length >= 2 ? '' : 'Escribe tu nombre.');
-      case 'correo':   return err('correo', CORREO.test(val('correo')) ? '' : 'Revisa el correo.');
-      case 'asunto':   return err('asunto', val('asunto').length >= 5 ? '' : 'Describe el asunto.');
-      case 'mensaje':  return err('mensaje', val('mensaje').length >= 10 ? '' : 'Cuéntanos más (mínimo 10 caracteres).');
-    }
-  }
-
-  ['nombre','correo','asunto','mensaje'].forEach(id => {
-    const el = document.getElementById('contacto-' + id);
-    if (el) el.addEventListener('blur', () => valida(id));
-  });
-
-  // Abrir modal
-  btnAbrir.addEventListener('click', () => {
-    modal.showModal();
-    form.reset();
-    err('general', '');
-  });
-
-  // Cerrar modal
-  btnCerrar.addEventListener('click', () => modal.close());
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.close();
-  });
-
-  // Enviar formulario
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const malos = ['nombre','correo','asunto','mensaje'].filter(c => !valida(c));
-    if (malos.length){
-      document.getElementById('contacto-' + malos[0]).focus();
-      return;
-    }
-
-    const datos = {
-      tipo: 'contacto',
-      nombre: val('nombre'),
-      correo: val('correo').toLowerCase(),
-      asunto: val('asunto'),
-      mensaje: val('mensaje'),
-      utm_source: q.get('utm_source') || 'volante_impreso',
-      utm_medium: q.get('utm_medium') || 'qr',
-      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
-      landing_variant: CONFIG.VARIANTE,
-      referrer: document.referrer || 'directo',
-      locale: 'es-MX',
-      timestamp_iso: new Date().toISOString()
-    };
-
-    const boton = form.querySelector('button[type=submit]');
-    boton.disabled = true;
-    const etiqueta = boton.textContent;
-    boton.textContent = 'Enviando…';
-
-    try {
-      if (CONFIG.ENDPOINT){
-        const r = await fetch(CONFIG.ENDPOINT, {
-          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
-        });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-      } else {
-        console.info('[modo demo] payload de contacto para Zapier:', datos);
-        await new Promise(r => setTimeout(r, 420));
-      }
-
-      // Mostrar éxito
-      form.classList.add('oculto');
-      document.getElementById('contacto-exito').classList.remove('oculto');
-      document.getElementById('contacto-exito-email').textContent = datos.correo;
-
-      // Cerrar modal después de 3 segundos
-      setTimeout(() => modal.close(), 3000);
-    } catch (_) {
-      boton.disabled = false;
-      boton.textContent = etiqueta;
-      err('general', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
-    }
-  });
+  const pon = (id, valor) => { const el = document.getElementById(id); if (el) el.value = valor; };
+  pon('c-utm-source',   q.get('utm_source')   || 'volante_impreso');
+  pon('c-utm-medium',   q.get('utm_medium')   || 'qr');
+  pon('c-utm-campaign', q.get('utm_campaign') || 'fulbright_posgrado_regular_2026');
 })();
 </script>
 </body>

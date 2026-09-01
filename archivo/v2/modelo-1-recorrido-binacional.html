@@ -1,0 +1,1691 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Beca Fulbright-García Robles, Posgrado Regular: hasta $37,000 USD al año para tu maestría o doctorado en Estados Unidos. Convocatoria hasta el 31 de enero.">
+<title>Recorrido Binacional</title>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js" } }
+</script>
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   Tokens. Diseño comprometido con un solo mundo visual oscuro:
+   el degradado institucional azul profundo → cerceta. Todos los
+   colores se declaran de forma explícita para que la página no
+   herede el fondo de su contenedor.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --profundo:#001129;
+  --marina:#002F6C;
+  --cerceta:#00A0AF;
+  --cerceta-luz:#5FE0E6;
+  --blanco:#FFFFFF;
+  --hielo:#DCEEF2;
+  --niebla:rgba(220,238,242,.66);
+  --tenue:rgba(220,238,242,.40);
+  --vidrio:rgba(255,255,255,.065);
+  --vidrio-alto:rgba(255,255,255,.11);
+  --borde:rgba(255,255,255,.15);
+  --borde-vivo:rgba(95,224,230,.42);
+
+  --ff-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --ff-body:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --ff-data:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+
+  --t--1:.8125rem;
+  --t-0:1rem;
+  --t-1:1.125rem;
+  --t-2:1.375rem;
+  --t-3:1.75rem;
+  --t-4:2.25rem;
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-6:24px; --s-8:32px;
+  --r:18px; --r-sm:12px; --r-pill:999px;
+  --pad:20px;
+  --toque:52px;
+
+  --sombra:0 -18px 44px rgba(0,10,26,.62);
+  --seguro-abajo:env(safe-area-inset-bottom,0px);
+  --seguro-arriba:env(safe-area-inset-top,0px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--ff-body);
+  font-size:var(--t-0);
+  line-height:1.55;
+  color:var(--hielo);
+  background:var(--profundo);
+  overflow:hidden;                 /* la app no hace scroll: lo hace la hoja */
+  overscroll-behavior:none;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit}
+
+:focus-visible{outline:3px solid var(--cerceta-luz);outline-offset:2px;border-radius:6px}
+
+.salto{
+  position:absolute;left:var(--s-3);top:calc(var(--seguro-arriba) + var(--s-3));z-index:60;
+  padding:10px 14px;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);font-weight:600;font-size:var(--t--1);
+  text-decoration:none;transform:translateY(-160%);transition:transform .18s ease;
+}
+.salto:focus{transform:none}
+
+/* ── Escena ────────────────────────────────────────────────── */
+.escena{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(120% 78% at 50% 6%, #073a63 0%, #002748 42%, var(--profundo) 78%),
+    var(--profundo);
+}
+#mapa{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;touch-action:none;   /* el gesto es de cámara, no de scroll */
+}
+
+/* ── Marcadores de monumento ──────────────────────────────── */
+.marcas{position:absolute;inset:0;z-index:12;pointer-events:none}
+.marca-pt{
+  position:absolute;left:0;top:0;
+  /* El botón se ancla por su esquina superior izquierda al punto
+     proyectado; el margen negativo lo centra bajo el monumento. */
+  margin:0;
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:30px;padding:0 11px 0 9px;border-radius:var(--r-pill);
+  background:rgba(0,17,41,.72);border:1px solid var(--borde-vivo);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  color:var(--blanco);font-size:10px;font-weight:650;letter-spacing:.02em;
+  white-space:nowrap;cursor:pointer;pointer-events:auto;touch-action:manipulation;
+  transition:background .18s ease;
+}
+/* Zona táctil de 52 px sin engordar la píldora. */
+.marca-pt::after{content:"";position:absolute;inset:-11px -8px;border-radius:inherit}
+.marca-pt i{
+  width:7px;height:7px;border-radius:50%;background:var(--cerceta-luz);flex:none;
+  box-shadow:0 0 0 3px rgba(95,224,230,.22);
+}
+.marca-pt:active{background:rgba(0,160,175,.4)}
+.ciudad-pt{
+  position:absolute;left:0;top:0;
+  font-family:var(--ff-data);font-size:10px;font-weight:600;letter-spacing:.02em;
+  color:rgba(220,238,242,.88);white-space:nowrap;pointer-events:none;
+  text-shadow:0 1px 6px rgba(0,17,41,.95),0 0 2px rgba(0,17,41,.9);
+}
+
+/* ── Barra superior ───────────────────────────────────────── */
+.barra{
+  position:fixed;left:0;right:0;top:0;z-index:45;
+  padding:calc(var(--seguro-arriba) + 11px) var(--pad) 13px;
+  display:flex;align-items:center;gap:var(--s-3);
+  background:linear-gradient(180deg,rgba(0,17,41,.93) 44%,rgba(0,17,41,.6) 78%,rgba(0,17,41,0));
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+}
+/* ── Logotipo del encabezado fijo ─────────────────────────── */
+.logo{display:flex;align-items:center;gap:9px;min-width:0}
+.logo .emblema{width:30px;height:30px;flex:none;color:#FFFFFF}
+.logo-oficial{height:34px;width:auto;flex:none}
+.lockup{display:flex;flex-direction:column;line-height:1.18;min-width:0}
+.lockup b{
+  font-size:13.5px;font-weight:750;letter-spacing:-.012em;color:#FFFFFF;white-space:nowrap;
+}
+.lockup b em{font-style:normal;font-weight:600;color:#5FE0E6;letter-spacing:.02em}
+.lockup > span{
+  font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (max-width:22rem){
+  .logo .emblema{width:26px;height:26px}
+  .lockup b{font-size:12px}
+  .lockup > span{font-size:8px;letter-spacing:.1em}
+}
+.lockup > span{color:var(--tenue)}
+.estado{
+  margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border-radius:var(--r-pill);
+  background:var(--vidrio);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hielo);
+  white-space:nowrap;
+}
+.estado i{
+  width:6px;height:6px;border-radius:50%;background:var(--cerceta-luz);
+  box-shadow:0 0 0 3px rgba(95,224,230,.2);flex:none;
+}
+.estado.cerrada i{background:var(--tenue);box-shadow:none}
+.estado .larga{display:none}
+@media (min-width:27rem){
+  .estado .larga{display:inline}
+  .estado .corta{display:none}
+}
+
+/* ── Titular sobre la escena ──────────────────────────────── */
+.titular{
+  position:absolute;left:var(--pad);right:var(--pad);
+  top:calc(var(--seguro-arriba) + 78px);z-index:15;
+  pointer-events:none;max-width:22rem;
+}
+.ceja{
+  display:inline-block;margin-bottom:10px;padding:5px 10px;
+  border-radius:var(--r-pill);border:1px solid var(--borde-vivo);
+  background:rgba(0,160,175,.14);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cerceta-luz);
+}
+.titular h1{
+  font-family:var(--ff-display);font-weight:600;font-size:var(--t-4);
+  line-height:1.02;letter-spacing:-.015em;color:var(--blanco);text-wrap:balance;
+  text-shadow:0 2px 26px rgba(0,17,41,.7);
+}
+.titular p{
+  margin-top:9px;font-size:var(--t--1);line-height:1.45;color:var(--niebla);max-width:17rem;
+  text-shadow:0 1px 16px rgba(0,17,41,.9);
+}
+.titular p b{color:var(--blanco);font-weight:650}
+/* Al abrir la hoja el mapa se acerca y sube: el titular estorbaría. */
+.titular{transition:opacity .3s ease}
+body[data-hoja="medio"] .titular,
+body[data-hoja="lleno"] .titular{opacity:0}
+
+/* ── Pista de gesto ───────────────────────────────────────── */
+.pista{
+  position:absolute;left:0;right:0;z-index:11;
+  bottom:calc(var(--hoja-pico,320px) + 14px);
+  display:flex;justify-content:center;pointer-events:none;
+  transition:opacity .4s ease;
+}
+.pista span{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 14px;border-radius:var(--r-pill);
+  background:rgba(0,17,41,.5);border:1px solid var(--borde);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  font-size:11px;color:var(--niebla);
+}
+.pista.oculta{opacity:0}
+
+/* ── Bottom sheet ─────────────────────────────────────────── */
+.hoja{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  height:92dvh;height:92vh;
+  display:flex;flex-direction:column;
+  border-radius:26px 26px 0 0;
+  background:linear-gradient(180deg, rgba(0,60,102,.90) 0%, rgba(0,25,58,.95) 34%, rgba(0,17,41,.98) 100%);
+  -webkit-backdrop-filter:blur(26px) saturate(130%);backdrop-filter:blur(26px) saturate(130%);
+  border-top:1px solid var(--borde);
+  box-shadow:var(--sombra);
+  transform:translateY(var(--y,0px));
+  touch-action:none;
+}
+.hoja.suave{transition:transform .34s cubic-bezier(.22,1,.36,1)}
+
+.asa{
+  flex:none;padding:10px 0 2px;display:flex;justify-content:center;cursor:grab;
+}
+.asa::before{
+  content:"";width:44px;height:4px;border-radius:99px;background:rgba(220,238,242,.34);
+}
+.hoja-cab{
+  flex:none;padding:6px var(--pad) 0;
+  display:flex;align-items:center;gap:var(--s-3);
+}
+.hoja-cab h2{
+  flex:1;min-width:0;
+  font-family:var(--ff-display);font-size:var(--t-1);font-weight:600;color:var(--blanco);
+  line-height:1.2;
+}
+.hoja-cab .sub{
+  display:block;font-family:var(--ff-data);font-size:10.5px;letter-spacing:.02em;
+  color:var(--cerceta-luz);margin-top:3px;font-variant-numeric:tabular-nums;
+}
+.hoja-cab .btn{flex:none;white-space:nowrap}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:var(--toque);padding:0 20px;border:0;border-radius:var(--r-pill);
+  background:var(--blanco);color:var(--profundo);
+  font-weight:650;font-size:var(--t--1);letter-spacing:.01em;
+  cursor:pointer;touch-action:manipulation;
+  transition:transform .14s ease,box-shadow .18s ease,opacity .18s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,.34);
+}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.fantasma{
+  background:var(--vidrio-alto);color:var(--hielo);
+  border:1px solid var(--borde);box-shadow:none;
+}
+.btn.chico{min-height:44px;padding:0 16px;font-size:12px}
+.btn.ancho{width:100%}
+
+/* Pestañas */
+.tabs{
+  flex:none;margin-top:14px;padding:0 var(--pad) 12px;
+  display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{
+  flex:none;min-height:40px;padding:0 15px;border-radius:var(--r-pill);
+  background:var(--vidrio);border:1px solid var(--borde);
+  color:var(--niebla);font-size:12.5px;font-weight:550;
+  cursor:pointer;touch-action:manipulation;scroll-snap-align:start;
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.tabs button[aria-selected="true"]{
+  background:var(--blanco);color:var(--profundo);border-color:var(--blanco);
+}
+.tabs button:active{transform:scale(.96)}
+
+/* Contenido desplazable */
+.hoja-scroll{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  padding:0 var(--pad) calc(var(--seguro-abajo) + 96px);
+  scroll-behavior:smooth;
+  touch-action:pan-y;
+}
+.bloque{padding:18px 0 6px;scroll-margin-top:8px}
+.bloque + .bloque{border-top:1px solid rgba(255,255,255,.08)}
+.bloque h3{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cerceta-luz);
+  font-weight:600;margin-bottom:12px;
+}
+
+/* Tarjetas de apoyo */
+.montos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.monto{
+  padding:14px;border-radius:var(--r);background:var(--vidrio);
+  border:1px solid var(--borde);
+}
+.monto b{
+  display:block;font-family:var(--ff-data);font-size:var(--t-2);font-weight:700;
+  color:var(--blanco);letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+}
+.monto .nivel{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cerceta-luz);margin-bottom:6px}
+.monto .dur{display:block;font-size:12px;color:var(--tenue);margin-top:4px}
+.nota{font-size:12.5px;color:var(--tenue);margin-top:10px}
+
+/* Filas de requisito */
+.filas{display:flex;flex-direction:column;gap:2px}
+.fila{
+  display:flex;align-items:baseline;gap:10px;padding:11px 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.fila:last-child{border-bottom:0}
+.fila .k{flex:1;font-size:13.5px;color:var(--hielo)}
+.fila .k small{display:block;font-size:11.5px;color:var(--tenue);margin-top:1px}
+.fila .v{
+  font-family:var(--ff-data);font-size:13.5px;font-weight:600;color:var(--blanco);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.fila.critica .v{color:var(--cerceta-luz)}
+
+/* Listas de elegibilidad */
+.elig{display:flex;flex-direction:column;gap:16px}
+.elig h4{
+  margin:0 0 8px;font-size:12.5px;font-weight:650;color:var(--blanco);
+  display:flex;align-items:center;gap:7px;
+}
+.elig ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.elig li{display:flex;gap:9px;font-size:13px;color:var(--niebla);line-height:1.45}
+.elig li svg{flex:none;margin-top:2px}
+.elig .no li{color:var(--tenue)}
+
+/* Línea de tiempo */
+.hitos{display:flex;flex-direction:column;gap:0;margin-top:2px}
+.hito{display:flex;gap:14px;padding-bottom:16px;position:relative}
+.hito:not(:last-child)::before{
+  content:"";position:absolute;left:5px;top:14px;bottom:0;width:1px;
+  background:linear-gradient(180deg,var(--borde-vivo),rgba(255,255,255,.08));
+}
+.hito i{
+  flex:none;width:11px;height:11px;border-radius:50%;margin-top:4px;
+  border:1.5px solid var(--cerceta-luz);background:transparent;
+}
+.hito.activo i{background:var(--cerceta-luz);box-shadow:0 0 0 4px rgba(95,224,230,.18)}
+.hito b{display:block;font-size:13.5px;color:var(--blanco);font-weight:600}
+.hito span{display:block;font-family:var(--ff-data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--cerceta-luz)}
+.hito p{font-size:12.5px;color:var(--tenue);margin-top:2px}
+
+/* Contador */
+.reloj{
+  display:flex;gap:8px;margin-bottom:14px;
+}
+.reloj div{
+  flex:1;padding:10px 6px;border-radius:var(--r-sm);
+  background:var(--vidrio);border:1px solid var(--borde);text-align:center;
+}
+.reloj b{
+  display:block;font-family:var(--ff-data);font-size:var(--t-1);font-weight:700;
+  color:var(--blanco);font-variant-numeric:tabular-nums;line-height:1.1;
+}
+.reloj span{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--tenue);margin-top:3px}
+.reloj.cerrado{display:none}
+
+/* Pasos */
+.pasos{display:flex;flex-direction:column;gap:12px;counter-reset:p}
+.paso{display:flex;gap:12px;align-items:flex-start}
+.paso i{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--vidrio-alto);border:1px solid var(--borde);
+  font-family:var(--ff-data);font-size:11px;font-style:normal;color:var(--cerceta-luz);
+}
+.paso b{display:block;font-size:13.5px;color:var(--blanco);font-weight:600}
+.paso p{font-size:12.5px;color:var(--tenue);margin-top:2px}
+
+/* Formulario */
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.campo label{font-size:12px;font-weight:600;color:var(--hielo)}
+.campo input[type=text],.campo input[type=email]{
+  min-height:var(--toque);padding:0 15px;border-radius:14px;
+  background:rgba(0,17,41,.55);border:1px solid var(--borde);
+  color:var(--blanco);font-size:16px;font-family:inherit;   /* 16px evita el zoom de iOS */
+  transition:border-color .18s ease,background .18s ease;
+}
+.campo input::placeholder{color:rgba(220,238,242,.34)}
+.campo input:focus{border-color:var(--cerceta-luz);background:rgba(0,17,41,.75);outline:none}
+.campo input[aria-invalid="true"]{border-color:#FFB4B4}
+.campo .err{font-size:11.5px;color:#FFB4B4;min-height:14px}
+.campo .ayuda{font-size:11.5px;color:var(--tenue)}
+
+.pills{display:flex;gap:8px}
+.pill{flex:1;position:relative}
+.pill input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.pill span{
+  display:flex;align-items:center;justify-content:center;min-height:var(--toque);
+  border-radius:14px;background:var(--vidrio);border:1px solid var(--borde);
+  font-size:13.5px;font-weight:550;color:var(--niebla);
+  transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.pill input:checked + span{background:var(--blanco);color:var(--profundo);border-color:var(--blanco);font-weight:650}
+.pill input:focus-visible + span{outline:3px solid var(--cerceta-luz);outline-offset:2px}
+
+.check{display:flex;gap:11px;align-items:flex-start;padding:12px 0;cursor:pointer}
+.check input{
+  flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:var(--cerceta-luz);
+}
+.check span{font-size:12.5px;color:var(--niebla);line-height:1.45}
+.check a{color:var(--cerceta-luz)}
+
+.exito{
+  display:none;padding:18px;border-radius:var(--r);
+  background:rgba(0,160,175,.14);border:1px solid var(--borde-vivo);
+}
+.exito.visible{display:block}
+.exito h3{font-family:var(--ff-display);font-size:var(--t-1);color:var(--blanco);text-transform:none;letter-spacing:0;margin-bottom:6px}
+.exito p{font-size:13px;color:var(--niebla)}
+.oculto{display:none !important}
+
+/* FAQ */
+details{
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+details summary{
+  min-height:var(--toque);display:flex;align-items:center;gap:10px;
+  font-size:13.5px;color:var(--hielo);cursor:pointer;list-style:none;
+  touch-action:manipulation;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::after{
+  content:"";margin-left:auto;flex:none;width:9px;height:9px;
+  border-right:1.6px solid var(--cerceta-luz);border-bottom:1.6px solid var(--cerceta-luz);
+  transform:rotate(45deg);transition:transform .2s ease;
+}
+details[open] summary::after{transform:rotate(-135deg)}
+details p{font-size:12.5px;color:var(--tenue);padding:0 0 14px}
+
+.pie{padding:20px 0 0;font-size:11px;color:var(--tenue);line-height:1.5}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  .hoja-scroll{scroll-behavior:auto}
+}
+
+/* Pantallas anchas: la escena se centra, la hoja se vuelve panel lateral */
+@media (min-width:60rem) and (min-height:34rem){
+  .hoja{
+    left:auto;right:24px;bottom:24px;top:24px;width:26rem;height:auto;
+    border-radius:26px;transform:none !important;border:1px solid var(--borde);
+  }
+  .asa{display:none}
+  .hoja-cab{padding-top:18px}
+  .titular{max-width:28rem;left:48px;top:120px}
+  .pista{bottom:32px;justify-content:flex-start;padding-left:48px}
+}
+</style>
+</head>
+<body>
+
+<a class="salto" href="#pre-registro">Saltar al pre-registro</a>
+
+<div class="escena">
+  <canvas id="mapa" aria-hidden="true"></canvas>
+  <div class="marcas" id="marcas" aria-label="Puntos del recorrido"></div>
+
+  <header class="barra">
+    <!-- ─────────────────────────────────────────────────────────
+         LOGOTIPO. Recreación tipográfica en SVG puro, provisional:
+         el uso de la marca Fulbright está regulado. Para publicar,
+         sustituir todo este bloque por el lockup oficial que
+         entregue COMEXUS. El contenedor ya está dimensionado para
+         recibirlo tal cual:
+           <img src="fulbright-comexus.svg" alt="Fulbright COMEXUS"
+                class="logo-oficial" width="188" height="34">
+         ───────────────────────────────────────────────────────── -->
+    <div class="logo">
+      <svg class="emblema" viewBox="0 0 44 44" role="img" aria-label="Fulbright COMEXUS">
+        <rect x="1.2" y="1.2" width="41.6" height="41.6" rx="12"
+              fill="none" stroke="currentColor" stroke-opacity=".34" stroke-width="1.5"/>
+        <!-- Dos trayectorias entre dos puntos: el corredor binacional -->
+        <path d="M9.5 30.5C15 15.5 29 15.5 34.5 30.5" fill="none" stroke="#FFFFFF"
+              stroke-width="2" stroke-linecap="round"/>
+        <path d="M9.5 30.5C15 22.5 29 22.5 34.5 30.5" fill="none" stroke="#5FE0E6"
+              stroke-width="1.6" stroke-linecap="round" stroke-opacity=".85"/>
+        <circle cx="9.5" cy="30.5" r="3" fill="#5FE0E6"/>
+        <circle cx="34.5" cy="30.5" r="3" fill="#FFFFFF"/>
+      </svg>
+      <span class="lockup">
+        <b>Fulbright <em>COMEXUS</em></b>
+        <span>Becas Fulbright-García Robles</span>
+      </span>
+    </div>
+    <div class="estado" id="estado" role="status">
+      <i aria-hidden="true"></i>
+      <span class="larga">Convocatoria abierta</span>
+      <span class="corta">Abierta</span>
+    </div>
+  </header>
+
+  <div class="titular">
+    <span class="ceja">Maestría y doctorado en EE. UU.</span>
+    <h1>Del Ángel a la Antorcha</h1>
+    <p><b>Hasta $37,000 USD al año</b> para tu posgrado en Estados Unidos.</p>
+  </div>
+
+  <div class="pista" id="pista">
+    <span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/>
+      </svg>
+      Arrastra para girar · pellizca para acercar
+    </span>
+  </div>
+</div>
+
+<section class="hoja" id="hoja" aria-label="Información de la beca">
+  <div class="asa" id="asa" role="button" tabindex="0" aria-label="Deslizar el panel de información" aria-expanded="false"></div>
+
+  <div class="hoja-cab">
+    <h2>La beca en 40 segundos
+      <span class="sub" id="sub-cab">Cierra el 31 de enero</span>
+    </h2>
+    <button class="btn chico" id="ir-form" type="button">Pre-registro</button>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones">
+    <button type="button" role="tab" aria-selected="true"  data-ir="apoyo">Apoyo</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="requisitos">Requisitos</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="elegibilidad">Elegibilidad</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="fechas">Fechas</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="proceso">Proceso</button>
+    <button type="button" role="tab" aria-selected="false" data-ir="pre-registro">Pre-registro</button>
+  </nav>
+
+  <div class="hoja-scroll" id="scroll">
+
+    <section class="bloque" id="apoyo">
+      <h3>Apoyo económico</h3>
+      <div class="montos">
+        <div class="monto">
+          <span class="nivel">Maestría</span>
+          <b>$37,000</b>
+          <span class="dur">USD al año · hasta 18 meses</span>
+        </div>
+        <div class="monto">
+          <span class="nivel">Doctorado</span>
+          <b>$25,000</b>
+          <span class="dur">USD al año · hasta 3 años</span>
+        </div>
+      </div>
+      <p class="nota">El monto cubre colegiatura y manutención según el costo del programa al que seas admitido.</p>
+    </section>
+
+    <section class="bloque" id="requisitos">
+      <h3>Requisitos</h3>
+      <div class="filas">
+        <div class="fila"><span class="k">Promedio de licenciatura</span><span class="v">8.0 mín.</span></div>
+        <div class="fila"><span class="k">TOEFL iBT<small>Cualquiera de los tres exámenes</small></span><span class="v">80 mín.</span></div>
+        <div class="fila"><span class="k">IELTS</span><span class="v">6.5 mín.</span></div>
+        <div class="fila"><span class="k">Duolingo</span><span class="v">120 mín.</span></div>
+        <div class="fila critica"><span class="k">Examen GRE<small>Sin excepciones por área</small></span><span class="v">Obligatorio</span></div>
+        <div class="fila critica"><span class="k">Escala de calidad COMEXUS<small>Umbral para pasar a entrevistas</small></span><span class="v">55 pts.</span></div>
+      </div>
+      <p class="nota">Los 55 puntos se calculan sobre tu expediente completo: promedio, exámenes, trayectoria y proyecto. No es un examen aparte.</p>
+    </section>
+
+    <section class="bloque" id="elegibilidad">
+      <h3>Elegibilidad</h3>
+      <div class="elig">
+        <div>
+          <h4>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Sí puedes postular
+          </h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>nacionalidad mexicana</b>.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>En cualquier posgrado <b>no clínico</b>.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5FE0E6" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Con <b>prioridad</b> si vienes de STEM o de estudios sobre Estados Unidos.</span></li>
+          </ul>
+        </div>
+        <div class="no">
+          <h4>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            No aplica este ciclo
+          </h4>
+          <ul>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Doble nacionalidad estadounidense.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Licenciatura o maestría ya cursadas en EE. UU.</span></li>
+            <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#DCEEF2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Áreas clínicas: medicina, odontología y veterinaria.</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="nota">Esta sección existe para ahorrarte meses. Si algo de la segunda lista aplica en tu caso, la postulación no procede.</p>
+    </section>
+
+    <section class="bloque" id="fechas">
+      <h3>Fechas</h3>
+      <div class="reloj" id="reloj" aria-label="Tiempo restante para el cierre">
+        <div><b id="r-d">--</b><span>Días</span></div>
+        <div><b id="r-h">--</b><span>Horas</span></div>
+        <div><b id="r-m">--</b><span>Min</span></div>
+        <div><b id="r-s">--</b><span>Seg</span></div>
+      </div>
+      <p class="nota" id="reloj-txt">Para el cierre de la convocatoria.</p>
+      <div class="hitos">
+        <div class="hito"><i aria-hidden="true"></i><div><span>1 sep 2025</span><b>Abre la convocatoria</b></div></div>
+        <div class="hito activo" id="hito-cierre"><i aria-hidden="true"></i><div><span>31 ene 2026</span><b>Cierra la convocatoria</b><p>Sin prórroga.</p></div></div>
+        <div class="hito"><i aria-hidden="true"></i><div><span>Ago 2027</span><b>Inicias estudios en EE. UU.</b></div></div>
+      </div>
+    </section>
+
+    <section class="bloque" id="proceso">
+      <h3>Proceso</h3>
+      <div class="pasos">
+        <div class="paso"><i>01</i><div><b>Verificas tu perfil</b><p>Promedio, inglés, GRE y elegibilidad.</p></div></div>
+        <div class="paso"><i>02</i><div><b>Envías tu postulación</b><p>No necesitas carta de aceptación de ninguna universidad.</p></div></div>
+        <div class="paso"><i>03</i><div><b>COMEXUS gestiona tu admisión</b><p>Te postula a entre 4 y 5 universidades estadounidenses.</p></div></div>
+        <div class="paso"><i>04</i><div><b>Tramitas la visa J1</b><p>COMEXUS lleva el proceso contigo.</p></div></div>
+      </div>
+    </section>
+
+    <section class="bloque" id="pre-registro">
+      <h3>Pre-registro</h3>
+
+      <form id="form" novalidate>
+        <p class="nota" style="margin:0 0 16px" id="form-intro">
+          Recibe la guía de requisitos y te avisamos antes del cierre. Todavía no estás llenando la solicitud.
+        </p>
+
+        <div class="campo">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-nombre">
+          <span class="err" id="e-nombre"></span>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-correo">
+          <span class="err" id="e-correo"></span>
+        </div>
+
+        <div class="campo">
+          <label id="lbl-nivel">Nivel al que quieres postular</label>
+          <div class="pills" role="radiogroup" aria-labelledby="lbl-nivel">
+            <label class="pill"><input type="radio" name="nivel" value="maestria"><span>Maestría</span></label>
+            <label class="pill"><input type="radio" name="nivel" value="doctorado"><span>Doctorado</span></label>
+          </div>
+          <span class="err" id="e-nivel"></span>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="elegible" name="elegible">
+          <span>Tengo nacionalidad mexicana y no he cursado licenciatura ni maestría en Estados Unidos.</span>
+        </label>
+        <span class="err" id="e-elegible"></span>
+
+        <label class="check">
+          <input type="checkbox" id="aviso" name="aviso">
+          <span>Acepto el <a href="#aviso-privacidad">aviso de privacidad</a> y que COMEXUS me escriba sobre esta convocatoria.</span>
+        </label>
+        <span class="err" id="e-aviso"></span>
+
+        <button class="btn ancho" type="submit" id="enviar" style="margin-top:8px">Recibir la guía</button>
+      </form>
+
+      <div class="exito" id="exito" role="status" aria-live="polite">
+        <h3 tabindex="-1" id="exito-h">Listo</h3>
+        <p id="exito-p"></p>
+      </div>
+    </section>
+
+    <section class="bloque" id="faq">
+      <h3>Preguntas frecuentes</h3>
+      <details><summary>¿Necesito carta de aceptación de una universidad?</summary><p>No. COMEXUS gestiona tu admisión en 4 o 5 universidades como parte del proceso.</p></details>
+      <details><summary>¿El GRE es obligatorio?</summary><p>Sí, sin excepción. El puntaje mínimo depende de tu área de estudio.</p></details>
+      <details><summary>¿Puedo postular si estudié en Estados Unidos?</summary><p>No, si ya cursaste ahí licenciatura o maestría.</p></details>
+      <details><summary>¿Qué son los 55 puntos de COMEXUS?</summary><p>El umbral de la escala de calidad con la que se evalúa tu expediente. Por debajo de 55 no se pasa a la etapa de entrevistas.</p></details>
+      <details><summary>¿Las áreas clínicas participan?</summary><p>No. Medicina, odontología y veterinaria quedan fuera de esta convocatoria.</p></details>
+    </section>
+
+    <p class="pie" id="aviso-privacidad">
+      Comisión México-Estados Unidos para el Intercambio Educativo y Cultural (COMEXUS).
+      Los datos del pre-registro se usan únicamente para enviarte información de esta
+      convocatoria y puedes solicitar tu baja en cualquier momento.
+      Cifras y fechas conforme a la convocatoria oficial vigente.
+    </p>
+  </div>
+</section>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN DEL CICLO — lo único que se toca cada año.
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  CIERRE: new Date('2026-01-31T23:59:59-06:00'),
+  APERTURA_SIGUIENTE: '1 de septiembre',
+  ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
+  VARIANTE: 'modelo-1-recorrido-binacional'
+};
+
+const ABIERTA = Date.now() < CONFIG.CIERRE.getTime();
+const REDUCIR = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ═══════════════════════════════════════════════════════════════
+   1 · MUNDO — geometría compartida por los dos renderizadores
+   Solo México y Estados Unidos. Sin globo: la esfera obligaba a
+   dejar vacío alrededor, y en retrato ese vacío es la mitad de la
+   pantalla.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Siluetas en (lat, lon). Estilizadas, no cartográficas: la fidelidad
+   necesaria es la que hace reconocible el contorno a 390 px. */
+const EEUU = [[48.4,-124.7],[49.0,-123.0],[49.0,-95.2],[48.9,-89.5],[46.8,-84.6],
+  [45.4,-83.5],[43.0,-82.4],[42.3,-79.8],[43.3,-79.1],[44.1,-76.4],[45.0,-74.7],
+  [45.0,-71.5],[47.4,-69.2],[47.0,-67.8],[44.8,-67.0],[43.7,-70.2],[42.0,-70.6],
+  [41.3,-71.8],[40.7,-74.0],[39.3,-74.4],[38.0,-75.2],[36.9,-76.0],[35.2,-75.5],
+  [34.0,-77.9],[32.8,-79.9],[31.1,-81.4],[29.9,-81.3],[27.0,-80.1],[25.2,-80.4],
+  [25.8,-81.4],[27.8,-82.6],[29.7,-83.4],[30.1,-84.3],[30.4,-87.2],[29.2,-89.3],
+  [29.7,-93.9],[28.4,-96.4],[26.0,-97.2],[29.3,-100.9],[29.8,-102.8],[31.8,-106.5],
+  [31.3,-111.0],[32.5,-114.7],[32.5,-117.1],[34.4,-120.5],[36.9,-122.0],[38.9,-123.7],
+  [41.7,-124.2],[46.2,-124.0]];
+
+const MEXICO = [[32.5,-114.7],[31.8,-106.5],[29.8,-102.8],[29.3,-100.9],[26.0,-97.2],
+  [23.2,-97.8],[21.5,-97.4],[19.2,-96.1],[18.7,-95.0],[18.6,-91.5],[19.8,-90.6],
+  [21.6,-88.0],[21.5,-86.9],[19.6,-87.5],[18.5,-88.3],[17.8,-89.1],[16.1,-90.5],
+  [14.6,-92.2],[15.8,-94.5],[16.2,-95.2],[16.7,-99.9],[17.6,-101.5],[19.1,-104.3],
+  [20.7,-105.3],[22.0,-105.7],[23.2,-106.4],[25.5,-108.9],[27.9,-111.0],[29.3,-112.3],
+  [31.3,-113.1]];
+
+const BAJA = [[32.5,-117.1],[30.4,-116.0],[28.0,-114.5],[26.0,-112.3],[24.4,-111.6],
+  [22.9,-110.0],[24.0,-110.3],[26.6,-111.8],[28.8,-113.5],[31.2,-114.8],[32.4,-115.0]];
+
+const PAISES = [
+  { id:'us', pts:EEUU,   mx:false },
+  { id:'mx', pts:MEXICO, mx:true  },
+  { id:'bc', pts:BAJA,   mx:true  }
+];
+
+/* Ciudades del corredor. Las mexicanas emisoras; las estadounidenses,
+   destinos del sur y de alta afluencia latina. */
+const CIUDADES = {
+  cdmx:      { nom:'Ciudad de México', lat:19.43, lon:-99.13, mx:true,  lado:1  },
+  monterrey: { nom:'Monterrey',        lat:25.67, lon:-100.31, mx:true, lado:1  },
+  guadalajara:{nom:'Guadalajara',      lat:20.67, lon:-103.35, mx:true, lado:-1 },
+  losangeles:{ nom:'Los Ángeles',      lat:34.05, lon:-118.24, mx:false, lado:1  },
+  houston:   { nom:'Houston',          lat:29.76, lon:-95.37,  mx:false, lado:1  },
+  austin:    { nom:'Austin',           lat:30.27, lon:-97.74,  mx:false, lado:-1 },
+  miami:     { nom:'Miami',            lat:25.76, lon:-80.19,  mx:false, lado:1  },
+  nuevayork: { nom:'Nueva York',       lat:40.71, lon:-74.01,  mx:false, lado:1  }
+};
+
+/* Seis trayectorias. Cubren las tres ciudades emisoras y los cuatro
+   destinos pedidos, más Nueva York, que es donde está la Antorcha. */
+const RUTAS = [
+  ['cdmx','austin'], ['cdmx','nuevayork'],
+  ['monterrey','houston'], ['monterrey','losangeles'],
+  ['guadalajara','losangeles'], ['guadalajara','miami']
+];
+
+const MONUMENTOS = [
+  { id:'angel',    ciudad:'cdmx',      nom:'Ángel de la Independencia', ir:'requisitos',
+    dato:'Aquí empieza: promedio 8.0, inglés acreditado y GRE obligatorio.' },
+  { id:'libertad', ciudad:'nuevayork', nom:'Estatua de la Libertad',    ir:'apoyo',
+    dato:'Aquí llegas: hasta $37,000 USD al año, con visa J1 gestionada.' }
+];
+
+const rad = g => g * Math.PI / 180;
+
+/* Proyección: grados a unidades de mundo sobre el plano XZ.
+   1 unidad = 1° de latitud; la longitud se corrige por el coseno de
+   la latitud media para que México no salga estirado. */
+const REF = { lat:31, lon:-96, kx:Math.cos(rad(31)) };
+const aPlano = (lat, lon) => [ (lon - REF.lon) * REF.kx, 0, -(lat - REF.lat) ];
+
+/* Nube de puntos del territorio, muestreada una sola vez. */
+const RELLENO = (() => {
+  const dentro = (lat, lon, poly) => {
+    let hit = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++){
+      const [yi, xi] = poly[i], [yj, xj] = poly[j];
+      if ((yi > lat) !== (yj > lat) && lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) hit = !hit;
+    }
+    return hit;
+  };
+  const pts = [];
+  for (let lat = 49; lat >= 14; lat -= 0.85)          // de norte a sur: pinta de lejos a cerca
+    for (let lon = -125; lon <= -66; lon += 0.85)
+      for (const p of PAISES)
+        if (dentro(lat, lon, p.pts)){ pts.push({ v:aPlano(lat, lon), mx:p.mx }); break; }
+  return pts;
+})();
+
+/* Arco parabólico entre dos ciudades, con altura proporcional al
+   trayecto: los saltos largos se ven más altos. */
+function arco(a, b, n = 64){
+  const pa = aPlano(a.lat, a.lon), pb = aPlano(b.lat, b.lon);
+  const d = Math.hypot(pb[0] - pa[0], pb[2] - pa[2]);
+  const alto = d * 0.34;
+  const out = [];
+  for (let i = 0; i <= n; i++){
+    const t = i / n;
+    out.push([
+      pa[0] + (pb[0] - pa[0]) * t,
+      alto * Math.sin(Math.PI * t),
+      pa[2] + (pb[2] - pa[2]) * t
+    ]);
+  }
+  return out;
+}
+
+const TRAYECTOS = RUTAS.map(([a, b], i) => ({
+  pts: arco(CIUDADES[a], CIUDADES[b]),
+  fase: i * 0.85,
+  sentido: i % 2 === 0 ? 1 : -1,     // van y vienen
+  mx: i % 2 === 0
+}));
+
+/* ── Cámara ──────────────────────────────────────────────────
+   El mapa vive en el plano XZ; la cámara lo mira desde el sur y
+   desde arriba. En retrato eso convierte el formato vertical en
+   una ventaja: México cerca y grande abajo, Estados Unidos al
+   fondo, y el cielo libre para los arcos. */
+const FOV = 42;
+const PROF_MUNDO = 35;     // grados de latitud entre Chiapas y la frontera norte
+
+/* El mapa de Norteamérica nunca puede ser más alto que ancho en
+   pantalla: aun visto desde cenit su relación máxima es 0.7:1, y el
+   móvil es 2.16:1. Así que no se encaja en el ancho —eso deja la
+   mitad de la pantalla vacía— sino que se llena la banda libre entre
+   el titular y la hoja, dejando que sangre por los costados. */
+const ENCUADRE = {
+  arriba: 248,                                   // alto de barra + titular
+  pico: () => Math.min(330, innerHeight * 0.42), // asomo de la hoja
+  banda(h){ return Math.max(190, h - this.arriba - this.pico()); },
+  centroY(h){ return this.arriba + this.banda(h) / 2; },
+  /* Distancia de cámara fijada a la elevación de referencia: al
+     inclinar, la perspectiva cambia sola, como una cámara real. */
+  distancia(w, h){
+    const f = (h / 2) / Math.tan(rad(FOV / 2));
+    return f * PROF_MUNDO * Math.sin(rad(50)) / (this.banda(h) * 0.88 * camara.zoom);
+  }
+};
+
+const camara = {
+  yaw: rad(-6),
+  elev: rad(50),
+  zoom: 1,
+  centro: [0, 0],          // punto de mira sobre el plano: [x, z]
+  vYaw: 0, vElev: 0,
+  vaiven: 0,               // balanceo lento cuando nadie toca
+  auto: !REDUCIR
+};
+
+/* El operador % de JavaScript conserva el signo, y el primer
+   fotograma puede llegar con una marca de tiempo anterior al origen:
+   sin esto, el avance de la estela sale negativo y el índice se sale
+   del arco. */
+const cicla = (x, periodo) => ((x % periodo) + periodo) % periodo;
+
+const CLAMP_ELEV = [rad(20), rad(80)];
+const CLAMP_YAW  = [rad(-48), rad(48)];   // el mapa no se pone del revés
+const sujeta = (v, [a, b]) => Math.max(a, Math.min(b, v));
+/* ═══════════════════════════════════════════════════════════════
+   2 · RENDERIZADOR DE RESPALDO (Canvas 2D)
+   Pinta desde el primer fotograma, sin dependencias. Three.js
+   releva el render solo si el CDN responde.
+   ═══════════════════════════════════════════════════════════════ */
+const Escena = (() => {
+  const lienzo = document.getElementById('mapa');
+  const ctx = lienzo.getContext('2d');
+  let w = 0, h = 0, cx = 0, cy = 0, f = 1, D = 1, dpr = 1, vivo = true;
+  const t0 = performance.now();
+
+  function medir(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    w = lienzo.clientWidth; h = lienzo.clientHeight;
+    lienzo.width = Math.round(w * dpr); lienzo.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = w / 2; cy = ENCUADRE.centroY(h);
+    f = (h / 2) / Math.tan(rad(FOV / 2));
+    D = ENCUADRE.distancia(w, h);
+  }
+
+  /* Punto de mundo → pantalla. Mismo encadenado que aplica Three:
+     giro del mapa, traslación al objetivo, inclinación, perspectiva. */
+  function proyectar(p){
+    const yaw = camara.yaw + camara.vaiven;
+    const c = Math.cos(yaw), s = Math.sin(yaw);
+    /* Primero el desplazamiento del punto de mira: así el giro ocurre
+       alrededor de la ciudad enfocada, no del centro del mapa. */
+    const px = p[0] - camara.centro[0], pz = p[2] - camara.centro[1];
+    let x = px * c + pz * s;
+    let z = -px * s + pz * c;
+    let y = p[1];
+
+    const ce = Math.cos(camara.elev), se = Math.sin(camara.elev);
+    y -= D * se; z -= D * ce;
+    const y2 = y * ce - z * se;
+    const z2 = y * se + z * ce;
+
+    const prof = -z2;
+    const esc = f / prof;
+    return { x: cx + x * esc, y: cy - y2 * esc, prof, esc };
+  }
+
+  const pantallaDe = (lat, lon) => proyectar(aPlano(lat, lon));
+  const visible = p => !!p && p.prof > 2;
+
+  function dibujarMonumento(g, p, id, k){
+    g.save(); g.translate(p.x, p.y); g.scale(k, k);
+    g.lineJoin = 'round'; g.lineCap = 'round';
+    g.strokeStyle = '#FFFFFF'; g.fillStyle = '#FFFFFF'; g.lineWidth = 1.5;
+
+    if (id === 'angel'){
+      /* Base, columna, capitel y figura alada. */
+      g.beginPath(); g.moveTo(-4.5, 0); g.lineTo(4.5, 0); g.lineTo(3, -3); g.lineTo(-3, -3); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-1.6, -3); g.lineTo(1.6, -3); g.lineTo(1.2, -17); g.lineTo(-1.2, -17); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-3, -17); g.lineTo(3, -17); g.lineTo(2.2, -19.5); g.lineTo(-2.2, -19.5); g.closePath(); g.fill();
+      g.beginPath(); g.arc(0, -22.5, 1.5, 0, 7); g.fill();
+      g.strokeStyle = '#5FE0E6';
+      g.beginPath(); g.moveTo(-1, -22); g.quadraticCurveTo(-6, -25, -6.5, -30); g.stroke();
+      g.beginPath(); g.moveTo(1, -22);  g.quadraticCurveTo(6, -25, 6.5, -30);  g.stroke();
+      g.strokeStyle = '#FFFFFF';
+      g.beginPath(); g.moveTo(0, -24); g.lineTo(0, -28); g.stroke();
+    } else {
+      /* Pedestal, manto, cabeza, corona, brazo y antorcha. */
+      g.beginPath(); g.moveTo(-5, 0); g.lineTo(5, 0); g.lineTo(4, -5); g.lineTo(-4, -5); g.closePath(); g.fill();
+      g.beginPath(); g.moveTo(-3.4, -5); g.lineTo(3.4, -5); g.lineTo(1.4, -18); g.lineTo(-1.4, -18); g.closePath(); g.fill();
+      g.beginPath(); g.arc(0, -20, 1.7, 0, 7); g.fill();
+      g.strokeStyle = '#5FE0E6';
+      for (let i = -2; i <= 2; i++){
+        g.beginPath(); g.moveTo(0, -21.4); g.lineTo(i * 1.9, -24.4); g.stroke();
+      }
+      g.strokeStyle = '#FFFFFF';
+      g.beginPath(); g.moveTo(1.4, -17.5); g.lineTo(4.6, -26); g.stroke();
+      g.beginPath(); g.moveTo(4.6, -26); g.lineTo(4.6, -28.4); g.stroke();
+      g.fillStyle = '#5FE0E6';
+      g.beginPath(); g.moveTo(4.6, -33); g.lineTo(6.4, -28.6); g.lineTo(2.8, -28.6); g.closePath(); g.fill();
+    }
+    g.restore();
+  }
+
+  function traza(pts, cerrar){
+    ctx.beginPath(); let mov = true;
+    const lista = cerrar ? pts.concat([pts[0]]) : pts;
+    for (const [la, lo] of lista){
+      const p = proyectar(aPlano(la, lo));
+      if (!visible(p)){ mov = true; continue; }
+      if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+    }
+    ctx.stroke();
+  }
+
+  function pintar(ahora){
+    if (!vivo) return;
+    const t = (ahora - t0) / 1000;
+
+    if (camara.auto && !arrastrando) camara.vaiven = REDUCIR ? 0 : Math.sin(t * 0.19) * rad(6);
+    if (!arrastrando){
+      camara.yaw = sujeta(camara.yaw + camara.vYaw, CLAMP_YAW);
+      camara.elev = sujeta(camara.elev + camara.vElev, CLAMP_ELEV);
+      camara.vYaw *= 0.93; camara.vElev *= 0.93;
+    }
+
+    ctx.clearRect(0, 0, w, h);
+
+    /* Resplandor bajo el mapa: sustituye al vacío que dejaba el globo. */
+    const centro = proyectar([0, 0, 0]);
+    const halo = ctx.createRadialGradient(centro.x, centro.y, 0, centro.x, centro.y, w * 0.95);
+    halo.addColorStop(0,   'rgba(0,160,175,.26)');
+    halo.addColorStop(.55, 'rgba(0,72,132,.14)');
+    halo.addColorStop(1,   'rgba(0,17,41,0)');
+    ctx.fillStyle = halo; ctx.fillRect(0, 0, w, h);
+
+    /* Retícula del plano */
+    ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(220,238,242,.09)';
+    for (let lat = 15; lat <= 50; lat += 5){
+      const fila = []; for (let lon = -126; lon <= -64; lon += 4) fila.push([lat, lon]);
+      traza(fila, false);
+    }
+    for (let lon = -125; lon <= -65; lon += 5){
+      const col = []; for (let lat = 14; lat <= 50; lat += 3) col.push([lat, lon]);
+      traza(col, false);
+    }
+
+    /* Territorio en puntos */
+    for (const pt of RELLENO){
+      const p = proyectar(pt.v);
+      if (!visible(p)) continue;
+      const r = Math.max(0.55, p.esc * 0.20);
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 7);
+      ctx.fillStyle = pt.mx ? 'rgba(95,224,230,.92)' : 'rgba(220,238,242,.44)';
+      ctx.fill();
+    }
+
+    /* Contornos */
+    for (const pais of PAISES){
+      ctx.lineWidth = pais.mx ? 1.5 : 1.1;
+      ctx.strokeStyle = pais.mx ? 'rgba(95,224,230,.9)' : 'rgba(220,238,242,.34)';
+      traza(pais.pts, true);
+    }
+
+    /* Trayectorias */
+    for (const tr of TRAYECTOS){
+      const proj = tr.pts.map(proyectar);
+      const color = tr.mx ? 'rgba(95,224,230,' : 'rgba(255,255,255,';
+      ctx.lineWidth = 1.3; ctx.lineCap = 'round';
+      ctx.beginPath(); let mov = true;
+      for (const p of proj){
+        if (!visible(p)){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = color + '.34)'; ctx.stroke();
+
+      /* Estela que recorre el arco */
+      const dur = 4.6;
+      const av = REDUCIR ? 0.5 : cicla(t + tr.fase, dur) / dur;
+      const n = proj.length - 1;
+      const cab = Math.max(0, Math.min(n, Math.round((tr.sentido > 0 ? av : 1 - av) * n)));
+      const desde = Math.max(0, Math.min(n, cab - tr.sentido * 16));
+      const [i0, i1] = desde < cab ? [desde, cab] : [cab, desde];
+      ctx.beginPath(); mov = true;
+      for (let i = i0; i <= i1; i++){
+        const p = proj[i];
+        if (!visible(p)){ mov = true; continue; }
+        if (mov){ ctx.moveTo(p.x, p.y); mov = false; } else ctx.lineTo(p.x, p.y);
+      }
+      ctx.lineWidth = 2; ctx.strokeStyle = color + '.95)'; ctx.stroke();
+
+      const pc = proj[cab];
+      if (pc && visible(pc)){
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, 2.6, 0, 7); ctx.fillStyle = '#FFFFFF'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pc.x, pc.y, 7, 0, 7); ctx.fillStyle = 'rgba(95,224,230,.2)'; ctx.fill();
+      }
+    }
+
+    /* Ciudades: el punto en el lienzo, el nombre en HTML */
+    for (const k in CIUDADES){
+      const c = CIUDADES[k];
+      const p = pantallaDe(c.lat, c.lon);
+      if (!visible(p)) continue;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 2.8, 0, 7);
+      ctx.fillStyle = c.mx ? '#5FE0E6' : '#FFFFFF'; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 7, 0, 7);
+      ctx.strokeStyle = c.mx ? 'rgba(95,224,230,.38)' : 'rgba(255,255,255,.30)';
+      ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    /* Monumentos: el pie va sobre la ciudad */
+    for (const m of MONUMENTOS){
+      const c = CIUDADES[m.ciudad];
+      const p = pantallaDe(c.lat, c.lon);
+      if (!visible(p)) continue;
+      const k = (p.esc * 5) / 34;      // 5 unidades de mundo de alto
+      dibujarMonumento(ctx, p, m.id, Math.max(0.5, k));
+    }
+
+    requestAnimationFrame(pintar);
+  }
+
+  return {
+    tipo:'canvas2d',
+    iniciar(){ medir(); addEventListener('resize', medir); requestAnimationFrame(pintar); },
+    detener(){ vivo = false; removeEventListener('resize', medir); },
+    medir, pantallaDe
+  };
+})();
+
+/* Renderizador en uso y estado del gesto: los comparten los
+   marcadores, los gestos y el relevo a Three.js. */
+let activo = Escena;
+let arrastrando = false;
+
+/* ═══════════════════════════════════════════════════════════════
+   2b · MARCADORES
+   Botones HTML anclados sobre cada monumento. Un glifo dibujado en
+   el lienzo no es enfocable ni lo lee un lector de pantalla; un
+   botón sí, y además garantiza la zona táctil.
+   ═══════════════════════════════════════════════════════════════ */
+const Marcas = (() => {
+  const capa = document.getElementById('marcas');
+  const conMonumento = {};
+  MONUMENTOS.forEach(m => { conMonumento[m.ciudad] = m; });
+
+  const piezas = Object.keys(CIUDADES).map(k => {
+    const c = CIUDADES[k];
+    const m = conMonumento[k];
+    const el = document.createElement(m ? 'button' : 'span');
+    el.className = m ? 'marca-pt' : 'ciudad-pt';
+    el.innerHTML = m
+      ? `<i aria-hidden="true"></i><span>${c.nom}</span>`
+      : `<span>${c.nom}</span>`;
+    if (m){
+      el.type = 'button';
+      el.setAttribute('aria-label', `${m.nom}, ${c.nom}. ${m.dato}`);
+    } else {
+      el.setAttribute('aria-hidden', 'true');   // el dato vive en la hoja
+    }
+    capa.appendChild(el);
+    return { el, c, m };
+  });
+
+  function conectar(enfocar){
+    piezas.filter(x => x.m).forEach(({ el, m }) => el.addEventListener('click', () => enfocar(m)));
+  }
+
+  (function seguir(){
+    requestAnimationFrame(seguir);
+    for (const { el, c, m } of piezas){
+      const p = activo.pantallaDe && activo.pantallaDe(c.lat, c.lon);
+      if (!p || p.prof <= 2){ el.style.visibility = 'hidden'; continue; }
+      el.style.visibility = 'visible';
+      const ancho = el.offsetWidth || 90;
+      /* El botón corona la figura, que mide 5 unidades de mundo.
+         La etiqueta simple se aparta hacia su lado. */
+      const bruto = c.lado > 0 ? p.x + 11 : p.x - ancho - 11;
+      const x = Math.max(6, Math.min(innerWidth - ancho - 6, bruto));
+      const y = m ? p.y - 15 : p.y - 9;
+      el.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
+    }
+  })();
+
+  return { conectar };
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   3 · GESTOS — un dedo gira e inclina, dos dedos acercan
+   ═══════════════════════════════════════════════════════════════ */
+(function gestos(){
+  const el = document.querySelector('.escena');
+  const dedos = new Map();
+  let ultX = 0, ultY = 0, dist0 = 0, zoom0 = 1;
+
+  el.addEventListener('pointerdown', e => {
+    if (e.target.closest('.barra, .hoja, .salto, .marca-pt')) return;
+    dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
+    if (dedos.size === 1){
+      arrastrando = true;
+      ultX = e.clientX; ultY = e.clientY;
+      camara.vYaw = camara.vElev = 0;
+      el.setPointerCapture(e.pointerId);
+      document.getElementById('pista').classList.add('oculta');
+    } else if (dedos.size === 2){
+      const [a, b] = [...dedos.values()];
+      dist0 = Math.hypot(a.x - b.x, a.y - b.y);
+      zoom0 = camara.zoom;
+    }
+  }, { passive:true });
+
+  el.addEventListener('pointermove', e => {
+    if (!dedos.has(e.pointerId)) return;
+    dedos.set(e.pointerId, { x:e.clientX, y:e.clientY });
+
+    if (dedos.size >= 2){
+      const [a, b] = [...dedos.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (dist0 > 0){
+        camara.zoom = Math.max(0.8, Math.min(2.4, zoom0 * (d / dist0)));
+        activo.medir && activo.medir();
+      }
+      return;
+    }
+    const dx = e.clientX - ultX, dy = e.clientY - ultY;
+    ultX = e.clientX; ultY = e.clientY;
+    camara.yaw  = sujeta(camara.yaw - dx * 0.0055, CLAMP_YAW);
+    camara.elev = sujeta(camara.elev - dy * 0.0042, CLAMP_ELEV);
+    camara.vYaw  = -dx * 0.0013;
+    camara.vElev = -dy * 0.0010;
+  }, { passive:true });
+
+  function soltar(e){
+    if (!dedos.has(e.pointerId)) return;
+    dedos.delete(e.pointerId);
+    if (dedos.size === 0) arrastrando = false;
+    if (dedos.size < 2) dist0 = 0;
+  }
+  el.addEventListener('pointerup', soltar, { passive:true });
+  el.addEventListener('pointercancel', soltar, { passive:true });
+
+  /* Acerca la cámara al monumento y abre su sección de la hoja. */
+  function enfocar(m){
+    const c = CIUDADES[m.ciudad];
+    const w = aPlano(c.lat, c.lon);
+    const destino = { yaw: rad(0), elev: rad(42), zoom: 1.45, cx: w[0], cz: w[2] };
+    const ini = {
+      yaw: camara.yaw, elev: camara.elev, zoom: camara.zoom,
+      cx: camara.centro[0], cz: camara.centro[1]
+    };
+    const t0 = performance.now();
+    camara.auto = false;
+    (function paso(now){
+      const k = Math.min(1, (now - t0) / (REDUCIR ? 1 : 620));
+      const e = 1 - Math.pow(1 - k, 3);
+      camara.yaw  = ini.yaw  + (destino.yaw  - ini.yaw)  * e;
+      camara.elev = ini.elev + (destino.elev - ini.elev) * e;
+      camara.zoom = ini.zoom + (destino.zoom - ini.zoom) * e;
+      camara.centro[0] = ini.cx + (destino.cx - ini.cx) * e;
+      camara.centro[1] = ini.cz + (destino.cz - ini.cz) * e;
+      activo.medir && activo.medir();
+      if (k < 1) requestAnimationFrame(paso);
+      else if (!REDUCIR) setTimeout(() => { camara.auto = true; }, 2600);
+    })(performance.now());
+
+    Hoja.abrir('medio');
+    Hoja.irA(m.ir);
+    document.getElementById('estado').setAttribute('aria-label', `${m.nom}. ${m.dato}`);
+  }
+
+  Marcas.conectar(enfocar);
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   4 · BOTTOM SHEET — tres posiciones, arrastre con inercia
+   ═══════════════════════════════════════════════════════════════ */
+const Hoja = (() => {
+  const hoja = document.getElementById('hoja');
+  const asa  = document.getElementById('asa');
+  const cab  = document.querySelector('.hoja-cab');
+  const scroll = document.getElementById('scroll');
+  const tabs = document.getElementById('tabs');
+  let alto = 0, posiciones = {}, actual = 'pico', y = 0;
+  const panel = matchMedia('(min-width:60rem) and (min-height:34rem)');
+
+  function medir(){
+    alto = hoja.offsetHeight;
+    const pico = Math.min(330, innerHeight * 0.42);
+    posiciones = { lleno:0, medio:Math.round(alto * 0.42), pico:Math.round(alto - pico) };
+    document.documentElement.style.setProperty('--hoja-pico', pico + 'px');
+    aplicar(actual);
+  }
+  function aplicar(nombre, animar = true){
+    actual = nombre; y = posiciones[nombre];
+    hoja.classList.toggle('suave', animar);
+    hoja.style.setProperty('--y', y + 'px');
+    asa.setAttribute('aria-expanded', String(nombre !== 'pico'));
+    document.body.dataset.hoja = nombre;
+    scroll.style.overflowY = nombre === 'pico' ? 'hidden' : 'auto';
+  }
+
+  /* Arrastre: desde el asa y la cabecera siempre; desde el contenido
+     solo si ya está arriba del todo y el gesto va hacia abajo. */
+  let sy = 0, y0 = 0, agarrado = false, desdeScroll = false;
+
+  function abajo(e){
+    const enScroll = e.target.closest('.hoja-scroll');
+    if (enScroll && scroll.scrollTop > 0) return;
+    if (e.target.closest('button, a, input, label, summary, details')) return;
+    agarrado = true; desdeScroll = !!enScroll;
+    sy = e.clientY; y0 = y;
+    hoja.classList.remove('suave');
+  }
+  function mover(e){
+    if (!agarrado) return;
+    const d = e.clientY - sy;
+    if (desdeScroll && d < 0){ agarrado = false; return; }
+    y = Math.max(0, Math.min(posiciones.pico + 40, y0 + d));
+    hoja.style.setProperty('--y', y + 'px');
+  }
+  function arriba(){
+    if (!agarrado) return;
+    agarrado = false;
+    const cand = Object.entries(posiciones)
+      .sort((a, b) => Math.abs(a[1] - y) - Math.abs(b[1] - y))[0][0];
+    aplicar(cand);
+  }
+
+  hoja.addEventListener('pointerdown', abajo, { passive:true });
+  hoja.addEventListener('pointermove', mover, { passive:true });
+  hoja.addEventListener('pointerup', arriba, { passive:true });
+  hoja.addEventListener('pointercancel', arriba, { passive:true });
+
+  asa.addEventListener('click', () => aplicar(actual === 'pico' ? 'medio' : 'pico'));
+  asa.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); aplicar(actual === 'pico' ? 'medio' : 'pico'); }
+  });
+
+  /* Pestañas ↔ desplazamiento */
+  tabs.addEventListener('click', e => {
+    const b = e.target.closest('button[data-ir]');
+    if (!b) return;
+    abrir('lleno');
+    irA(b.dataset.ir);
+  });
+
+  function irA(id){
+    const s = document.getElementById(id);
+    if (!s) return;
+    requestAnimationFrame(() => {
+      scroll.scrollTo({ top: s.offsetTop - 6, behavior: REDUCIR ? 'auto' : 'smooth' });
+    });
+    marcar(id);
+  }
+  function marcar(id){
+    [...tabs.children].forEach(b => b.setAttribute('aria-selected', String(b.dataset.ir === id)));
+    const sel = tabs.querySelector('[aria-selected="true"]');
+    if (sel) sel.scrollIntoView({ inline:'center', block:'nearest', behavior: REDUCIR ? 'auto' : 'smooth' });
+  }
+
+  const espia = new IntersectionObserver(ents => {
+    const vis = ents.filter(e => e.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+    if (vis && tabs.querySelector(`[data-ir="${vis.target.id}"]`)) marcar(vis.target.id);
+  }, { root:scroll, rootMargin:'0px 0px -62% 0px', threshold:0 });
+  document.querySelectorAll('.bloque[id]').forEach(s => espia.observe(s));
+
+  function abrir(pos){ if (!panel.matches) aplicar(pos); }
+
+  addEventListener('resize', medir);
+  medir();
+
+  return { abrir, irA, medir };
+})();
+
+document.getElementById('ir-form').addEventListener('click', () => { Hoja.abrir('lleno'); Hoja.irA('pre-registro'); });
+
+/* ═══════════════════════════════════════════════════════════════
+   5 · ESTADO DE LA CONVOCATORIA Y CONTADOR
+   ═══════════════════════════════════════════════════════════════ */
+(function reloj(){
+  const d = document.getElementById('r-d'), h = document.getElementById('r-h');
+  const m = document.getElementById('r-m'), s = document.getElementById('r-s');
+  const txt = document.getElementById('reloj-txt');
+  const sub = document.getElementById('sub-cab');
+  const caja = document.getElementById('reloj');
+
+  if (!ABIERTA){
+    caja.classList.add('cerrado');
+    txt.textContent = `La convocatoria de este ciclo cerró. La siguiente abre el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    const est = document.getElementById('estado');
+    est.classList.add('cerrada');
+    est.querySelector('.larga').textContent = 'Convocatoria cerrada';
+    est.querySelector('.corta').textContent = 'Cerrada';
+    document.getElementById('hito-cierre').classList.remove('activo');
+    sub.textContent = `Cerrada · la siguiente abre el ${CONFIG.APERTURA_SIGUIENTE}`;
+    document.getElementById('ir-form').textContent = 'Avísame';
+    document.getElementById('enviar').textContent = 'Avísame cuando abra';
+    document.getElementById('form-intro').textContent =
+      `El ciclo cerró. Déjanos tu correo y te escribimos en cuanto abra la siguiente convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    return;
+  }
+
+  function tic(){
+    let x = Math.max(0, CONFIG.CIERRE.getTime() - Date.now());
+    const dd = Math.floor(x / 864e5); x -= dd * 864e5;
+    const hh = Math.floor(x / 36e5);  x -= hh * 36e5;
+    const mm = Math.floor(x / 6e4);   x -= mm * 6e4;
+    const ss = Math.floor(x / 1e3);
+    d.textContent = dd;
+    h.textContent = String(hh).padStart(2, '0');
+    m.textContent = String(mm).padStart(2, '0');
+    s.textContent = String(ss).padStart(2, '0');
+    sub.textContent = `Cierra en ${dd} días · 31 de enero`;
+  }
+  tic(); setInterval(tic, 1000);
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   6 · FORMULARIO DE PRE-REGISTRO
+   ═══════════════════════════════════════════════════════════════ */
+(function formulario(){
+  const form = document.getElementById('form');
+  const exito = document.getElementById('exito');
+  const boton = document.getElementById('enviar');
+
+  const q = new URLSearchParams(location.search);
+  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+  function err(campo, msg){
+    const el = document.getElementById(campo);
+    const caja = document.getElementById('e-' + campo);
+    if (caja) caja.textContent = msg || '';
+    if (el && el.type !== 'checkbox') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+
+  function valida(campo){
+    const v = id => (document.getElementById(id).value || '').trim();
+    switch (campo){
+      case 'nombre':  return err('nombre', v('nombre').length >= 3 ? '' : 'Escribe tu nombre completo.');
+      case 'correo':  return err('correo', CORREO.test(v('correo')) ? '' : 'Revisa el correo: parece que le falta algo.');
+      case 'nivel':   return err('nivel', form.querySelector('input[name=nivel]:checked') ? '' : 'Elige maestría o doctorado.');
+      case 'elegible':return err('elegible', document.getElementById('elegible').checked ? '' : 'Necesitamos esta confirmación para poder escribirte.');
+      case 'aviso':   return err('aviso', document.getElementById('aviso').checked ? '' : 'Marca la casilla para que podamos enviarte la guía.');
+    }
+  }
+
+  ['nombre','correo'].forEach(id =>
+    document.getElementById(id).addEventListener('blur', () => valida(id)));
+  form.querySelectorAll('input[name=nivel]').forEach(r =>
+    r.addEventListener('change', () => valida('nivel')));
+  ['elegible','aviso'].forEach(id =>
+    document.getElementById(id).addEventListener('change', () => valida(id)));
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const campos = ['nombre','correo','nivel','elegible','aviso'];
+    const malos = campos.filter(c => !valida(c));
+    if (malos.length){
+      const primero = document.getElementById(malos[0]) || form.querySelector('input[name=nivel]');
+      primero.focus({ preventScroll:false });
+      return;
+    }
+
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      correo: document.getElementById('correo').value.trim().toLowerCase(),
+      nivel: form.querySelector('input[name=nivel]:checked').value,
+      elegibilidad_confirmada: true,
+      consentimiento_aviso: true,
+      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
+      convocatoria_abierta: ABIERTA,
+      utm_source: q.get('utm_source') || 'volante_impreso',
+      utm_medium: q.get('utm_medium') || 'qr',
+      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
+      utm_content: q.get('utm_content') || '',
+      qr_id: q.get('qr_id') || '',
+      landing_variant: CONFIG.VARIANTE,
+      referrer: document.referrer || 'directo',
+      locale: 'es-MX',
+      timestamp_iso: new Date().toISOString()
+    };
+
+    boton.disabled = true;
+    const etiqueta = boton.textContent;
+    boton.textContent = 'Enviando…';
+
+    try {
+      if (CONFIG.ENDPOINT){
+        const r = await fetch(CONFIG.ENDPOINT, {
+          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+      } else {
+        console.info('[modo demo] payload para Zapier:', datos);
+        await new Promise(r => setTimeout(r, 420));
+      }
+      form.classList.add('oculto');
+      exito.classList.add('visible');
+      document.getElementById('exito-p').textContent = ABIERTA
+        ? `Te llegó la guía a ${datos.correo}. El próximo aviso es a 60 días del cierre.`
+        : `Guardamos ${datos.correo}. Te escribimos en cuanto abra la convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+      document.getElementById('exito-h').focus();
+    } catch (_) {
+      boton.disabled = false;
+      boton.textContent = etiqueta;
+      err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
+    }
+  });
+})();
+
+/* Arranca el respaldo de inmediato: el globo nunca aparece vacío. */
+Escena.iniciar();
+document.documentElement.dataset.render = 'canvas2d';
+
+/* Oculta la pista de gesto sola a los 6 s. */
+setTimeout(() => document.getElementById('pista').classList.add('oculta'), 6000);
+</script>
+
+<script type="module">
+/* ═══════════════════════════════════════════════════════════════
+   7 · RELEVO A THREE.JS
+   El respaldo ya está pintando. Este módulo solo mejora el render
+   si el CDN responde a tiempo; si no, no ocurre nada visible.
+   ═══════════════════════════════════════════════════════════════ */
+const conLimite = (p, ms) => Promise.race([
+  p, new Promise((_, no) => setTimeout(() => no(new Error('timeout')), ms))
+]);
+
+try {
+  const THREE = await conLimite(import('three'), 3500);
+  iniciarThree(THREE);
+  document.documentElement.dataset.render = 'three';
+} catch (_) {
+  document.documentElement.dataset.render = 'canvas2d';
+}
+
+function iniciarThree(THREE){
+  const viejo = document.getElementById('mapa');
+  Escena.detener();
+
+  const lienzo = document.createElement('canvas');
+  lienzo.id = 'mapa'; lienzo.setAttribute('aria-hidden', 'true');
+  viejo.replaceWith(lienzo);
+
+  const ren = new THREE.WebGLRenderer({ canvas:lienzo, antialias:true, alpha:true });
+  ren.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+
+  const escena = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(FOV, 1, 1, 4000);
+  const mapa = new THREE.Group();      // gira
+  const interior = new THREE.Group();  // se desplaza al punto de mira
+  mapa.add(interior);
+  escena.add(mapa);
+
+  const V = a => new THREE.Vector3(a[0], a[1], a[2]);
+  const linea = (pts, color, op) => new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(pts.map(V)),
+    new THREE.LineBasicMaterial({ color, transparent:true, opacity:op })
+  );
+
+  /* Retícula del plano */
+  const gv = [];
+  for (let lat = 15; lat <= 50; lat += 5)
+    for (let lon = -126; lon < -64; lon += 4){
+      gv.push(...aPlano(lat, lon), ...aPlano(lat, lon + 4));
+    }
+  for (let lon = -125; lon <= -65; lon += 5)
+    for (let lat = 14; lat < 50; lat += 3){
+      gv.push(...aPlano(lat, lon), ...aPlano(lat + 3, lon));
+    }
+  interior.add(new THREE.LineSegments(
+    new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(gv, 3)),
+    new THREE.LineBasicMaterial({ color:0xDCEEF2, transparent:true, opacity:0.09 })
+  ));
+
+  /* Territorio: las mismas muestras que usa el respaldo */
+  for (const mx of [true, false]){
+    const v = [];
+    RELLENO.filter(p => p.mx === mx).forEach(p => v.push(p.v[0], 0.04, p.v[2]));
+    interior.add(new THREE.Points(
+      new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(v, 3)),
+      new THREE.PointsMaterial({ color: mx ? 0x5FE0E6 : 0xDCEEF2, size: mx ? 0.78 : 0.58,
+        transparent:true, opacity: mx ? 0.95 : 0.42, sizeAttenuation:true })
+    ));
+  }
+
+  /* Contornos */
+  for (const pais of PAISES){
+    const pts = pais.pts.concat([pais.pts[0]]).map(([la, lo]) => {
+      const p = aPlano(la, lo); return [p[0], 0.12, p[2]];
+    });
+    interior.add(linea(pts, pais.mx ? 0x5FE0E6 : 0xDCEEF2, pais.mx ? 0.92 : 0.34));
+  }
+
+  /* Trayectorias y sus estelas */
+  const LARGO_ESTELA = 17;
+  const pulsos = [];
+  for (const tr of TRAYECTOS){
+    const color = tr.mx ? 0x5FE0E6 : 0xFFFFFF;
+    interior.add(linea(tr.pts, color, 0.34));
+
+    /* Tramo brillante que recorre el arco. Se reescribe cada
+       fotograma sobre un búfer de tamaño fijo. */
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(LARGO_ESTELA * 3), 3));
+    const estela = new THREE.Line(geo, new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.95 }));
+    interior.add(estela);
+
+    const bola = new THREE.Mesh(
+      new THREE.SphereGeometry(0.5, 12, 10),
+      new THREE.MeshBasicMaterial({ color:0xFFFFFF })
+    );
+    interior.add(bola);
+    pulsos.push({ tr, bola, estela });
+  }
+
+  /* Ciudades */
+  const anilloGeo = new THREE.RingGeometry(0.55, 0.8, 20);
+  for (const k in CIUDADES){
+    const c = CIUDADES[k];
+    const p = aPlano(c.lat, c.lon);
+    const punto = new THREE.Mesh(
+      new THREE.SphereGeometry(0.32, 12, 10),
+      new THREE.MeshBasicMaterial({ color: c.mx ? 0x5FE0E6 : 0xFFFFFF })
+    );
+    punto.position.set(p[0], 0.2, p[2]);
+    interior.add(punto);
+
+    const anillo = new THREE.Mesh(anilloGeo, new THREE.MeshBasicMaterial({
+      color: c.mx ? 0x5FE0E6 : 0xFFFFFF, transparent:true, opacity:0.34, side:THREE.DoubleSide
+    }));
+    anillo.position.set(p[0], 0.06, p[2]);
+    anillo.rotation.x = -Math.PI / 2;
+    interior.add(anillo);
+  }
+
+  /* Monumentos low-poly, de pie sobre su ciudad */
+  function monumento(id){
+    const g = new THREE.Group();
+    const blanco = new THREE.MeshBasicMaterial({ color:0xFFFFFF });
+    const luz = new THREE.MeshBasicMaterial({ color:0x5FE0E6 });
+    const add = (geo, mat, y, rz) => {
+      const m = new THREE.Mesh(geo, mat); m.position.y = y; if (rz) m.rotation.z = rz; g.add(m); return m;
+    };
+    if (id === 'angel'){
+      add(new THREE.BoxGeometry(1.15, 0.38, 1.15), blanco, 0.19);
+      add(new THREE.CylinderGeometry(0.21, 0.27, 2.4, 10), blanco, 1.58);
+      add(new THREE.BoxGeometry(0.7, 0.25, 0.7), blanco, 2.9);
+      add(new THREE.SphereGeometry(0.29, 12, 10), blanco, 3.35);
+      const ala = new THREE.BoxGeometry(0.12, 1.1, 0.42);
+      add(ala, luz, 3.7,  0.5).position.x = -0.42;
+      add(ala, luz, 3.7, -0.5).position.x =  0.42;
+    } else {
+      add(new THREE.BoxGeometry(1.3, 0.62, 1.3), blanco, 0.31);
+      add(new THREE.ConeGeometry(0.55, 2.4, 8), blanco, 1.82);
+      add(new THREE.SphereGeometry(0.29, 12, 10), blanco, 3.25);
+      const corona = add(new THREE.ConeGeometry(0.5, 0.42, 7), luz, 3.66);
+      corona.rotation.x = Math.PI;
+      const brazo = add(new THREE.CylinderGeometry(0.1, 0.1, 1.55, 8), blanco, 3.5, -0.55);
+      brazo.position.x = 0.58;
+      const llama = add(new THREE.ConeGeometry(0.28, 0.66, 8), luz, 4.42);
+      llama.position.x = 1.0;
+    }
+    return g;
+  }
+
+  for (const m of MONUMENTOS){
+    const c = CIUDADES[m.ciudad];
+    const p = aPlano(c.lat, c.lon);
+    const g = monumento(m.id);
+    g.position.set(p[0], 0, p[2]);
+    interior.add(g);
+  }
+
+  /* Proyección a pantalla para los marcadores HTML. */
+  const tmp = new THREE.Vector3();
+  function pantallaDe(lat, lon){
+    const w = aPlano(lat, lon);
+    tmp.set(w[0], 0, w[2]);
+    interior.localToWorld(tmp);
+    const prof = cam.position.distanceTo(tmp);
+    tmp.project(cam);
+    const r = ren.domElement.getBoundingClientRect();
+    const f = (r.height / 2) / Math.tan(rad(FOV / 2));
+    return {
+      x:(tmp.x * 0.5 + 0.5) * r.width,
+      y:(-tmp.y * 0.5 + 0.5) * r.height,
+      prof: tmp.z < 1 ? prof : -1,
+      esc: f / prof
+    };
+  }
+
+  function medir(){
+    const w = lienzo.clientWidth, h = lienzo.clientHeight;
+    ren.setSize(w, h, false);
+    cam.aspect = w / h;
+    /* Sube el encuadre para que el mapa caiga en la banda libre,
+       igual que hace el respaldo con su centro de proyección. */
+    cam.setViewOffset(w, h, 0, h / 2 - ENCUADRE.centroY(h), w, h);
+    cam.updateProjectionMatrix();
+    const D = ENCUADRE.distancia(w, h);
+    cam.position.set(0, D * Math.sin(camara.elev), D * Math.cos(camara.elev));
+    cam.lookAt(0, 0, 0);
+  }
+  addEventListener('resize', medir);
+  medir();
+
+  const relojT = new THREE.Clock();
+  (function bucle(){
+    requestAnimationFrame(bucle);
+    const t = relojT.getElapsedTime();
+
+    if (camara.auto && !arrastrando) camara.vaiven = REDUCIR ? 0 : Math.sin(t * 0.19) * rad(6);
+    if (!arrastrando){
+      camara.yaw = sujeta(camara.yaw + camara.vYaw, CLAMP_YAW);
+      camara.elev = sujeta(camara.elev + camara.vElev, CLAMP_ELEV);
+      camara.vYaw *= 0.93; camara.vElev *= 0.93;
+    }
+    mapa.rotation.y = camara.yaw + camara.vaiven;
+    interior.position.set(-camara.centro[0], 0, -camara.centro[1]);
+    interior.updateMatrixWorld();
+    medir();
+
+    for (const { tr, bola, estela } of pulsos){
+      const av = REDUCIR ? 0.5 : cicla(t + tr.fase, 4.6) / 4.6;
+      const n = tr.pts.length - 1;
+      const cab = Math.max(0, Math.min(n, Math.round((tr.sentido > 0 ? av : 1 - av) * n)));
+      bola.position.set(...tr.pts[cab]);
+
+      const pos = estela.geometry.attributes.position;
+      for (let k = 0; k < LARGO_ESTELA; k++){
+        const i = Math.max(0, Math.min(n, cab - tr.sentido * k));
+        pos.setXYZ(k, tr.pts[i][0], tr.pts[i][1], tr.pts[i][2]);
+      }
+      pos.needsUpdate = true;
+    }
+    ren.render(escena, cam);
+  })();
+
+  activo = { tipo:'three', pantallaDe, medir };
+}
+</script>
+</body>
+</html>
