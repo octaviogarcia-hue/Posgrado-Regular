@@ -367,49 +367,6 @@ button{font:inherit;color:inherit}
 }
 .reloj span{display:block;margin-top:3px;font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
 
-/* Formulario */
-.campo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
-.campo label{font-size:12px;font-weight:700;color:var(--legacy)}
-.campo input[type=text],.campo input[type=email]{
-  min-height:var(--toque);padding:0 16px;border-radius:var(--r-sm);
-  background:var(--blanco);border:1.5px solid var(--gris-claro);
-  color:var(--tinta);font-size:16px;font-family:var(--ff);   /* 16px evita el zoom de iOS */
-  transition:border-color .18s ease,box-shadow .18s ease;
-}
-.campo input::placeholder{color:var(--gris-claro)}
-.campo input:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(0,169,224,.18);outline:none}
-.campo input[aria-invalid="true"]{border-color:#B3261E}
-.err{font-size:11.5px;font-weight:600;color:#B3261E;min-height:15px}
-
-.grupo{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--s-4)}
-.grupo > span:first-child{font-size:12px;font-weight:700;color:var(--legacy)}
-.pills{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
-.pill{position:relative}
-.pill input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
-.pill span{
-  display:flex;align-items:center;justify-content:center;
-  min-height:var(--toque);border-radius:var(--r-sm);
-  background:var(--blanco);border:1.5px solid var(--gris-claro);
-  font-size:14px;font-weight:600;color:var(--tinta);
-  transition:background .18s ease,color .18s ease,border-color .18s ease;
-}
-.pill input:checked + span{background:var(--legacy);color:var(--blanco);border-color:var(--legacy)}
-.pill input:focus-visible + span{outline:3px solid var(--sky);outline-offset:2px}
-
-.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;cursor:pointer;min-height:48px}
-.check input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:var(--legacy)}
-.check span{font-size:12.5px;color:var(--tinta);line-height:1.45}
-.check a{color:var(--azure)}
-
-.exito{
-  display:none;padding:var(--s-5);border-radius:var(--r);
-  background:var(--legacy);color:var(--blanco);
-}
-.exito.visible{display:block}
-.exito h3{font-size:var(--t-2);font-weight:800;letter-spacing:-.02em;margin-bottom:var(--s-2)}
-.exito p{font-size:var(--t--1);color:rgba(255,255,255,.9)}
-.oculto{display:none !important}
-
 /* Cita formal en serif */
 .cita{
   margin-top:var(--s-6);padding-left:var(--s-4);
@@ -570,7 +527,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 </head>
 <body>
 
-<a class="salto" href="#pre-registro">Saltar al pre-registro</a>
+<a class="salto" href="#contacto">Saltar al formulario de contacto</a>
 
 <header class="barra">
   <a class="logo" href="#inicio" aria-label="Fulbright COMEXUS, Becas Fulbright-García Robles">
@@ -620,7 +577,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
     </ul>
 
     <div class="acciones">
-      <a class="btn" href="#pre-registro" id="cta-portada">Recibir la guía de requisitos</a>
+      <a class="btn" href="#contacto" id="cta-portada">Escríbele a COMEXUS</a>
       <a class="btn fantasma" href="#requisitos">Ver si califico</a>
     </div>
 
@@ -831,13 +788,13 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
     </section>
   </div>
 
-  <!-- ══════════════ CONVERSIÓN ══════════════ -->
-  <section class="seccion tono" id="pre-registro">
-    <p class="rotulo-sec">Pre-registro</p>
-    <h2>Te avisamos antes de que cierre</h2>
-    <p id="form-intro">
-      Déjanos tu correo y recibes la guía de requisitos, más un recordatorio en cada etapa.
-      Todavía no estás llenando la solicitud.
+  <!-- ══════════════ CUENTA REGRESIVA ══════════════ -->
+  <section class="seccion tono" id="cierre">
+    <p class="rotulo-sec">Cuenta regresiva</p>
+    <h2 id="cierre-t">Lo que falta para el cierre</h2>
+    <p id="cierre-intro">
+      La convocatoria cierra el 15 de enero de 2027, sin prórroga. Si algo no te queda claro
+      antes de postular, escríbenos y te respondemos por correo.
     </p>
 
     <div class="reloj" id="reloj" aria-label="Tiempo restante para el cierre">
@@ -847,45 +804,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
       <div><b id="r-s">--</b><span>Seg</span></div>
     </div>
 
-    <form id="form" novalidate style="margin-top:var(--s-6)">
-      <div class="campo">
-        <label for="nombre">Nombre completo</label>
-        <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ana Ruiz Molina" aria-describedby="e-nombre">
-        <span class="err" id="e-nombre"></span>
-      </div>
-      <div class="campo">
-        <label for="correo">Correo electrónico</label>
-        <input id="correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@ejemplo.mx" aria-describedby="e-correo">
-        <span class="err" id="e-correo"></span>
-      </div>
-      <div class="grupo" role="radiogroup" aria-labelledby="lbl-nivel">
-        <span id="lbl-nivel">Nivel al que quieres postular</span>
-        <div class="pills">
-          <label class="pill"><input type="radio" name="nivel" value="maestria"><span>Maestría</span></label>
-          <label class="pill"><input type="radio" name="nivel" value="doctorado"><span>Doctorado</span></label>
-        </div>
-        <span class="err" id="e-nivel"></span>
-      </div>
-
-      <label class="check">
-        <input type="checkbox" id="elegible" name="elegible">
-        <span>Tengo nacionalidad mexicana y no he cursado licenciatura ni maestría en Estados Unidos.</span>
-      </label>
-      <span class="err" id="e-elegible"></span>
-
-      <label class="check">
-        <input type="checkbox" id="aviso" name="aviso">
-        <span>Acepto el <a href="#aviso-privacidad">aviso de privacidad</a> y que COMEXUS me escriba sobre esta convocatoria.</span>
-      </label>
-      <span class="err" id="e-aviso"></span>
-
-      <button class="btn" type="submit" id="enviar" style="width:100%;margin-top:var(--s-3)">Recibir la guía</button>
-    </form>
-
-    <div class="exito" id="exito" role="status" aria-live="polite">
-      <h3 tabindex="-1" id="exito-h">Listo</h3>
-      <p id="exito-p"></p>
-    </div>
+    <a class="btn" href="#contacto" style="width:100%;margin-top:var(--s-6)">Escríbele a COMEXUS</a>
   </section>
 
   <section class="seccion">
@@ -946,9 +865,9 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
 
 <footer class="pie" id="aviso-privacidad">
   <b>Comisión México-Estados Unidos para el Intercambio Educativo y Cultural</b>
-  Los datos del pre-registro se usan únicamente para enviarte información de esta convocatoria
-  y puedes solicitar tu baja en cualquier momento. Cifras, fechas y criterios de elegibilidad
-  conforme a la convocatoria oficial vigente.
+  Los datos que envías por el formulario de contacto se usan únicamente para responder tu
+  mensaje. Cifras, fechas y criterios de elegibilidad conforme a la convocatoria oficial
+  vigente.
 
   <div class="contacto">
     <div class="contacto-grupo">
@@ -968,7 +887,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
     <b>Hasta $37,000 USD al año</b>
     <span id="dock-s">Quedan -- días</span>
   </div>
-  <a class="btn" href="#pre-registro" id="dock-cta">Pre-registrarme</a>
+  <a class="btn" href="#contacto" id="dock-cta">Escríbenos</a>
 </div>
 
 <script>
@@ -977,9 +896,7 @@ details p{font-size:12.5px;color:var(--gris);padding:0 0 var(--s-4)}
    ═══════════════════════════════════════════════════════════════ */
 const CONFIG = {
   CIERRE: new Date('2027-01-15T23:59:59-06:00'),
-  APERTURA_SIGUIENTE: '1 de septiembre',
-  ENDPOINT: '',                       // Catch Hook de Zapier. Vacío = modo demo.
-  VARIANTE: 'modelo-1-scrollytelling'
+  APERTURA_SIGUIENTE: '1 de septiembre'
 };
 
 const ABIERTA = Date.now() < CONFIG.CIERRE.getTime();
@@ -1113,11 +1030,9 @@ const sujeta = (v, a, b) => Math.max(a, Math.min(b, v));
     est.querySelector('.corta').textContent = 'Cerrada';
     document.getElementById('hito-cierre').classList.remove('activo');
     dockS.textContent = `Abre el ${CONFIG.APERTURA_SIGUIENTE}`;
-    document.getElementById('dock-cta').textContent = 'Avísame';
-    document.getElementById('cta-portada').textContent = 'Avisarme cuando abra';
-    document.getElementById('enviar').textContent = 'Avísame cuando abra';
-    document.getElementById('form-intro').textContent =
-      `El ciclo cerró. Déjanos tu correo y te escribimos en cuanto abra la siguiente convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
+    document.getElementById('cierre-t').textContent = 'La convocatoria de este ciclo cerró';
+    document.getElementById('cierre-intro').textContent =
+      `El ciclo cerró. La siguiente convocatoria abre el ${CONFIG.APERTURA_SIGUIENTE}; escríbenos si quieres preparar tu postulación desde ahora.`;
     return;
   }
 
@@ -1136,100 +1051,13 @@ const sujeta = (v, a, b) => Math.max(a, Math.min(b, v));
   tic(); setInterval(tic, 1000);
 })();
 
-/* El dock se retira cuando el formulario ya está a la vista. */
+/* El dock se retira cuando el formulario de contacto ya está a la vista. */
 new IntersectionObserver(ents => {
   ents.forEach(e => document.getElementById('dock').classList.toggle('fuera', e.isIntersecting));
-}, { threshold:0.2 }).observe(document.getElementById('pre-registro'));
-
-/* ═══════════════════════════════════════════════════════════════
-   3 · FORMULARIO DE PRE-REGISTRO
-   ═══════════════════════════════════════════════════════════════ */
-(function formulario(){
-  const form = document.getElementById('form');
-  const exito = document.getElementById('exito');
-  const boton = document.getElementById('enviar');
-  const q = new URLSearchParams(location.search);
-  const CORREO = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
-
-  function err(campo, msg){
-    const el = document.getElementById(campo);
-    const caja = document.getElementById('e-' + campo);
-    if (caja) caja.textContent = msg || '';
-    if (el && el.type !== 'checkbox') el.setAttribute('aria-invalid', msg ? 'true' : 'false');
-    return !msg;
-  }
-  const val = id => (document.getElementById(id).value || '').trim();
-
-  function valida(campo){
-    switch (campo){
-      case 'nombre':   return err('nombre', val('nombre').length >= 3 ? '' : 'Escribe tu nombre completo.');
-      case 'correo':   return err('correo', CORREO.test(val('correo')) ? '' : 'Revisa el correo: parece que le falta algo.');
-      case 'nivel':    return err('nivel', form.querySelector('input[name=nivel]:checked') ? '' : 'Elige maestría o doctorado.');
-      case 'elegible': return err('elegible', document.getElementById('elegible').checked ? '' : 'Necesitamos esta confirmación para poder escribirte.');
-      case 'aviso':    return err('aviso', document.getElementById('aviso').checked ? '' : 'Marca la casilla para que podamos enviarte la guía.');
-    }
-  }
-
-  ['nombre','correo'].forEach(id => document.getElementById(id).addEventListener('blur', () => valida(id)));
-  form.querySelectorAll('input[name=nivel]').forEach(r => r.addEventListener('change', () => valida('nivel')));
-  ['elegible','aviso'].forEach(id => document.getElementById(id).addEventListener('change', () => valida(id)));
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const malos = ['nombre','correo','nivel','elegible','aviso'].filter(c => !valida(c));
-    if (malos.length){
-      (document.getElementById(malos[0]) || form.querySelector('input[name=nivel]')).focus();
-      return;
-    }
-
-    const datos = {
-      nombre: val('nombre'),
-      correo: val('correo').toLowerCase(),
-      nivel: form.querySelector('input[name=nivel]:checked').value,
-      elegibilidad_confirmada: true,
-      consentimiento_aviso: true,
-      convocatoria_abierta: ABIERTA,
-      fecha_cierre_objetivo: CONFIG.CIERRE.toISOString(),
-      utm_source: q.get('utm_source') || 'volante_impreso',
-      utm_medium: q.get('utm_medium') || 'qr',
-      utm_campaign: q.get('utm_campaign') || 'fulbright_posgrado_regular_2026',
-      utm_content: q.get('utm_content') || '',
-      qr_id: q.get('qr_id') || '',
-      landing_variant: CONFIG.VARIANTE,
-      referrer: document.referrer || 'directo',
-      locale: 'es-MX',
-      timestamp_iso: new Date().toISOString()
-    };
-
-    boton.disabled = true;
-    const etiqueta = boton.textContent;
-    boton.textContent = 'Enviando…';
-    try {
-      if (CONFIG.ENDPOINT){
-        const r = await fetch(CONFIG.ENDPOINT, {
-          method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(datos)
-        });
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-      } else {
-        console.info('[modo demo] payload para Zapier:', datos);
-        await new Promise(r => setTimeout(r, 420));
-      }
-      form.classList.add('oculto');
-      exito.classList.add('visible');
-      document.getElementById('exito-p').textContent = ABIERTA
-        ? `Te llegó la guía a ${datos.correo}. El próximo aviso es a 60 días del cierre.`
-        : `Guardamos ${datos.correo}. Te escribimos en cuanto abra la convocatoria, el ${CONFIG.APERTURA_SIGUIENTE}.`;
-      document.getElementById('exito-h').focus();
-    } catch (_) {
-      boton.disabled = false;
-      boton.textContent = etiqueta;
-      err('aviso', 'No se pudo enviar. Revisa tu conexión y vuelve a intentar.');
-    }
-  });
-})();
+}, { threshold:0.2 }).observe(document.getElementById('contacto'));
 
 /* ══════════════════════════════════════════════════════════════
-   4 · CONTACTO — trazabilidad de campaña
+   3 · CONTACTO — trazabilidad de campaña
    El envío lo hace el propio <form> con un POST nativo al servicio
    conectado en su action; aquí solo se copian los parámetros de
    campaña a los campos ocultos para que viajen con el mensaje.
