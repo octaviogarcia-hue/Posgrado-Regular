@@ -167,9 +167,9 @@ un envío que no vaya a ocurrir.
 
 | Sitio | Texto | Destino |
 |---|---|---|
-| Portada | `Escríbele a COMEXUS` | `#contacto` |
+| Portada | `Escríbenos` | `#contacto` |
 | Portada, secundario | `Ver si califico` | `#requisitos` |
-| Cuenta regresiva | `Escríbele a COMEXUS` | `#contacto` |
+| Cuenta regresiva | `Escríbenos` | `#contacto` |
 | Barra inferior fija | `Escríbenos` | `#contacto` |
 | Pie | `Enviar mensaje` | `#contacto` |
 
