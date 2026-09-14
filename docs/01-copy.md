@@ -61,7 +61,7 @@ $37,000. Romper esa continuidad es la forma más rápida de perder a alguien que
 
 - **Etiqueta:** `Beca Fulbright-García Robles · Posgrado Regular`
 - **Ceja:** «Del Ángel a la Antorcha», en el chip azul sobre el titular.
-- **Titular:** «Tu posgrado en EE. UU. *empieza aquí*»
+- **Titular:** «Tu posgrado en EE.UU. *empieza aquí*»
   · subtítulo: «La beca Fulbright-García Robles financia tu posgrado en Estados Unidos con
   hasta $37,000 USD al año. COMEXUS te acompaña con asesoría en tu proceso de admisión.»
 - **Píldora de estado:** `● Convocatoria abierta` / `● Convocatoria cerrada`
@@ -151,7 +151,7 @@ Es el **único formulario de la página**. La landing no captura correos para un
 recordatorios: quien tiene una duda escribe, y COMEXUS responde. Nada en la pantalla promete
 un envío que no vaya a ocurrir.
 
-- **Encabezado:** «Escríbele a COMEXUS»
+- **Encabezado:** «Escríbenos»
 - **Subtexto:** «¿Tu duda no aparece arriba? Déjanos tu mensaje y te respondemos por correo.»
 - **Campos:** Nombre completo · Correo electrónico · Asunto · Mensaje
 - **Botón:** `Enviar mensaje`
@@ -175,8 +175,9 @@ un envío que no vaya a ocurrir.
 
 ### Preguntas frecuentes
 
-1. **¿Necesito carta de aceptación de una universidad?** No. No gestionamos la admisión,
-   apoyamos en el proceso de solicitud.
+1. **¿Necesito carta de aceptación de una universidad?** No necesitas una carta de aceptación
+   para postular. Primero solicitas a la beca y COMEXUS te acompaña en tu proceso de
+   aplicación a las universidades de tu interés.
 2. **¿El GRE es obligatorio?** Sí, sin excepción. El puntaje mínimo depende del área.
 3. **¿Puedo postular si estudié en Estados Unidos?** No, si ya cursaste ahí licenciatura o
    maestría.
