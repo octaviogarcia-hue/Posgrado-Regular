@@ -15,6 +15,8 @@ eventos de ratón.
 index.html                           La landing: relato guiado por scroll con mapa
                                      SVG animado. Es la raíz del sitio publicado.
 logo-fulbright-comexus.png           Logotipo oficial del encabezado
+HANDOFF.md                           Cierre de campaña: progreso, errores y lecciones
+                                     aprendidas, reutilizable para la siguiente campaña
 docs/
   01-copy.md                         Hook del volante y microcopy de la landing
 tools/
